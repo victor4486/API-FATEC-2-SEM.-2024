@@ -1,11 +1,24 @@
 package com.cyber.cybernexuspacer;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 public class CriteriosController {
+
+    @FXML
+    private Button adicionarSprintButton;
+
+    @FXML
+    private Button btnAcompSprint;
+
+    @FXML
+    private Button btnSairCriterios;
 
     @FXML
     private VBox sprintContainer; // VBox onde as Sprints serão adicionadas
@@ -35,5 +48,12 @@ public class CriteriosController {
     private void handleAdicionarCriterio() {
         String titulo = tituloCritério.getText();
         String descricao = descricaoCritério.getText();
+    }
+    @FXML
+    public void handleSair(ActionEvent actionEvent) {
+    }
+    @FXML
+    void handleAcompSprint(ActionEvent event) throws IOException {
+        Main.setRoot("acompanharSprints-view");
     }
 }

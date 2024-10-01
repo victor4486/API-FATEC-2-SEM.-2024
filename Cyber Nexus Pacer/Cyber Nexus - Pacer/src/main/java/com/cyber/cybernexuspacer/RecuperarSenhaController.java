@@ -9,7 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class RecuperarSenha {
+import java.io.IOException;
+
+public class RecuperarSenhaController {
     @FXML
     private AnchorPane anchorFundo;
 
@@ -41,8 +43,8 @@ public class RecuperarSenha {
     private Text txtDigiteSenhha;
 
     @FXML
-    void onClickEnviar(ActionEvent event) {
-
+    void onClickEnviar(ActionEvent event) throws IOException {
+        Main.setRoot("AreaDoAluno-view");
     }
 
 }

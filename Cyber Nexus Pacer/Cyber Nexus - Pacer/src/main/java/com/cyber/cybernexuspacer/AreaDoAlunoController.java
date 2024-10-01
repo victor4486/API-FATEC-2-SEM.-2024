@@ -1,4 +1,4 @@
-package org.example.areadoaluno;
+package com.cyber.cybernexuspacer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -188,6 +188,7 @@ public class AreaDoAlunoController {
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+
+
     }
 }

@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -27,7 +29,7 @@ public class LoginController {
     private Label txtSistemaPacer;
 
     @FXML
-    private PasswordField usuarioLogin;
+    private TextField  usuarioLogin;
 
     @FXML
     private PasswordField usuarioSenha;
@@ -35,7 +37,13 @@ public class LoginController {
     // O método @FXML precisa estar dentro da classe LoginController
     @FXML
     void onClickbtnEntrar(ActionEvent event) throws IOException {
-        Main.setRoot("recuperacaoSenha");
+        if(Objects.equals(usuarioLogin.getText(), "aluno")) {
+            Main.setRoot("recuperacaoSenha");
+        }
+        else if(Objects.equals(usuarioLogin.getText(), "admin")) {
+            Main.setRoot("criterios");
+        }
     }
+
 
 }
