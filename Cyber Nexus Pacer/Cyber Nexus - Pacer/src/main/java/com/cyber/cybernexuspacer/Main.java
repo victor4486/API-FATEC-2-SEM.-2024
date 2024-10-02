@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Carregar o arquivo FXML corretamente
-        scene = new Scene(loadFXML("login"), 800, 600);
+        scene = new Scene(loadFXML("login-view"), 800, 600);
         stage.setScene(scene);
         stage.show();
     }
@@ -24,7 +24,7 @@ public class Main extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    // Método para carregar o arquivo FXML e garantir que retorna um Parent
+    //Método para carregar o arquivo FXML e garantir que retorna um Parent
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();  // Isso garante que o nó raiz é do tipo Parent

@@ -1,4 +1,4 @@
-package com.example.api;
+package com.cyber.cybernexuspacer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class AcompanharSprintsController {
 
@@ -144,8 +146,8 @@ public class AcompanharSprintsController {
     }
 
     @FXML
-    protected void onbtnsair(ActionEvent event) {
-
+    protected void onbtnsair(ActionEvent event) throws IOException {
+        Main.setRoot("login-view");
     }
 
     @FXML
