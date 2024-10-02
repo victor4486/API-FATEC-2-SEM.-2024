@@ -1,5 +1,6 @@
 package com.cyber.cybernexuspacer;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -7,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 
 public class AreaDoAlunoController {
     @FXML
@@ -187,8 +190,7 @@ public class AreaDoAlunoController {
     private Pane paneSprint1111;
 
     @FXML
-    protected void onHelloButtonClick() {
-
-
+    void onClickbtnSair(ActionEvent event) throws IOException {
+        Main.setRoot("login-view");
     }
 }

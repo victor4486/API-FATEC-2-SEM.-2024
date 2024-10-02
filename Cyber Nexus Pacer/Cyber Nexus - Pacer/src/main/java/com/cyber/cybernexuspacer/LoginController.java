@@ -38,10 +38,10 @@ public class LoginController {
     @FXML
     void onClickbtnEntrar(ActionEvent event) throws IOException {
         if(Objects.equals(usuarioLogin.getText(), "aluno")) {
-            Main.setRoot("recuperacaoSenha");
+            Main.setRoot("recuperacaoSenha-view");
         }
         else if(Objects.equals(usuarioLogin.getText(), "admin")) {
-            Main.setRoot("criterios");
+            Main.setRoot("cadastroTurma-view");
         }
     }
 

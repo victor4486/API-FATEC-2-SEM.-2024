@@ -1,10 +1,13 @@
 package com.cyber.cybernexuspacer;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 
 public class CadastroDeTurmaController {
 
@@ -31,5 +34,10 @@ public class CadastroDeTurmaController {
 
     @FXML
     private ScrollBar scrollBar;
+
+    @FXML
+    void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException {
+        Main.setRoot("criterios-view");
+    }
 
 }
