@@ -24,6 +24,20 @@ _______________________________________________________________________________
 |4. [TECNOLOGIAS UTILIZADAS](#TECNOLOGIAS) |
 |:-------:|
 
+## <a name="EQUIPE"></a> **EQUIPE** 
+_______________________________________________________________________________
+
+| **INTEGRANTES**| **FUNÇÃO** | **NETWORKS** |**IDS**|
+|:-------:|:--------:|:-------:|:--------:|
+| DIEGO RAFAEL MORENO VITVICKI| ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/dievit" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![image](https://github.com/user-attachments/assets/cb1436aa-1fbf-4c78-bed0-7bbda49365db)|
+| DIEGO SALES GAMERO JOÃO| ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/DiegoSGamero" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/3c28b9a0-d16b-4fa2-9b41-f4678eb8959f)|
+|  JOÃO PEDRO VENTURA | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/jaupventur" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/4bf968bd-8879-47d7-a0ec-522768f831dd)|
+|  LEONARDO RIBEIRO | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/LeoRibeiro05" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/f5f349b7-0219-4ff8-8bf1-8a22e232a3d9)|
+|  MARCOS ANTONIO POVINSKE | ![Static Badge](https://img.shields.io/badge/PRODUCT_OWNER-pink) | <a href="https://github.com/MarcosPovs" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/0c7edca6-0bbf-4a15-addf-eda3555d0cca)|
+|  TIAGO AUGUSTO SEIXAS  | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/TiagoAugustoSeixas" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>|![Image](https://github.com/user-attachments/assets/d3c8ecb3-562d-408b-9122-a35133830aa9)|
+|  TIAGO SANTOS | ![Static Badge](https://img.shields.io/badge/SCRUM_MASTER-black) | <a href="https://github.com/tiago17santos" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>|![Image](https://github.com/user-attachments/assets/e39515e8-763e-4a17-befd-04cff4d20c9c)|
+|  VICTOR SOUZA |  ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href=" https://github.com/victor4486 " target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![image](https://github.com/user-attachments/assets/7497da22-5a35-4fe6-ae9e-09263988d880)|
+
 
 
 ##  <a name="SOBRE"></a> **SOBRE**
