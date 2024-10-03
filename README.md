@@ -1,4 +1,4 @@
-# API-FATEC-2-SEM.-2024 - SPRINT 2 
+# API-FATEC-2-SEM.-2024 - SPRINT 2
 
 <html>
 <body>
