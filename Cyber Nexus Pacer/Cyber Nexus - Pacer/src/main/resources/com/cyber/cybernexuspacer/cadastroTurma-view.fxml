@@ -52,7 +52,7 @@
                </ImageView>
          </children>
       </Pane>
-      <ImageView fitHeight="100.0" fitWidth="105.0" layoutX="688.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="44.0" fitWidth="98.0" layoutX="694.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imagens/fatec.png" />
          </image>

@@ -446,7 +446,7 @@
             </ScrollPane>
          </children>
       </Pane>
-      <ImageView fx:id="logofatec" fitHeight="63.0" fitWidth="127.0" layoutX="655.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logofatec" fitHeight="55.0" fitWidth="107.0" layoutX="675.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@imagens/fatec.png" />
          </image>
