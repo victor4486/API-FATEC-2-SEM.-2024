@@ -70,6 +70,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name2" fontSmoothingType="LCD" layoutX="52.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TechTitans" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name3" fontSmoothingType="LCD" layoutX="144.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="7.0" layoutY="67.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -90,6 +100,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name23" fontSmoothingType="LCD" layoutX="65.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SteamDucks" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name33" fontSmoothingType="LCD" layoutX="157.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="7.0" layoutY="128.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -110,6 +130,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name22" fontSmoothingType="LCD" layoutX="57.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CyberNexus" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name32" fontSmoothingType="LCD" layoutX="149.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="7.0" layoutY="188.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -130,6 +160,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name21" fontSmoothingType="LCD" layoutX="52.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DynamosData" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name31" fontSmoothingType="LCD" layoutX="144.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="4.0" layoutY="252.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -150,6 +190,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name211" fontSmoothingType="LCD" layoutX="52.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UnitedForCode" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name311" fontSmoothingType="LCD" layoutX="144.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="4.0" layoutY="312.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -170,6 +220,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name2111" fontSmoothingType="LCD" layoutX="52.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DataTime" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name3111" fontSmoothingType="LCD" layoutX="144.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                         <Pane layoutX="4.0" layoutY="368.0" prefHeight="53.0" prefWidth="579.0" style="-fx-background-color: #93DD86; -fx-background-radius: 5;">
@@ -190,6 +250,16 @@
                                  </font>
                               </Text>
                               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4ffe6" height="23.0" layoutX="501.0" layoutY="27.0" stroke="#00000015" strokeType="INSIDE" width="44.0" />
+                              <Text fx:id="pontuacao_label_name21111" fontSmoothingType="LCD" layoutX="52.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sqlutions" wrappingWidth="92.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pontuacao_label_name31111" fontSmoothingType="LCD" layoutX="144.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" wrappingWidth="47.20341110229492">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </Pane>
                      </children>
