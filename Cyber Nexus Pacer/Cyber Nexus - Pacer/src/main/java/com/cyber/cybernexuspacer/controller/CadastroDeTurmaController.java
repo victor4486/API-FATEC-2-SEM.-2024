@@ -1,6 +1,5 @@
-package com.cyber.cybernexuspacer;
+package com.cyber.cybernexuspacer.controller;
 
-import com.cyber.cybernexuspacer.controller.Main;
 import com.cyber.cybernexuspacer.dao.CadastroTurmaDao;
 import com.cyber.cybernexuspacer.entity.CadastroTurma;
 import javafx.event.ActionEvent;
@@ -60,6 +59,7 @@ public class CadastroDeTurmaController {
 
 
         Main.setRoot("criterios-view");
+    }
 
 
     public void carregarPlanilha(javafx.event.ActionEvent actionEvent) {
