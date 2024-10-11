@@ -1,7 +1,6 @@
 package com.cyber.cybernexuspacer.dao;
 
 import com.cyber.cybernexuspacer.entity.CadastroTurma;
-import com.cyber.cybernexuspacer.entity.ConexaoDao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
