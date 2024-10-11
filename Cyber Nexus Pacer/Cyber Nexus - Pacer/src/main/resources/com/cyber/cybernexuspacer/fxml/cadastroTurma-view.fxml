@@ -47,14 +47,14 @@
             <ScrollBar fx:id="scrollBar" layoutX="751.0" layoutY="10.0" orientation="VERTICAL" prefHeight="355.0" prefWidth="19.0" />
                <ImageView fitHeight="323.0" fitWidth="911.0" layoutX="31.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@imagens/PLANE.jpg" />
+                     <Image url="@../imagens/PLANE.jpg" />
                   </image>
                </ImageView>
          </children>
       </Pane>
       <ImageView fitHeight="44.0" fitWidth="98.0" layoutX="694.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@imagens/fatec.png" />
+            <Image url="@../imagens/fatec.png" />
          </image>
       </ImageView>
    </children>

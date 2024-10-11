@@ -26,7 +26,7 @@
                         </Label>
                         <ImageView fitHeight="38.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@imagens/fatec.png" />
+                                <Image url="@../imagens/fatec.png" />
                             </image>
                         </ImageView>
                     </children>

@@ -304,7 +304,7 @@
       </Pane>
       <ImageView fx:id="logofatec" fitHeight="60.0" fitWidth="107.0" layoutX="668.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@imagens/fatec.png" />
+            <Image url="@../imagens/fatec.png" />
          </image>
       </ImageView>
    </children>

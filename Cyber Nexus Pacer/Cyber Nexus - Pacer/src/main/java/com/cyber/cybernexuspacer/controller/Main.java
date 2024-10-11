@@ -24,9 +24,9 @@ public class Main extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    //Método para carregar o arquivo FXML e garantir que retorna um Parent
+    //Metodo para carregar o arquivo FXML e garantir que retorna um Parent
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/cyber/cybernexuspacer/fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();  // Isso garante que o nó raiz é do tipo Parent
     }
 

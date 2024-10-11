@@ -351,7 +351,7 @@
       </Button>
       <ImageView fx:id="imgFatec" fitHeight="76.0" fitWidth="121.0" layoutX="650.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@imagens/fatec.png" />
+            <Image url="@../imagens/fatec.png" />
          </image>
       </ImageView>
    </children>
