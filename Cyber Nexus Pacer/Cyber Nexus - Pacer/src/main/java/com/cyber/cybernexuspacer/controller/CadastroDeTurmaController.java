@@ -48,6 +48,7 @@ public class CadastroDeTurmaController {
 
         new CadastroTurmaDao().CadastrarAlunos(cadastroTurma);
 
+
         Main.setRoot("criterios-view");
     }
 
