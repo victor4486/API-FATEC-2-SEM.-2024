@@ -59,6 +59,7 @@ public class CadastroDeTurmaController {
 
 
         Main.setRoot("criterios-view");
+    }
 
 
     public void carregarPlanilha(javafx.event.ActionEvent actionEvent) {
