@@ -8,10 +8,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 
 public class CadastroDeTurmaController {
 
@@ -40,6 +48,7 @@ public class CadastroDeTurmaController {
     private ScrollBar scrollBar;
 
     @FXML
+
     void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
 
         CadastroTurma cadastroTurma = new CadastroTurma();
@@ -50,7 +59,20 @@ public class CadastroDeTurmaController {
         new CadastroTurmaDao().CadastrarAlunos(cadastroTurma);
 
 
-        //Main.setRoot("criterios-view");
+        Main.setRoot("criterios-view");
+
+
+    public void carregarPlanilha(javafx.event.ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
+        File selectFile = fileChooser.showOpenDialog(button_carregarDocumento.getScene().getWindow());
+
+
     }
 
 }
+
+
+
+
+
