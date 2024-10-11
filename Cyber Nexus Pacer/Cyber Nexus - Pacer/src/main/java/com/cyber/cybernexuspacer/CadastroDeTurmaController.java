@@ -1,5 +1,6 @@
-package com.cyber.cybernexuspacer.controller;
+package com.cyber.cybernexuspacer;
 
+import com.cyber.cybernexuspacer.controller.Main;
 import com.cyber.cybernexuspacer.dao.CadastroTurmaDao;
 import com.cyber.cybernexuspacer.entity.CadastroTurma;
 import javafx.event.ActionEvent;
@@ -49,7 +50,7 @@ public class CadastroDeTurmaController {
         new CadastroTurmaDao().CadastrarAlunos(cadastroTurma);
 
 
-        Main.setRoot("criterios-view");
+        //Main.setRoot("criterios-view");
     }
 
 }
