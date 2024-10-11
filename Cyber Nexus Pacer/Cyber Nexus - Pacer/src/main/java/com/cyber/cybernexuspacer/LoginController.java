@@ -29,6 +29,9 @@ public class LoginController {
     private Label txtSistemaPacer;
 
     @FXML
+    private Label lblUsuarioESenhaInvalidos;
+
+    @FXML
     private TextField  usuarioLogin;
 
     @FXML
@@ -37,11 +40,13 @@ public class LoginController {
     // O método @FXML precisa estar dentro da classe LoginController
     @FXML
     void onClickbtnEntrar(ActionEvent event) throws IOException {
-        if(Objects.equals(usuarioLogin.getText(), "aluno")) {
-            Main.setRoot("recuperacaoSenha-view");
+        if(Objects.equals(usuarioLogin.getText(), "usuarioLogin" )
+                && (Objects.equals(usuarioSenha, "usuarioSenha" ))) {
+            Main.setRoot("criterios-view");
         }
-        else if(Objects.equals(usuarioLogin.getText(), "admin")) {
-            Main.setRoot("cadastroTurma-view");
+        else {
+            // Exibe a mensagem de erro se as credenciais estiverem incorretas
+            lblUsuarioESenhaInvalidos.setText("Usuário ou senha incorretos!");
         }
     }
 

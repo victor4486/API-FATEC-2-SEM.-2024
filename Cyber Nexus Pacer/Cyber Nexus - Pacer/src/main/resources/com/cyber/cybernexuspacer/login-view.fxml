@@ -41,4 +41,5 @@
         </font>
     </Button>
    <TextField fx:id="usuarioLogin" layoutX="311.0" layoutY="280.0" promptText="Usuário" />
+   <Label fx:id="lblUsuarioESenhaInvalidos" layoutX="320.0" layoutY="401.0" textFill="#f2041c" />
 </AnchorPane>
