@@ -21,9 +21,6 @@ public class CadastroTurmaDao {
             stmt.close();
 
 
-
-
-
         } catch (SQLException e) {
             e.printStackTrace();
 
