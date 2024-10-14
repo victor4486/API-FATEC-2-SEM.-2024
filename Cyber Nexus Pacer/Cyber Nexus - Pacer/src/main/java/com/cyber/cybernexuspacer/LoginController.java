@@ -32,7 +32,7 @@ public class LoginController {
     private Label lblUsuarioESenhaInvalidos;
 
     @FXML
-    private TextField  usuarioLogin;
+    private TextField usuarioLogin;
 
     @FXML
     private PasswordField usuarioSenha;
@@ -40,15 +40,18 @@ public class LoginController {
     // O método @FXML precisa estar dentro da classe LoginController
     @FXML
     void onClickbtnEntrar(ActionEvent event) throws IOException {
-        if(Objects.equals(usuarioLogin.getText(), "usuarioLogin" )
-                && (Objects.equals(usuarioSenha, "usuarioSenha" ))) {
+        // Verifica se o login e a senha inseridos são iguais aos valores esperados
+        if (Objects.equals(usuarioLogin.getText(), "usuarioLogin")
+                && Objects.equals(usuarioSenha.getText(), "usuarioSenha")) {
+            // Se estiverem corretos, muda a tela para 'criterios-view'
             Main.setRoot("criterios-view");
-        }
-        else {
+        } else {
             // Exibe a mensagem de erro se as credenciais estiverem incorretas
             lblUsuarioESenhaInvalidos.setText("Usuário ou senha incorretos!");
         }
     }
 
-
 }
+
+
+
