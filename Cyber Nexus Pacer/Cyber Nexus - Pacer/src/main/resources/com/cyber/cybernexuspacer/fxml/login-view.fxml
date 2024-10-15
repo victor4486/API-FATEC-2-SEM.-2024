@@ -12,21 +12,21 @@
 
 <AnchorPane fx:id="anchorlogin" prefHeight="612.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cyber.cybernexuspacer.controller.LoginController">
     <!-- Label Sistema PACER -->
-    <Label fx:id="lblTxtSistemaPacer" contentDisplay="CENTER" layoutX="196.0" layoutY="26.0" prefHeight="70.0" prefWidth="295.0" text="SISTEMA PACER">
+    <Label fx:id="lblTxtSistemaPacer" contentDisplay="CENTER" layoutX="279.0" layoutY="102.0" prefHeight="70.0" prefWidth="258.0" text="SISTEMA PACER">
         <font>
             <Font name="Arial Black" size="25.0" />
         </font>
     </Label>
 
     <!-- Label FATEC São José -->
-    <Label fx:id="lblTxtFatec" contentDisplay="CENTER" layoutX="70.0" layoutY="77.0" text="FATEC SÃO JOSÉ DOS CAMPOS">
+    <Label fx:id="lblTxtFatec" contentDisplay="CENTER" layoutX="173.0" layoutY="154.0" text="FATEC SÃO JOSÉ DOS CAMPOS">
         <font>
             <Font name="Arial Black" size="25.0" />
         </font>
     </Label>
 
     <!-- Imagem FATEC -->
-    <ImageView fx:id="imgFatec1" fitHeight="102.0" fitWidth="170.0" layoutX="617.0" layoutY="11.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
+    <ImageView fx:id="imgFatec1" fitHeight="102.0" fitWidth="170.0" layoutX="620.0" layoutY="36.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
         <image>
             <Image url="@../imagens/fatec.png" />
         </image>
@@ -34,12 +34,20 @@
             <ColorAdjust brightness="0.26" contrast="0.21" />
         </effect>
     </ImageView>
-    <PasswordField fx:id="usuarioSenha" layoutX="311.0" layoutY="331.0" promptText="Senha" />
-    <Button fx:id="btnEntrar" layoutX="312.0" layoutY="373.0" mnemonicParsing="false" onAction="#onClickbtnEntrar" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: lightblue; -fx-alignment: center;" styleClass="-fx-alignment" text="Entrar" textAlignment="CENTER" textFill="#fffffb" textOverrun="CENTER_ELLIPSIS">
+    <Button fx:id="btnEntrar" layoutX="317.0" layoutY="423.0" mnemonicParsing="false" onAction="#onClickbtnEntrar" prefHeight="25.0" prefWidth="148.0" style="-fx-background-color: lightblue; -fx-alignment: center;" styleClass="-fx-alignment" text="Entrar" textAlignment="CENTER" textFill="#fffffb" textOverrun="CENTER_ELLIPSIS">
         <font>
           <Font name="Arial Black" size="12.0" />
         </font>
     </Button>
-   <TextField fx:id="usuarioLogin" layoutX="311.0" layoutY="280.0" promptText="Usuário" />
+   <TextField fx:id="usuarioLogin" layoutX="316.0" layoutY="330.0" promptText="Usuário" />
+   <ImageView fx:id="imgFatec12" blendMode="MULTIPLY" fitHeight="100.0" fitWidth="200.0" layoutX="30.0" layoutY="40.0" nodeOrientation="INHERIT" opacity="0.4" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
+      <image>
+         <Image url="@../imagens/logo%20Cyber%20Nexus.png" />
+      </image>
+      <effect>
+         <ColorAdjust brightness="0.26" contrast="0.21" />
+      </effect>
+   </ImageView>
    <Label fx:id="lblUsuarioESenhaInvalidos" layoutX="320.0" layoutY="401.0" textFill="#f2041c" />
+   <PasswordField fx:id="usuarioSenha" layoutX="316.0" layoutY="375.0" promptText="Senha" />
 </AnchorPane>
