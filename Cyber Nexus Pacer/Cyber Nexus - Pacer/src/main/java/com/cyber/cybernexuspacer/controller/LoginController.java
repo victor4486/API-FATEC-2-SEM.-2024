@@ -50,11 +50,12 @@ public class LoginController {
         try {
             // Verifica se o login e a senha estão corretos no banco de dados
             if (loginDao.verificarLogin(nome, senha, tipoUsuario)) {
+                System.out.println(tipoUsuario);
                 // Se estiverem corretos, muda a tela
                 if ("Aluno".equals(tipoUsuario)) {
                     Main.setRoot("AreaDoAluno-view");
                 } else if ("Admin".equals(tipoUsuario)) {
-                    Main.setRoot("AreaAdmin-view");
+                    Main.setRoot("cadastroTurma-view");
                 } else if ("Professor".equals(tipoUsuario)) {
                     Main.setRoot("AreaDoProfessor-view");
                 }

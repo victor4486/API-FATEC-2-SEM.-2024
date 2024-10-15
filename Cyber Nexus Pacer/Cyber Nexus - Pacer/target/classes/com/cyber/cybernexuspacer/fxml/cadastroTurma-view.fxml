@@ -11,17 +11,12 @@
 
 <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="694.0" prefWidth="800.0" style="-fx-background-color: #d9d9d9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cyber.cybernexuspacer.controller.CadastroDeTurmaController">
    <children>
-      <Label fx:id="label_top" layoutX="-23.0" layoutY="-7.0" prefHeight="40.0" prefWidth="822.0" style="-fx-background-color: #86B6DD;" text="        PRÓTIPO PACER">
-         <font>
-            <Font name="Arial Black" size="11.0" />
-         </font>
-      </Label>
       <Label fx:id="label_olaProfessor" layoutX="18.0" layoutY="60.0" prefHeight="30.0" prefWidth="161.0" text="Olá, Professor!">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="label_cadastrodeturma" alignment="CENTER" layoutX="193.0" layoutY="52.0" prefHeight="39.0" prefWidth="456.0" style="-fx-background-color: #86B6DD;" text="CADASTRO DE TURMA" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_cadastrodeturma" alignment="CENTER" layoutX="198.0" layoutY="38.0" prefHeight="39.0" prefWidth="456.0" style="-fx-background-color: #86B6DD;" text="CADASTRO DE TURMA" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="30.0" />
          </font>
@@ -52,9 +47,14 @@
                </ImageView>
          </children>
       </Pane>
-      <ImageView fitHeight="44.0" fitWidth="98.0" layoutX="694.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="60.0" fitWidth="107.0" layoutX="668.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagens/fatec.png" />
+         </image>
+      </ImageView>
+      <ImageView blendMode="MULTIPLY" fitHeight="60.0" fitWidth="150.0" layoutX="8.0" layoutY="1.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagens/logo Cyber Nexus.png" />
          </image>
       </ImageView>
    </children>
