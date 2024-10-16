@@ -3,7 +3,7 @@
 <html>
 <body>
 
-![image](https://github.com/user-attachments/assets/d934addd-3b30-4a1c-b168-fb32dc906470)
+![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/BANNER%20PACER%20API.png)
 
 
 
@@ -66,6 +66,9 @@ _______________________________________________________________________________
 | CRIAÇÃO DE UM LIMITADOR DE DATA DAS SPRINTS | PRIORIDADE ALTA | ❌ |
 | DESENVOLVIMENTO DO SISTEMA DE AVALIAÇÃO DO ALUNO | PRIORIDADE ALTA |❌ |
 | CRIAÇÃO DE UM SISTEMA DE LOGIN E SENHA | PRIORIDADE MÉDIA |❌ |
+| CRIAÇÃO DA ABA DE CRIAÇÃO DE CRITÉRIOS DE AVALIAÇÃO | PRIORIDADE ALTA |❌ |
+| CRIAÇÃO DE SISTEMA DE UPLOAD DE ARQUIVOS | PRIORIDADE MÉDIA |❌ |
+
 
 
 
@@ -74,7 +77,7 @@ _______________________________________________________________________________
 _______________________________________________________________________________
 
 
-![image](https://github.com/user-attachments/assets/2e409dba-39cd-42aa-8825-69bf566dc277)
+![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/TECNOLOGIAS%20UTILIZADAS.jpg)
 
 
 

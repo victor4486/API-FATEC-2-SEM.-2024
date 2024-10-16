@@ -2,6 +2,7 @@ package com.cyber.cybernexuspacer.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -52,6 +53,11 @@ public class CadastroDeTurmaController {
 
     private ObservableList<Aluno> listaAluno = FXCollections.observableArrayList();
 
+
+    @FXML
+    void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException {
+
+    }
 
     @FXML
     public void initialize() {
@@ -122,6 +128,7 @@ public class CadastroDeTurmaController {
             e.printStackTrace();
         }
     }
+
 
 }
 
