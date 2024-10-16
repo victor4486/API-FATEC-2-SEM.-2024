@@ -1,24 +1,17 @@
 package com.cyber.cybernexuspacer.controller;
 
-import com.cyber.cybernexuspacer.dao.CadastroTurmaDao;
-import com.cyber.cybernexuspacer.entity.CadastroTurma;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.Scanner;
-
+//---------------------
 
 public class CadastroDeTurmaController {
 
@@ -42,35 +35,97 @@ public class CadastroDeTurmaController {
 
     @FXML
     private Pane pane_planilha;
+    @FXML
+    private TableColumn<?, ?> coluna_Aluno;
 
     @FXML
-    private ScrollBar scrollBar;
+    private TableColumn<?, ?> coluna_Email;
 
     @FXML
+    private TableColumn<?, ?> coluna_Grupo;
 
-    void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
+    @FXML
+    private ImageView logo_fatec;
 
-        CadastroTurma cadastroTurma = new CadastroTurma();
-        cadastroTurma.setNome("Tiago");
-        cadastroTurma.setSenha("fatec2024");
-        cadastroTurma.setEmail("tiag.santos159@fatec.sp.gov.br");
+    @FXML
+    private TableView<Aluno> tabela;
 
-        new CadastroTurmaDao().CadastrarAlunos(cadastroTurma);
+    private ObservableList<Aluno> listaAluno = FXCollections.observableArrayList();
 
 
-        Main.setRoot("criterios-view");
+    @FXML
+    public void initialize() {
+        // Configura as colunas com os dados da classe Pessoa
+        coluna_Aluno.setCellValueFactory(new PropertyValueFactory<>("aluno"));
+        coluna_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        coluna_Grupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
+
+
+        // Configura a tabela para exibir a lista de pessoas
+        tabela.setItems(listaAluno);
     }
 
-
+    @FXML
     public void carregarPlanilha(javafx.event.ActionEvent actionEvent) {
+        // Abre o explorador de arquivos para a escolha do arquivo
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("."));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
         File selectFile = fileChooser.showOpenDialog(button_carregarDocumento.getScene().getWindow());
 
+        if (selectFile != null) {
+            try (Scanner scanner = new Scanner(selectFile)) {
+                listaAluno.clear();  // Limpa a lista antes de adicionar novos dados
 
+                // Ignora a linha do cabeçalho
+                if (scanner.hasNextLine()) {
+                    scanner.nextLine();
+                }
+
+                // Lê o arquivo linha por linha e adiciona cada pessoa na lista
+                while (scanner.hasNextLine()) {
+                    String linha = scanner.nextLine();
+                    String[] dados = linha.split(",");
+
+                    if (dados.length >= 3) {
+                        String aluno = dados[0];
+                        String email = dados[1];
+                        String grupo = dados[2];
+                        Aluno pessoa = new Aluno(aluno, email, grupo);
+                        listaAluno.add(pessoa);
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //-------------------------------------------------------------
+
+    public void tabela(String arquivoCSV) {
+        String linha;
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivoCSV))) {
+            br.readLine(); // Ignora a primeira linha (cabeçalho)
+            ObservableList<Aluno> listaAlunos = null;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                String aluno = dados[0];
+                String email = dados[1];
+                String grupo = dados[2];
+
+                // Cria o objeto Pessoa e adiciona à lista observável
+                listaAlunos.add(new Aluno(aluno, email, grupo));
+            }
+            tabela.setItems(listaAlunos); // Associa a lista ao TableView
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
+
+
 
 
 
