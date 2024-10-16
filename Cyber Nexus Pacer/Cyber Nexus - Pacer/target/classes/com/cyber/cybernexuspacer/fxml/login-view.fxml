@@ -40,14 +40,6 @@
         </font>
     </Button>
    <TextField fx:id="usuarioLogin" layoutX="316.0" layoutY="330.0" promptText="Usuário" />
-   <ImageView fx:id="imgFatec11" fitHeight="54.0" fitWidth="101.0" layoutX="26.0" layoutY="64.0" nodeOrientation="INHERIT" opacity="0.1" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
-      <image>
-         <Image url="@../imagens/logo%20Cyber%20Nexus.jpeg" />
-      </image>
-      <effect>
-         <ColorAdjust brightness="0.26" contrast="0.21" />
-      </effect>
-   </ImageView>
    <ImageView fx:id="imgFatec12" blendMode="MULTIPLY" fitHeight="100.0" fitWidth="200.0" layoutX="30.0" layoutY="40.0" nodeOrientation="INHERIT" opacity="0.4" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: transparent;">
       <image>
          <Image url="@../imagens/logo%20Cyber%20Nexus.png" />
