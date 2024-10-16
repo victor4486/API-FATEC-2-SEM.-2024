@@ -1,12 +1,14 @@
 package com.cyber.cybernexuspacer.entity;
 
+import com.cyber.cybernexuspacer.dao.ConexaoDao;
+
 public class Criterio {
     private int id;
     private String nome;
     private String descricao;
 
     // Construtores, Getters e Setters
-    public User(int id, String name, String email) {
+    public Criterio(int id, String name, String email) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
