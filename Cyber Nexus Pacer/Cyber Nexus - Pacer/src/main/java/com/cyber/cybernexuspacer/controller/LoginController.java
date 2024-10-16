@@ -55,7 +55,7 @@ public class LoginController {
                 if ("Aluno".equals(tipoUsuario)) {
                     Main.setRoot("AreaDoAluno-view");
                 } else if ("Admin".equals(tipoUsuario)) {
-                    Main.setRoot("cadastroTurma-view");
+                    Main.setRoot("TelaMenu-view");
                 } else if ("Professor".equals(tipoUsuario)) {
                     Main.setRoot("AreaDoProfessor-view");
                 }
