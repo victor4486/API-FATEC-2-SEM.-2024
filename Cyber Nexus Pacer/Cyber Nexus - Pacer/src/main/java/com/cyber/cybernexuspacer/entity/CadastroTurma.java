@@ -1,5 +1,7 @@
 package com.cyber.cybernexuspacer.entity;
 
+import com.cyber.cybernexuspacer.dao.ConexaoDao;
+
 public class CadastroTurma {
     private Long id;
 
@@ -37,5 +39,10 @@ public class CadastroTurma {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static void main(String[] args) {
+        // Chama o método de teste de conexão
+        ConexaoDao.testConnection();
     }
 }
