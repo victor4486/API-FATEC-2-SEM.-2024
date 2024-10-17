@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Carregar o arquivo FXML corretamente
-        scene = new Scene(loadFXML("login-view"), 800, 600);
+        scene = new Scene(loadFXML("criterios-view"), 800, 600);
         stage.setScene(scene);
         stage.show();
     }
