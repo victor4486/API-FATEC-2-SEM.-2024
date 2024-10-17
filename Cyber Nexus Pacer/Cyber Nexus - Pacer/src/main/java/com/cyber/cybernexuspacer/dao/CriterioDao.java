@@ -10,22 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CriterioDao {
-    //CRUD Create
-    public List<Criterio> getAllCriterios() {
-        List<Criterio> criterios = new ArrayList<>();
-        String sql = "SELECT * FROM Criterio";
-        try (Connection conn = ConexaoDao.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Criterio criterio = new Criterio(rs.getInt("id"), rs.getString("nome"), rs.getString("descricao"));
-                criterios.add(criterio);
-            }
+
+    public void inserirCriterio(String nome, String descricao) {
+        String sql = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
+
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, nome);
+            stmt.setString(2, descricao);
+            stmt.executeUpdate();
+
+            System.out.println("Critério inserido com sucesso!");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return criterios;
     }
-
-    // Outras operações de CRUD (insert, update, delete)
 }
