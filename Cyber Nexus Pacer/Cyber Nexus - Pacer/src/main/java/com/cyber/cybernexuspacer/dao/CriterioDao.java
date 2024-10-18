@@ -28,18 +28,19 @@ public class CriterioDao {
 
         } catch (SQLException e) {
             e.printStackTrace(); // Captura corretamente a SQLException
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close(); // Fechando o PreparedStatement
+        }finally {
+                try {
+                    if (stmt != null) {
+                        stmt.close(); // Fechando o PreparedStatement
+                    }
+                    // Remova ou comente a linha abaixo para manter a conexão aberta
+                    // if (connection != null) {
+                    //     connection.close(); // Fechando a conexão
+                    // }
+                } catch (SQLException e) {
+                    e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
                 }
-                if (connection != null) {
-                    connection.close(); // Fechando a conexão se necessário
-                }
-            } catch (SQLException e) {
-                e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
             }
-        }
     }
 
 }
