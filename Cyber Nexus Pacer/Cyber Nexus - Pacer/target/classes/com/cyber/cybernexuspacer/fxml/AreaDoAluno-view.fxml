@@ -321,13 +321,13 @@
             </AnchorPane>
          </children>
       </Pane>
-      <Pane fx:id="areaAlunoTitulo" layoutX="256.0" layoutY="38.0" prefHeight="60.0" prefWidth="380.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 4;">
+      <Pane fx:id="areaAlunoTitulo" layoutX="225.0" layoutY="45.0" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 4;">
          <children>
-            <Text fill="WHITE" layoutX="122.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Área do Aluno">
+            <Label layoutX="91.0" layoutY="9.0" text="ÁREA DO ALUNO" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Arial Bold" size="20.0" />
                </font>
-            </Text>
+            </Label>
          </children>
       </Pane>
       <Button fx:id="btnSairNotas" layoutX="25.0" layoutY="546.0" mnemonicParsing="false" onAction="#onClickbtnSair" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="Sair" textAlignment="CENTER" textFill="WHITE">
@@ -343,11 +343,6 @@
       <ImageView fx:id="imgFatec" fitHeight="60.0" fitWidth="107.0" layoutX="668.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagens/fatec.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgFatec1" blendMode="MULTIPLY" fitHeight="51.0" fitWidth="82.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagens/logo%20Cyber%20Nexus.jpeg" />
          </image>
       </ImageView>
       <ImageView fx:id="imgFatec2" blendMode="MULTIPLY" fitHeight="60.0" fitWidth="150.0" layoutX="8.0" layoutY="1.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">

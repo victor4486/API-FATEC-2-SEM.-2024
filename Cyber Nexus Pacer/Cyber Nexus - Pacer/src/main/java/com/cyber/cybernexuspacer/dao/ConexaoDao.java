@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConexaoDao {
     private static final String url = "jdbc:mysql://localhost:3306/pacerapi";
     private static final String user = "root";
-    private static final String password = "tiago123";
+    private static final String password = "Tiago123!";
 
     private static Connection conn;
 
@@ -26,6 +26,15 @@ public class ConexaoDao {
             return null;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void testConnection() {
+        Connection connection = getConnection();
+        if (connection != null) {
+            System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
+        } else {
+            System.out.println("Falha na conexão com o banco de dados.");
         }
     }
 }

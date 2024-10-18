@@ -16,9 +16,9 @@
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="label_cadastrodeturma" alignment="CENTER" layoutX="198.0" layoutY="38.0" prefHeight="39.0" prefWidth="456.0" style="-fx-background-color: #86B6DD;" text="CADASTRO DE TURMA" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_cadastrodeturma" alignment="CENTER" layoutX="237.0" layoutY="40.0" prefHeight="39.0" prefWidth="378.0" style="-fx-background-color: #86B6DD;" text="CADASTRO DE TURMA" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Arial Black" size="30.0" />
+            <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
       <Button fx:id="button_sair" layoutX="25.0" layoutY="536.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="98.0" style="-fx-background-color: #86B6DD;" text="SAIR" textFill="WHITE">
