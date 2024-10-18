@@ -43,11 +43,7 @@
             </ImageView>
             <ScrollPane fx:id="scrollCriteriosCriados" layoutX="281.0" layoutY="234.0" prefHeight="259.0" prefWidth="470.0">
               <content>
-                <AnchorPane fx:id="campo_criterios" minHeight="0.0" minWidth="0.0" prefHeight="396.0" prefWidth="452.0">
-                     <children>
-                        <Pane fx:id="campoParaCriterio" layoutX="3.0" layoutY="5.0" prefHeight="51.0" prefWidth="445.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 4;" />
-                     </children>
-                  </AnchorPane>
+                <AnchorPane fx:id="campo_criterios" minHeight="0.0" minWidth="0.0" prefHeight="396.0" prefWidth="452.0" />
               </content>
             </ScrollPane>
                 <!-- Botão "Adicionar Sprint" -->
