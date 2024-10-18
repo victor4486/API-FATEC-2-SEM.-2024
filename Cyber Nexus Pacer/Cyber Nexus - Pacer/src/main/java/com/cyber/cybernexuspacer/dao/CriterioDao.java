@@ -13,18 +13,33 @@ public class CriterioDao {
 
     public void inserirCriterio(String nome, String descricao) {
         String sql = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
+        Connection connection = null;
+        PreparedStatement stmt = null;
 
-        try (Connection connection = ConexaoDao.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            connection = ConexaoDao.getConnection(); // Obtém a conexão
+            stmt = connection.prepareStatement(sql);
 
             stmt.setString(1, nome);
             stmt.setString(2, descricao);
-            stmt.executeUpdate();
+            stmt.executeUpdate(); // Executa a inserção
 
             System.out.println("Critério inserido com sucesso!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Captura corretamente a SQLException
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close(); // Fechando o PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Fechando a conexão se necessário
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
+            }
         }
     }
+
 }
