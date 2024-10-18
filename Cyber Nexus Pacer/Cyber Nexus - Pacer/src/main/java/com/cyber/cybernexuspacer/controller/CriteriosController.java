@@ -115,8 +115,10 @@ public class CriteriosController {
         descricaoCritério.clear();
     }
     @FXML
-    public void handleSair(ActionEvent actionEvent) {
+    public void handleSair(ActionEvent actionEvent) throws IOException {
+        Main.setRoot("TelaMenu-view");
     }
+
     @FXML
     void handleAcompSprint(ActionEvent event) throws IOException {
         Main.setRoot("acompanharSprints-view");
