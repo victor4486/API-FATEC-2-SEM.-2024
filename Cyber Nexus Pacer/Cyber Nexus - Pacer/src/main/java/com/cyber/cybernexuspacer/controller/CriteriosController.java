@@ -1,5 +1,6 @@
 package com.cyber.cybernexuspacer.controller;
 
+import com.cyber.cybernexuspacer.dao.CriterioDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,11 +67,17 @@ public class CriteriosController {
     private void handleAdicionarCriterio() {
         String titulo = tituloCritério.getText();
         String descricao = descricaoCritério.getText();
+        //caso campo vazio
         if (titulo.isEmpty() || descricao.isEmpty()) {
             System.out.println("Os campos de título e descrição não podem estar vazios.");
 
             return;
         }
+
+        //adicionar ao bd
+        CriterioDao criterioDao = new CriterioDao();
+        criterioDao.inserirCriterio(titulo, descricao);
+
         //criação do campo de exibição do critério
         Pane novoCriterio = new Pane();
         novoCriterio.setPrefSize(445, 50);
@@ -108,8 +115,10 @@ public class CriteriosController {
         descricaoCritério.clear();
     }
     @FXML
-    public void handleSair(ActionEvent actionEvent) {
+    public void handleSair(ActionEvent actionEvent) throws IOException {
+        Main.setRoot("TelaMenu-view");
     }
+
     @FXML
     void handleAcompSprint(ActionEvent event) throws IOException {
         Main.setRoot("acompanharSprints-view");
