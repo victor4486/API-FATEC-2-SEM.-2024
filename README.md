@@ -121,7 +121,7 @@ _______________________________________________________________________________
 ## <a name="DOCS"></a>  **DOCUMENTAÇÕES 📚** 
 _______________________________________________________________________________
 
- [**BURNDOWN**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
+ [**BURNDOWN**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png)
  
  [**MODELAGEM DE BANCO DE DADOS**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
  
