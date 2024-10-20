@@ -38,6 +38,8 @@ _______________________________________________________________________________
 ##  <a name=BURNDOWN></a> **BURNDOWN DA SPRINT**
 _______________________________________________________________________________
 
+![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png)
+
 
 ##  <a name=MODELAGEM></a> **MODELAGEM DO BANCO DE DADOS**
 _______________________________________________________________________________
