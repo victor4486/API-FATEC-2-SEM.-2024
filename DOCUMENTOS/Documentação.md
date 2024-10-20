@@ -42,6 +42,7 @@ _______________________________________________________________________________
 ##  <a name=MODELAGEM></a> **MODELAGEM DO BANCO DE DADOS**
 _______________________________________________________________________________
 
+![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/MODELAGEM%20DE%20BANCO%20DE%20DADOS%20SPRINT%202%20CYBERNEXUS.png)
 
 </body>
 </html>
