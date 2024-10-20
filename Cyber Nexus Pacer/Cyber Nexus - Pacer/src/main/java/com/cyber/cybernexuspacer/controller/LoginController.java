@@ -57,7 +57,7 @@ public class LoginController {
                 } else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");
                 } else if ("Professor".equals(tipoUsuario)) {
-                    Main.setRoot("AreaDoProfessor-view");
+                    Main.setRoot("TelaMenu-view");
                 }
             } else {
                 // Exibe a mensagem de erro se as credenciais estiverem incorretas
