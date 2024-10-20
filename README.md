@@ -91,8 +91,14 @@ _______________________________________________________________________________
 _______________________________________________________________________________
 
  [**BURNDOWN**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
+
+ ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png)
+ 
  
  [**MODELAGEM DE BANCO DE DADOS**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
+
+ ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/MODELAGEM%20DE%20BANCO%20DE%20DADOS%20SPRINT%202%20CYBERNEXUS.png)
+ 
  
  [**PROTÓTIPO DE TELAS**](https://www.figma.com/design/QGUqQzvNf3rkLnSx3C5mAM/PACER-V2?node-id=0-1&t=bUoGKdfa1E2TV2fU-1)
  
