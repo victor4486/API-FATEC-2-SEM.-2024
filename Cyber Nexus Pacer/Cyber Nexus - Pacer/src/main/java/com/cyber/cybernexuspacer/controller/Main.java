@@ -1,5 +1,6 @@
 package com.cyber.cybernexuspacer.controller;
 
+import com.cyber.cybernexuspacer.dao.ConexaoDao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        ConexaoDao.testConnection();
         // Carregar o arquivo FXML corretamente
         scene = new Scene(loadFXML("login-view"), 800, 600);
         stage.setScene(scene);

@@ -5,20 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDao {
-    private static final String url = "jdbc:mysql://localhost:3306/pacerapi";
-    private static final String user = "root";
-    private static final String password = "tiago123";
+    private static final String url = "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres"; // Substitua pelos seus dados do Supabase
+    private static final String user = "postgres.avytuuhwmswsbshvwipz"; // Substitua pelo usuário do Supabase
+    private static final String password = "CyberNexusFatec"; // Substitua pela senha do Supabase
 
     private static Connection conn;
 
     public static Connection getConnection() {
         try {
             if (conn == null) {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection(url,user,password);
+                Class.forName("org.postgresql.Driver"); // Atualizado para o driver PostgreSQL
+                conn = DriverManager.getConnection(url, user, password);
                 return conn;
-            }
-            else{
+            } else {
                 return conn;
             }
         } catch (SQLException e) {
