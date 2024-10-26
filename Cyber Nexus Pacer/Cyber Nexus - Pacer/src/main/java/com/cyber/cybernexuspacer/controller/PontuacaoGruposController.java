@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class PontuacaoGruposController {
 
     @FXML
@@ -145,8 +147,8 @@ public class PontuacaoGruposController {
     }
 
     @FXML
-    void onbtnsair(ActionEvent event) {
-
+    void onbtnsair(ActionEvent event) throws IOException {
+        Main.setRoot("TelaMenu-view");
     }
 
     @FXML

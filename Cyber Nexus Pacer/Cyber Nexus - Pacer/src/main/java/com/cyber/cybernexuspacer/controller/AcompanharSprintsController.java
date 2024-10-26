@@ -147,7 +147,7 @@ public class AcompanharSprintsController {
 
     @FXML
     protected void onbtnsair(ActionEvent event) throws IOException {
-        Main.setRoot("login-view");
+        Main.setRoot("TelaMenu-view");
     }
 
     @FXML

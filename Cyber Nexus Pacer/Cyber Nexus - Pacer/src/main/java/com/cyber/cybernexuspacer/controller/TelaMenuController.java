@@ -56,12 +56,12 @@ public class TelaMenuController {
     }
 
     @FXML
-    void onbtn_tela_gerenciar_alunos(ActionEvent event) {
-
+    void onbtn_tela_gerenciar_alunos(ActionEvent event) throws IOException {
+        Main.setRoot("acompanharSprints-view");
     }
 
     @FXML
-    void onbtn_tela_gerenciar_grupos(ActionEvent event) {
-
+    void onbtn_tela_gerenciar_grupos(ActionEvent event) throws IOException {
+        Main.setRoot("pontuacaoGrupos-view");
     }
 }
