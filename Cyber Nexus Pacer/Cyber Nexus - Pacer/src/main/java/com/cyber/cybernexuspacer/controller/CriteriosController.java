@@ -83,7 +83,13 @@ public class CriteriosController {
         //adicionar ao bd
         CriterioDao criterioDao = new CriterioDao();
         criterioDao.inserirCriterio(titulo, descricao);
+
+        //exibindo no historico
         exibirCriterio(titulo, descricao);
+
+        //limpando campos de entrada
+        tituloCriterio.clear();
+        descricaoCriterio.clear();
     }
 
     private void exibirCriterio(String titulo, String descricao) {
