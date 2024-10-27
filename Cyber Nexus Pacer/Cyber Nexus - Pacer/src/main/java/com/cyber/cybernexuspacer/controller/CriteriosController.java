@@ -65,6 +65,11 @@ public class CriteriosController {
     private TextField descricaoCriterio; // TextField para a descrição do critério
 
     @FXML
+    public void initialize() throws SQLException {
+        carregarCriterios();
+    }
+
+    @FXML
     private void handleAdicionarCriterio() {
         String titulo = tituloCriterio.getText();
         String descricao = descricaoCriterio.getText();
@@ -78,7 +83,7 @@ public class CriteriosController {
         //adicionar ao bd
         CriterioDao criterioDao = new CriterioDao();
         criterioDao.inserirCriterio(titulo, descricao);
-
+        exibirCriterio(titulo, descricao);
     }
 
     private void exibirCriterio(String titulo, String descricao) {
@@ -126,11 +131,6 @@ public class CriteriosController {
         }
     }
 
-    @FXML
-    public void initialize() throws SQLException {
-
-        carregarCriterios();
-    }
 
 
     @FXML
