@@ -63,9 +63,7 @@ public class    CriterioDao {
                 // Cria um novo objeto Criterio e adiciona à lista
                 Criterio criterio = new Criterio(titulo, descricao);
                 criterios.add(criterio);
-                for(Criterio c : criterios) {
-                    System.out.println(c.geetTitulo() + "  -  " + c.getDescricao());
-                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
