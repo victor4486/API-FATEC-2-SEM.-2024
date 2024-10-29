@@ -74,6 +74,40 @@ public class    CriterioDao {
 
         return criterios;  // Retorna a lista de critérios
     }
+    public void excluirCriterio(int id) {
+        String sql = "DELETE FROM criterio WHERE id = ?";
+        Connection connection = null;
+        PreparedStatement stmt = null;
+
+        try {
+            connection = ConexaoDao.getConnection(); // Obtém a conexão
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id); // Define o ID do critério a ser deletado
+
+            int rowsAffected = stmt.executeUpdate(); // Executa a exclusão
+            if (rowsAffected > 0) {
+                System.out.println("Critério deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum critério encontrado com o ID fornecido.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Captura corretamente a SQLException
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close(); // Fechando o PreparedStatement
+                }
+                // Remova ou comente a linha abaixo para manter a conexão aberta
+                // if (connection != null) {
+                //     connection.close(); // Fechando a conexão
+                // }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
+            }
+        }
+    }
+
 
 }
 

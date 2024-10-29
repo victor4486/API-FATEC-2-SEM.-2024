@@ -1,7 +1,6 @@
 package com.cyber.cybernexuspacer.controller;
 
 import com.cyber.cybernexuspacer.dao.CriterioDao;
-import com.cyber.cybernexuspacer.entity.Criterio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,8 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 
 public class CriteriosController {
 
@@ -49,9 +46,17 @@ public class CriteriosController {
     private VBox sprintVBox; // VBox que contém o botão Adicionar Sprint
 
     @FXML
-    private AnchorPane campo_criterios;// ScrollPane para exibir os critérios
+    private AnchorPane campo_criterios; // ScrollPane para exibir os critérios
 
     private int sprintCount = 0; // Contador para o número de sprints
+
+    @FXML
+    private TextField tituloCritério; // TextField para o título do critério
+
+    @FXML
+    private TextField descricaoCritério; // TextField para a descrição do critério
+
+    private int criterioIdCounter = 1; // Contador de ID fictício para os critérios (para fins de exemplo)
 
     @FXML
     private void handleAdicionarSprint() {
@@ -59,46 +64,26 @@ public class CriteriosController {
     }
 
     @FXML
-    private TextField tituloCriterio; // TextField para o título do critério
-
-    @FXML
-    private TextField descricaoCriterio; // TextField para a descrição do critério
-
-    @FXML
-    public void initialize() throws SQLException {
-        carregarCriterios();
-    }
-
-    @FXML
     private void handleAdicionarCriterio() {
-        String titulo = tituloCriterio.getText();
-        String descricao = descricaoCriterio.getText();
-        //caso campo vazio
+        String titulo = tituloCritério.getText();
+        String descricao = descricaoCritério.getText();
+
+        // Caso campo vazio
         if (titulo.isEmpty() || descricao.isEmpty()) {
             System.out.println("Os campos de título e descrição não podem estar vazios.");
-
             return;
         }
 
-        //adicionar ao bd
+        // Adicionar ao BD e obter um ID fictício para o critério
         CriterioDao criterioDao = new CriterioDao();
+        int criterioId = criterioIdCounter++; // Simulação de ID único (substitua pela lógica correta ao usar banco de dados)
         criterioDao.inserirCriterio(titulo, descricao);
 
-        //exibindo no historico
-        exibirCriterio(titulo, descricao);
-
-        //limpando campos de entrada
-        tituloCriterio.clear();
-        descricaoCriterio.clear();
-    }
-
-    private void exibirCriterio(String titulo, String descricao) {
         // Criação do campo de exibição do critério
         Pane novoCriterio = new Pane();
-        novoCriterio.setPrefSize(445, 70);
-        novoCriterio.setLayoutX(4);
-        novoCriterio.setLayoutY(10);
+        novoCriterio.setPrefSize(445, 50);
         novoCriterio.setStyle("-fx-background-color: #86B6DD; -fx-background-radius: 4;");
+        novoCriterio.setLayoutX(4);
 
         // Adicionando o título e a descrição no critério
         Label tituloLabel = new Label("Título:   " + titulo);
@@ -109,35 +94,44 @@ public class CriteriosController {
         Label descricaoLabel = new Label("Descrição: " + descricao);
         descricaoLabel.setLayoutX(10);
         descricaoLabel.setLayoutY(30);
-        descricaoLabel.setWrapText(true);  // Permite quebra de linha
-        descricaoLabel.setPrefWidth(400);  // Defina uma largura preferencial
         descricaoLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
 
-        novoCriterio.getChildren().addAll(tituloLabel, descricaoLabel);
+        // Botão de exclusão
+        Button btnExcluir = new Button("Excluir");
+        btnExcluir.setLayoutX(370);
+        btnExcluir.setLayoutY(10);
+        btnExcluir.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white;");
+        btnExcluir.setOnAction(event -> handleExcluirCriterio(novoCriterio, criterioId));
 
-        // Verifica quantos critérios já existem no campo_criterios
-        int numeroDeCriterios = campo_criterios.getChildren().size();
+        novoCriterio.getChildren().addAll(tituloLabel, descricaoLabel, btnExcluir);
 
         // Calcula a posição Y para o novo critério
-        double novaPosicaoY = numeroDeCriterios == 0 ? 0 : numeroDeCriterios * 78;
-
-        // Define a posição do novo critério
+        double novaPosicaoY = campo_criterios.getChildren().size() * 58;
         novoCriterio.setLayoutY(novaPosicaoY);
 
         // Adiciona o novo critério ao AnchorPane (campo_criterios)
         campo_criterios.getChildren().add(novoCriterio);
+
+        // Limpa os campos de texto para adicionar novos critérios
+        tituloCritério.clear();
+        descricaoCritério.clear();
     }
 
-    private void carregarCriterios() throws SQLException {
+    @FXML
+    private void handleExcluirCriterio(Pane criterioPane, int criterioId) {
+        // Remover do BD
         CriterioDao criterioDao = new CriterioDao();
-        List<Criterio> criterios = criterioDao.listarCriterios();
+        criterioDao.excluirCriterio(criterioId);
 
-        for (Criterio criterio : criterios) {
-            exibirCriterio(criterio.geetTitulo(), criterio.getDescricao());
+        // Remover da interface
+        campo_criterios.getChildren().remove(criterioPane);
+
+        // Reposiciona os critérios restantes
+        for (int i = 0; i < campo_criterios.getChildren().size(); i++) {
+            Pane pane = (Pane) campo_criterios.getChildren().get(i);
+            pane.setLayoutY(i * 58);
         }
     }
-
-
 
     @FXML
     public void handleSair(ActionEvent actionEvent) throws IOException {
