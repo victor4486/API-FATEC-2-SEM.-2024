@@ -238,7 +238,7 @@ public class CriteriosController {
     @FXML
     private void handleAdicionarSprint() {
         sprintCount++;
-
+        System.out.println(sprintCount);
         switch (sprintCount) {
             case 1:
                 PaneSprint1.setVisible(true);
@@ -251,7 +251,6 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
             case 2:
-                sprintCount--;
                 PaneSprint11.setVisible(true);
                 LblTxtSprint1.setVisible(true);
                 BtnDeleteSprint1.setVisible(true);
@@ -262,7 +261,6 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
             case 3:
-                sprintCount--;
                 PaneSprint111.setVisible(true);
                 LblTxtSprint11.setVisible(true);
                 BtnDeleteSprint11.setVisible(true);
@@ -273,7 +271,6 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
             case 4:
-                sprintCount--;
                 PaneSprint1111.setVisible(true);
                 LblTxtSprint111.setVisible(true);
                 BtnDeleteSprint111.setVisible(true);
@@ -284,7 +281,6 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
             case 5:
-                sprintCount--;
                 PaneSprint11111.setVisible(true);
                 LblTxtSprint1111.setVisible(true);
                 BtnDeleteSprint1111.setVisible(true);
@@ -295,7 +291,7 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
         }
-     }
+    }
 
     @FXML
     void handleDeleteSprint1(ActionEvent event) {
