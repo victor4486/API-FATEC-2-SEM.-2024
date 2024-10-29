@@ -62,4 +62,7 @@ public class CriterioDao {
         }
         return criterios;
     }
+
+    public void inserirCriterio(String titulo, String descricao) {
+    }
 }
