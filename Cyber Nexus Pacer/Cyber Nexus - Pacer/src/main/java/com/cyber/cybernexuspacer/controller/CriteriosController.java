@@ -262,7 +262,7 @@ public class CriteriosController {
                 System.out.println(sprintCount);
                 break;
             case 3:
-                sprintCount--;E
+                sprintCount--;
                 PaneSprint111.setVisible(true);
                 LblTxtSprint11.setVisible(true);
                 BtnDeleteSprint11.setVisible(true);
