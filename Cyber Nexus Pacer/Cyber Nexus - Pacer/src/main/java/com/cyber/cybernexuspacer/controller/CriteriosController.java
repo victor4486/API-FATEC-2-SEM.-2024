@@ -4,10 +4,7 @@ import com.cyber.cybernexuspacer.dao.CriterioDao;
 import com.cyber.cybernexuspacer.entity.Criterio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -19,7 +16,119 @@ import java.util.List;
 public class CriteriosController {
 
     @FXML
+    private Button BtnDeleteSprint;
+
+    @FXML
+    private Button BtnDeleteSprint1;
+
+    @FXML
+    private Button BtnDeleteSprint11;
+
+    @FXML
+    private Button BtnDeleteSprint111;
+
+    @FXML
+    private Button BtnDeleteSprint1111;
+
+    @FXML
+    private DatePicker DataPickerFIM;
+
+    @FXML
+    private DatePicker DataPickerFIM1;
+
+    @FXML
+    private DatePicker DataPickerFIM11;
+
+    @FXML
+    private DatePicker DataPickerFIM111;
+
+    @FXML
+    private DatePicker DataPickerFIM1111;
+
+    @FXML
+    private DatePicker DataPickerINICIO;
+
+    @FXML
+    private DatePicker DataPickerINICIO1;
+
+    @FXML
+    private DatePicker DataPickerINICIO11;
+
+    @FXML
+    private DatePicker DataPickerINICIO111;
+
+    @FXML
+    private DatePicker DataPickerINICIO1111;
+
+    @FXML
+    private Label LblTxtFIM;
+
+    @FXML
+    private Label LblTxtFIM1;
+
+    @FXML
+    private Label LblTxtFIM11;
+
+    @FXML
+    private Label LblTxtFIM111;
+
+    @FXML
+    private Label LblTxtFIM1111;
+
+    @FXML
+    private Label LblTxtINICIO;
+
+    @FXML
+    private Label LblTxtINICIO1;
+
+    @FXML
+    private Label LblTxtINICIO11;
+
+    @FXML
+    private Label LblTxtINICIO111;
+
+    @FXML
+    private Label LblTxtINICIO1111;
+
+    @FXML
+    private Label LblTxtSprint;
+
+    @FXML
+    private Label LblTxtSprint1;
+
+    @FXML
+    private Label LblTxtSprint11;
+
+    @FXML
+    private Label LblTxtSprint111;
+
+    @FXML
+    private Label LblTxtSprint1111;
+
+    @FXML
+    private Pane PaneSprint1;
+
+    @FXML
+    private Pane PaneSprint11;
+
+    @FXML
+    private Pane PaneSprint111;
+
+    @FXML
+    private Pane PaneSprint1111;
+
+    @FXML
+    private Pane PaneSprint11111;
+
+
+    // divisão de fxml
+
+
+    @FXML
     private Button adicionarSprintButton;
+
+    @FXML
+    private Button btnAcompSprint;
 
     @FXML
     private Button btnCriarCriterio;
@@ -28,41 +137,16 @@ public class CriteriosController {
     private Button btnSairCriterios;
 
     @FXML
-    private VBox sprintContainer; // VBox onde as Sprints serão adicionadas
+    private AnchorPane campo_criterios;
+
+    @FXML
+    private TextField descricaoCriterio;
 
     @FXML
     private ScrollPane scrollCriteriosCriados;
 
     @FXML
-    private Pane campoParaCriterio;
-
-    @FXML
-    private Pane campoParaCriterio1;
-
-    @FXML
-    private Pane campoParaCriterio11;
-
-    @FXML
-    private Pane campoParaCriterio12;
-
-    @FXML
-    private VBox sprintVBox; // VBox que contém o botão Adicionar Sprint
-
-    @FXML
-    private AnchorPane campo_criterios;// ScrollPane para exibir os critérios
-
-    private int sprintCount = 0; // Contador para o número de sprints
-
-    @FXML
-    private void handleAdicionarSprint() {
-        sprintCount++; // Incrementa o contador
-    }
-
-    @FXML
-    private TextField tituloCriterio; // TextField para o título do critério
-
-    @FXML
-    private TextField descricaoCriterio; // TextField para a descrição do critério
+    private TextField tituloCriterio;
 
     @FXML
     public void initialize() throws SQLException {
@@ -137,8 +221,6 @@ public class CriteriosController {
         }
     }
 
-
-
     @FXML
     public void handleSair(ActionEvent actionEvent) throws IOException {
         Main.setRoot("TelaMenu-view");
@@ -148,4 +230,137 @@ public class CriteriosController {
     void handleAcompSprint(ActionEvent event) throws IOException {
         Main.setRoot("acompanharSprints-view");
     }
+
+    // Victor
+
+    int sprintCount = 0;
+
+    @FXML
+    private void handleAdicionarSprint() {
+        sprintCount++;
+
+        switch (sprintCount) {
+            case 1:
+                PaneSprint1.setVisible(true);
+                LblTxtSprint.setVisible(true);
+                BtnDeleteSprint.setVisible(true);
+                DataPickerFIM.setVisible(true);
+                DataPickerINICIO.setVisible(true);
+                LblTxtFIM.setVisible(true);
+                LblTxtINICIO.setVisible(true);
+                System.out.println(sprintCount);
+                break;
+            case 2:
+                sprintCount--;
+                PaneSprint11.setVisible(true);
+                LblTxtSprint1.setVisible(true);
+                BtnDeleteSprint1.setVisible(true);
+                DataPickerFIM1.setVisible(true);
+                DataPickerINICIO1.setVisible(true);
+                LblTxtFIM1.setVisible(true);
+                LblTxtINICIO1.setVisible(true);
+                System.out.println(sprintCount);
+                break;
+            case 3:
+                sprintCount--;E
+                PaneSprint111.setVisible(true);
+                LblTxtSprint11.setVisible(true);
+                BtnDeleteSprint11.setVisible(true);
+                DataPickerFIM11.setVisible(true);
+                DataPickerINICIO11.setVisible(true);
+                LblTxtFIM11.setVisible(true);
+                LblTxtINICIO11.setVisible(true);
+                System.out.println(sprintCount);
+                break;
+            case 4:
+                sprintCount--;
+                PaneSprint1111.setVisible(true);
+                LblTxtSprint111.setVisible(true);
+                BtnDeleteSprint111.setVisible(true);
+                DataPickerFIM111.setVisible(true);
+                DataPickerINICIO111.setVisible(true);
+                LblTxtFIM111.setVisible(true);
+                LblTxtINICIO111.setVisible(true);
+                System.out.println(sprintCount);
+                break;
+            case 5:
+                sprintCount--;
+                PaneSprint11111.setVisible(true);
+                LblTxtSprint1111.setVisible(true);
+                BtnDeleteSprint1111.setVisible(true);
+                DataPickerFIM1111.setVisible(true);
+                DataPickerINICIO1111.setVisible(true);
+                LblTxtFIM1111.setVisible(true);
+                LblTxtINICIO1111.setVisible(true);
+                System.out.println(sprintCount);
+                break;
+        }
+     }
+
+    @FXML
+    void handleDeleteSprint1(ActionEvent event) {
+        sprintCount--;
+        PaneSprint1.setVisible(false);
+        LblTxtSprint.setVisible(false);
+        BtnDeleteSprint.setVisible(false);
+        DataPickerFIM.setVisible(false);
+        DataPickerINICIO.setVisible(false);
+        LblTxtFIM.setVisible(false);
+        LblTxtINICIO.setVisible(false);
+        System.out.println(sprintCount);
+    }
+
+    @FXML
+    void handleDeleteSprint2(ActionEvent event) {
+        sprintCount--;
+        PaneSprint11.setVisible(false);
+        LblTxtSprint1.setVisible(false);
+        BtnDeleteSprint1.setVisible(false);
+        DataPickerFIM1.setVisible(false);
+        DataPickerINICIO1.setVisible(false);
+        LblTxtFIM1.setVisible(false);
+        LblTxtINICIO1.setVisible(false);
+        System.out.println(sprintCount);
+    }
+
+    @FXML
+    void handleDeleteSprint3(ActionEvent event) {
+        sprintCount--;
+        PaneSprint111.setVisible(false);
+        LblTxtSprint11.setVisible(false);
+        BtnDeleteSprint11.setVisible(false);
+        DataPickerFIM11.setVisible(false);
+        DataPickerINICIO11.setVisible(false);
+        LblTxtFIM11.setVisible(false);
+        LblTxtINICIO11.setVisible(false);
+        System.out.println(sprintCount);
+    }
+
+    @FXML
+    void handleDeleteSprint4(ActionEvent event) {
+        sprintCount--;
+        PaneSprint1111.setVisible(false);
+        LblTxtSprint111.setVisible(false);
+        BtnDeleteSprint111.setVisible(false);
+        DataPickerFIM111.setVisible(false);
+        DataPickerINICIO111.setVisible(false);
+        LblTxtFIM111.setVisible(false);
+        LblTxtINICIO111.setVisible(false);
+        System.out.println(sprintCount);
+    }
+
+    @FXML
+    void handleDeleteSprint5(ActionEvent event) {
+        sprintCount--;
+        PaneSprint11111.setVisible(false);
+        LblTxtSprint1111.setVisible(false);
+        BtnDeleteSprint1111.setVisible(false);
+        DataPickerFIM1111.setVisible(false);
+        DataPickerINICIO1111.setVisible(false);
+        LblTxtFIM1111.setVisible(false);
+        LblTxtINICIO1111.setVisible(false);
+        System.out.println(sprintCount);
+    }
+
 }
+
