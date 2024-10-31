@@ -3,6 +3,7 @@ package com.cyber.cybernexuspacer.controller;
 import com.cyber.cybernexuspacer.dao.LoginDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -55,7 +56,16 @@ public class LoginController {
                 if ("Aluno".equals(tipoUsuario)) {
                     // verifica se a senha e aluno para identificar primeiro login e redefinir a senha
                     if ("aluno".equals(senha)) {
-                        Main.setRoot("recuperacaoSenha-view");
+                        // Carregar a tela de recuperação de senha e passar o nome do usuário
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("recuperacaoSenha-view.fxml"));
+                        AnchorPane root = loader.load();
+
+                        // Obter o controller da tela de recuperação e passar o nome do usuário
+                        RecuperarSenhaController recuperarSenhaController = loader.getController();
+                        recuperarSenhaController.setNomeUsuario(nome);
+
+                        // Mostrar a nova tela
+                        painelPrincipal.getChildren().setAll(root);
                     } else {
                         Main.setRoot("AreaDoAluno-view");
                     }

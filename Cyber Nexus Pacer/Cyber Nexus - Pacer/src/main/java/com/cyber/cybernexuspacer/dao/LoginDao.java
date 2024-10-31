@@ -30,4 +30,25 @@ public class LoginDao {
             if (stmt != null) stmt.close();
         }
     }
+
+    public boolean atualizarSenha(String nome, String novaSenha) throws SQLException {
+        String sql = "UPDATE USUARIO SET SENHA = ? WHERE NOME = ?";
+        PreparedStatement stmt = null;
+
+        try {
+            Connection connection = ConexaoDao.getConnection();
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, novaSenha);
+            stmt.setString(2, nome);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;  // Retorna verdadeiro se a atualização foi bem-sucedida
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (stmt != null) stmt.close();
+        }
+    }
+
 }
