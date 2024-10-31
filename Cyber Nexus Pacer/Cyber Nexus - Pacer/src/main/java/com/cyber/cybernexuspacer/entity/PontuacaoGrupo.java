@@ -12,6 +12,7 @@ public class PontuacaoGrupo {
         this.integrantes = integrantes;
         this.nota = nota;
     }
+
     public int getId() {
         return id;
     }

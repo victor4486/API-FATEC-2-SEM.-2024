@@ -203,7 +203,7 @@ public class CriteriosController {
         int numeroDeCriterios = campo_criterios.getChildren().size();
 
         // Calcula a posição Y para o novo critério
-        double novaPosicaoY = numeroDeCriterios == 0 ? 0 : numeroDeCriterios * 78;
+        double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 78;
 
         // Define a posição do novo critério
         novoCriterio.setLayoutY(novaPosicaoY);
@@ -231,7 +231,6 @@ public class CriteriosController {
         Main.setRoot("acompanharSprints-view");
     }
 
-    // Victor
 
     int sprintCount = 0;
 

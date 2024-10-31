@@ -22,4 +22,5 @@ public class Aluno {
     public String getSenha() { return senha; }
     public String getTipo_usuario() { return tipo_usuario; }
 
+
 }

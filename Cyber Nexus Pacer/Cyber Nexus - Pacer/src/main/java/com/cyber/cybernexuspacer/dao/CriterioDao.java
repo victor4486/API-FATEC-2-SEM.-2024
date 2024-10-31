@@ -35,7 +35,7 @@ public class    CriterioDao {
                 }
                 // Remova ou comente a linha abaixo para manter a conexão aberta
                  //if (connection != null) {
-                     //connection.close(); // Fechando a conexão
+                 //    connection.close(); // Fechando a conexão
                  //}
             } catch (SQLException e) {
                 e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos

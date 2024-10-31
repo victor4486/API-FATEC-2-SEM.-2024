@@ -232,8 +232,6 @@ public class AreaDoAlunoController {
         Label lblNotaDois = criaLabel(415,33,"2");
         Label lblNotaTres = criaLabel(445,33,"3");
 
-
-
         paneCriterio.getChildren().addAll(
                 tituloLabel, descricaoLabel,
                 checkboxZero,checkboxUm,checkboxDois,checkboxTres,

@@ -177,8 +177,6 @@ public class PontuacaoGruposController {
         Label nomeEquipe = criaLabel(7,7,"Nome: " + grupo, "-fx-text-fill: black; -fx-font-size: 14px; -fx-font-family: 'Arial';"  );
         Label integrantesEquipe = criaLabel(7,34,"Integrantes da Equipe: " + String.valueOf(integrantes), "-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
         Label labelNotas = criaLabel(482,10,"Notas da Sprint", "-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
-        //Label lblNotasSprint = criaLabel(509,30,String.valueOf(nota), "-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
-
 
 
         lblNotasSprint = new TextField(String.valueOf(nota));
