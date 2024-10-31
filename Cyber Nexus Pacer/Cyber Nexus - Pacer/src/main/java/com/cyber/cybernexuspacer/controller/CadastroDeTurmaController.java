@@ -3,6 +3,7 @@ package com.cyber.cybernexuspacer.controller;
 import com.cyber.cybernexuspacer.dao.CadastroTurmaDao;
 import com.cyber.cybernexuspacer.dao.ConexaoDao;
 import com.cyber.cybernexuspacer.entity.Aluno;
+import com.cyber.cybernexuspacer.entity.CadastroTurma;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,6 +69,7 @@ public class CadastroDeTurmaController {
                 // Verifica se o aluno já existe
                 if (!CadastroTurmaDao.alunoExists(aluno)) {
                     CadastroTurmaDao.CadastrarAlunos(aluno);
+
                 } else {
                     // Opcional: informe o usuário sobre a duplicata
                     System.out.println("Aluno já existe: " + aluno.getAluno());
@@ -83,6 +85,8 @@ public class CadastroDeTurmaController {
         } finally {
             // Restaura o modo de auto-commit
             ConexaoDao.getConnection().setAutoCommit(true);
+            ConexaoDao.getConnection().close();
+
         }
     }
 
@@ -124,7 +128,7 @@ public class CadastroDeTurmaController {
                         String aluno = dados[0];
                         String email = dados[1];
                         String grupo = dados[2];
-                        Aluno pessoa = new Aluno(aluno, email, grupo);
+                        Aluno pessoa = new Aluno(aluno, email, grupo, "fatec2024", "Aluno");
                         listaAluno.add(pessoa);
                     }
                 }
