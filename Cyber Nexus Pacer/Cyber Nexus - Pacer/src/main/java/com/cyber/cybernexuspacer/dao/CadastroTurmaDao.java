@@ -11,6 +11,7 @@ public class CadastroTurmaDao {
 
     public static void CadastrarAlunos(Aluno aluno) throws SQLException {
         //String sql = "INSERT INTO ALUNOS (NOME, EMAIL, GRUPO) VALUES(?,?,?); ";
+
         String sqlUsuario = "INSERT INTO USUARIO (EMAIL, SENHA, TIPO_USUARIO) VALUES(?,?,?) ";
         String sqlGrupo = "INSERT IGNORE INTO GRUPOS (GRUPO,SPRINT,NOTA) VALUES(?,0.00,0.00) "; // Use "ON CONFLICT (EMAIL) DO NOTHING" se estiver usando PostgreSQL
         String sqlAluno = "INSERT INTO ALUNOS (NOME,EMAIL, ID_GRUPO) VALUES(?, ?, (SELECT ID FROM GRUPOS WHERE GRUPO = ?))";
@@ -48,7 +49,6 @@ public class CadastroTurmaDao {
 
 
             connection.commit(); // Confirmar a transação
-
 
             //stmt = ConexaoDao.getConnection().prepareStatement(sql);
             //stmt.setString(1, Aluno.getAluno());
