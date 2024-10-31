@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         //ConexaoDao.testConnection();
         // Carregar o arquivo FXML corretamente
-        scene = new Scene(loadFXML("AreaDoAluno-view"), 800, 600);
+        scene = new Scene(loadFXML("login-view"), 800, 600);
         stage.setScene(scene);
         stage.show();
     }
