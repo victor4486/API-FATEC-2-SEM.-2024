@@ -41,7 +41,7 @@ public class CadastroTurma {
     public void setTipo_usuario(String tipo_usuario) { this.tipo_usuario = tipo_usuario; }
 
     public static void main(String[] args) {
-        // Chama o método de teste de conexão
+        // Chama o metodo de teste de conexão
         ConexaoDao.testConnection();
     }
 }

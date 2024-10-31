@@ -23,8 +23,6 @@ public class PontuacaoGruposDao {
         try {
 
             stmt = ConexaoDao.getConnection().prepareStatement(sql);
-
-
             rs = stmt.executeQuery();
 
             // Itera sobre o ResultSet para preencher a lista de critérios
