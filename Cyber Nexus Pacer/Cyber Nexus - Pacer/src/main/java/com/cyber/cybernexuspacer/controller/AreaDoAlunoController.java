@@ -245,7 +245,7 @@ public class AreaDoAlunoController {
         int numeroDeCriterios = campo_criterios.getChildren().size();
 
         // Calcula a posição Y para o novo critério
-        double novaPosicaoY = numeroDeCriterios == 0 ? 0 : numeroDeCriterios * 85;
+        double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 85;
 
         // Define a posição do novo critério
         paneCriterio.setLayoutY(novaPosicaoY);
