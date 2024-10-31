@@ -53,7 +53,12 @@ public class LoginController {
                 System.out.println(tipoUsuario);
                 // Se estiverem corretos, muda a tela
                 if ("Aluno".equals(tipoUsuario)) {
-                    Main.setRoot("AreaDoAluno-view");
+                    // verifica se a senha e aluno para identificar primeiro login e redefinir a senha
+                    if ("aluno".equals(senha)) {
+                        Main.setRoot("recuperacaoSenha-view");
+                    } else {
+                        Main.setRoot("AreaDoAluno-view");
+                    }
                 } else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");
                 } else if ("Professor".equals(tipoUsuario)) {
