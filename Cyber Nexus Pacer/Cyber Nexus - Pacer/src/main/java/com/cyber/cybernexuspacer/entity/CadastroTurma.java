@@ -4,28 +4,26 @@ import com.cyber.cybernexuspacer.dao.ConexaoDao;
 
 public class CadastroTurma {
     private Long id;
-
     private String nome;
-
     private String senha;
-
     private String email;
+    private String tipo_usuario;
+
+
 
     public Long getId() {
         return id;
     }
-
     public String getNome() {
         return nome;
     }
-
     public String getSenha() {
         return senha;
     }
-
     public String getEmail() {
         return email;
     }
+    public String getTipo_usuario() { return tipo_usuario; }
 
 
     public void setId(Long id) {
@@ -40,6 +38,7 @@ public class CadastroTurma {
     public void setEmail(String email) {
         this.email = email;
     }
+    public void setTipo_usuario(String tipo_usuario) { this.tipo_usuario = tipo_usuario; }
 
     public static void main(String[] args) {
         // Chama o método de teste de conexão
