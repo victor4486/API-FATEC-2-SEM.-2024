@@ -3,12 +3,16 @@ package com.cyber.cybernexuspacer.controller;
 import com.cyber.cybernexuspacer.dao.LoginDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,6 +23,7 @@ public class RecuperarSenhaController {
 
     @FXML
     private Button btnClickEnviar;
+
 
     @FXML
     private ImageView imgFatec;
@@ -58,7 +63,8 @@ public class RecuperarSenhaController {
     }
 
     @FXML
-    public void onClickEnviar() throws SQLException {
+    private Button btnEnviar;
+    public void onClickEnviar() throws SQLException, IOException {
 
         String novaSenha = fieldNovaSenha.getText();
         String repetirSenha = fieldRepetirSenha.getText();
@@ -70,6 +76,7 @@ public class RecuperarSenhaController {
                 boolean sucesso = loginDao.atualizarSenha(nomeUsuario, novaSenha);
                 if (sucesso) {
                     System.out.println("Senha atualizada com sucesso!");
+                    Main.setRoot("login-view");
                 } else {
                     System.out.println("Erro ao atualizar senha!");
                 }
@@ -79,14 +86,6 @@ public class RecuperarSenhaController {
             }
         } else {
             System.out.println("As senhas não coincidem!");
-        }
-
-        boolean sucesso = loginDao.atualizarSenha(nomeUsuario, novaSenha);
-
-        if (sucesso) {
-            System.out.println("Senha atualizada com sucesso!");
-        } else {
-            System.out.println("Erro ao atualizar a senha.");
         }
     }
 
