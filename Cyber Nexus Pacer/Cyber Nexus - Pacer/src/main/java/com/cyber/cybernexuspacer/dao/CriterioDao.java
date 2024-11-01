@@ -11,7 +11,7 @@ import java.util.List;
 
 public class    CriterioDao {
 
-    public void inserirCriterio(String nome, String descricao) {
+    public void inserirCriterio(Criterio criterio) {
         String sql = "INSERT INTO CRITERIO (TITULO, DESCRICAO) VALUES (?, ?)";
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -20,8 +20,8 @@ public class    CriterioDao {
             connection = ConexaoDao.getConnection(); // Obtém a conexão
             stmt = connection.prepareStatement(sql);
 
-            stmt.setString(1, nome);
-            stmt.setString(2, descricao);
+            stmt.setString(1, criterio.getTitulo());
+            stmt.setString(2, criterio.getDescricao());
             stmt.executeUpdate(); // Executa a inserção
 
             System.out.println("Critério inserido com sucesso!");

@@ -188,16 +188,12 @@ public class PontuacaoGruposController {
         // Armazena o TextField associado ao ID do grupo
         notasMap.put(id,lblNotasSprint);
 
-
-
         Rectangle retangNotaSprint = new Rectangle();
         retangNotaSprint.setWidth(44);
         retangNotaSprint.setHeight(23);
         retangNotaSprint.setLayoutX(501);
         retangNotaSprint.setLayoutY(27);
         retangNotaSprint.setFill(Color.web("#d4ffe6"));
-
-
 
         paneCriterio.getChildren().addAll(
                 nomeEquipe, integrantesEquipe,

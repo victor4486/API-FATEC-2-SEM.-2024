@@ -12,7 +12,7 @@ public class Criterio {
     }
 
     public int getId() { return id; }
-    public String geetTitulo() { return titulo; }
+    public String getTitulo() { return titulo; }
     public String getDescricao() { return descricao; }
 
     public void setId(int id) { this.id = id; }

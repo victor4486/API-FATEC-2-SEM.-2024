@@ -257,7 +257,7 @@ public class AreaDoAlunoController {
         List<Criterio> criterios = criterioDao.listarCriterios();
 
         for (Criterio criterio : criterios) {
-            exibirCriterio(criterio.geetTitulo(), criterio.getDescricao());
+            exibirCriterio(criterio.getTitulo(), criterio.getDescricao());
         }
     }
 
