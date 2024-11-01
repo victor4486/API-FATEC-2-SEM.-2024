@@ -232,8 +232,6 @@ public class AreaDoAlunoController {
         Label lblNotaDois = criaLabel(415,33,"2");
         Label lblNotaTres = criaLabel(445,33,"3");
 
-
-
         paneCriterio.getChildren().addAll(
                 tituloLabel, descricaoLabel,
                 checkboxZero,checkboxUm,checkboxDois,checkboxTres,
@@ -245,7 +243,7 @@ public class AreaDoAlunoController {
         int numeroDeCriterios = campo_criterios.getChildren().size();
 
         // Calcula a posição Y para o novo critério
-        double novaPosicaoY = numeroDeCriterios == 0 ? 0 : numeroDeCriterios * 85;
+        double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 85;
 
         // Define a posição do novo critério
         paneCriterio.setLayoutY(novaPosicaoY);
