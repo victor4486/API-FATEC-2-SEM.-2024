@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -49,120 +48,7 @@
                 </Button>
             <ScrollPane layoutX="10.0" layoutY="176.0" prefHeight="299.0" prefWidth="251.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="672.0" prefWidth="232.0">
-                     <children>
-                        <Pane fx:id="PaneSprint1" layoutX="6.0" layoutY="7.0" prefHeight="120.0" prefWidth="220.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 5;" visible="false">
-                           <children>
-                              <Button fx:id="BtnDeleteSprint" layoutX="160.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteSprint1" prefHeight="3.0" prefWidth="0.0" text="X" />
-                              <Label fx:id="LblTxtSprint" layoutX="25.0" layoutY="13.0" text="Sprint 1" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtINICIO" layoutX="65.0" layoutY="50.0" text="INICIO" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtFIM" layoutX="77.0" layoutY="83.0" text="FIM" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="DataPickerINICIO" layoutX="114.0" layoutY="48.0" prefHeight="25.0" prefWidth="92.0" />
-                              <DatePicker fx:id="DataPickerFIM" layoutX="114.0" layoutY="81.0" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="PaneSprint11" layoutX="6.0" layoutY="138.0" prefHeight="120.0" prefWidth="220.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 5;" visible="false">
-                           <children>
-                              <Button fx:id="BtnDeleteSprint1" layoutX="160.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteSprint2" prefHeight="3.0" prefWidth="0.0" text="X" />
-                              <Label fx:id="LblTxtSprint1" layoutX="25.0" layoutY="13.0" text="Sprint 2" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtINICIO1" layoutX="65.0" layoutY="50.0" text="INICIO" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtFIM1" layoutX="77.0" layoutY="83.0" text="FIM" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="DataPickerINICIO1" layoutX="114.0" layoutY="48.0" prefHeight="25.0" prefWidth="92.0" />
-                              <DatePicker fx:id="DataPickerFIM1" layoutX="114.0" layoutY="81.0" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="PaneSprint111" layoutX="6.0" layoutY="266.0" prefHeight="120.0" prefWidth="220.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 5;" visible="false">
-                           <children>
-                              <Button fx:id="BtnDeleteSprint11" layoutX="160.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteSprint3" prefHeight="3.0" prefWidth="0.0" text="X" />
-                              <Label fx:id="LblTxtSprint11" layoutX="25.0" layoutY="13.0" text="Sprint 3" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtINICIO11" layoutX="65.0" layoutY="50.0" text="INICIO" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtFIM11" layoutX="77.0" layoutY="83.0" text="FIM" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="DataPickerINICIO11" layoutX="114.0" layoutY="48.0" prefHeight="25.0" prefWidth="92.0" />
-                              <DatePicker fx:id="DataPickerFIM11" layoutX="114.0" layoutY="81.0" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="PaneSprint1111" layoutX="8.0" layoutY="393.0" prefHeight="120.0" prefWidth="220.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 5;" visible="false">
-                           <children>
-                              <Button fx:id="BtnDeleteSprint111" layoutX="160.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteSprint4" prefHeight="3.0" prefWidth="0.0" text="X" />
-                              <Label fx:id="LblTxtSprint111" layoutX="25.0" layoutY="13.0" text="Sprint 4" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtINICIO111" layoutX="65.0" layoutY="50.0" text="INICIO" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtFIM111" layoutX="77.0" layoutY="83.0" text="FIM" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="DataPickerINICIO111" layoutX="114.0" layoutY="48.0" prefHeight="25.0" prefWidth="92.0" />
-                              <DatePicker fx:id="DataPickerFIM111" layoutX="114.0" layoutY="81.0" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="PaneSprint11111" layoutX="8.0" layoutY="515.0" prefHeight="120.0" prefWidth="220.0" style="-fx-background-color: #86B6DD; -fx-background-radius: 5;" visible="false">
-                           <children>
-                              <Button fx:id="BtnDeleteSprint1111" layoutX="160.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeleteSprint5" prefHeight="3.0" prefWidth="0.0" text="X" />
-                              <Label fx:id="LblTxtSprint1111" layoutX="25.0" layoutY="13.0" text="Sprint 5" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtINICIO1111" layoutX="65.0" layoutY="50.0" text="INICIO" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="LblTxtFIM1111" layoutX="77.0" layoutY="83.0" text="FIM" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="DataPickerINICIO1111" layoutX="114.0" layoutY="48.0" prefHeight="25.0" prefWidth="92.0" />
-                              <DatePicker fx:id="DataPickerFIM1111" layoutX="114.0" layoutY="81.0" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
+                <AnchorPane fx:id="campo_sprints" minHeight="0.0" minWidth="0.0" prefHeight="672.0" prefWidth="232.0" />
               </content>
             </ScrollPane>
             </children>
@@ -183,7 +69,7 @@
 
 
         <!-- Botões de Ação -->
-        <Button layoutX="673.0" layoutY="553.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="125.0" style="-fx-background-color: #369C06;" text="Confirmar" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="50.0">
+        <Button fx:id="btnConfirmar" layoutX="673.0" layoutY="553.0" mnemonicParsing="false" onAction="#onClickConfirmar" prefHeight="32.0" prefWidth="125.0" style="-fx-background-color: #369C06;" text="Confirmar" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="50.0">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font></Button>
