@@ -122,7 +122,7 @@ public class CadastroDeTurmaController {
                 // Lê o arquivo linha por linha e adiciona cada pessoa na lista
                 while (scanner.hasNextLine()) {
                     String linha = scanner.nextLine();
-                    String[] dados = linha.split(";");
+                    String[] dados = linha.split(",");
 
                     if (dados.length >= 3) {
                         String aluno = dados[0];

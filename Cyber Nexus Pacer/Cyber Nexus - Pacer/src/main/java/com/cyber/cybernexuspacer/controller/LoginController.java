@@ -3,12 +3,16 @@ package com.cyber.cybernexuspacer.controller;
 import com.cyber.cybernexuspacer.dao.LoginDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,7 +56,9 @@ public class LoginController {
             if (loginDao.verificarLogin(nome, senha, tipoUsuario)) {
                 System.out.println(tipoUsuario);
                 // Se estiverem corretos, muda a tela
-                if ("Aluno".equals(tipoUsuario)) {
+                if ("Aluno".equals(tipoUsuario) && "aluno".equals(senha)) {
+                    redirecionarParaRecuperacaoSenha(nome);
+                } else if ("Aluno".equals(tipoUsuario)) {
                     Main.setRoot("AreaDoAluno-view");
                 } else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");
@@ -66,6 +72,20 @@ public class LoginController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void redirecionarParaRecuperacaoSenha(String nomeUsuario) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/cyber/cybernexuspacer/fxml/recuperacaoSenha-view.fxml"));
+        Parent root = loader.load();
+
+        // Obtém o controller da tela de recuperação de senha e define o nome do usuário
+        RecuperarSenhaController recuperarSenhaController = loader.getController();
+        recuperarSenhaController.setNomeUsuario(nomeUsuario);
+
+        // Configura a nova cena
+        Stage stage = (Stage) btnEntrar.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private String verificarTipoUsuario(String nome) {
