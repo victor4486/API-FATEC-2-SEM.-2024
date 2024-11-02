@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CriteriosController {
 
@@ -139,7 +140,8 @@ public class CriteriosController {
         DatePicker dataInicioPicker = new DatePicker();
         DatePicker dataFimPicker = new DatePicker();
 
-        Sprint novoSprint = new Sprint("Sprint " + sprintCount, null, null);
+        // Inicializando o novo Sprint com um ID temporário (pode ser 0)
+        Sprint novoSprint = new Sprint(0,"Sprint " + sprintCount, null, null);
 
         // Adiciona o novo sprint à lista
         sprints.add(novoSprint);
@@ -157,6 +159,13 @@ public class CriteriosController {
                 novoSprint.setDataFim(Date.valueOf(dataFimPicker.getValue())); // Converta para java.sql.Date
             }
         });
+
+        for (Sprint sprint : sprints) {
+            System.out.println("ID: " + sprint.getId());
+            System.out.println("num sprint: " + sprint.getNumSprint());
+            System.out.println("data inicio: " + sprint.getDataInicio());
+            System.out.println("data fim: " + sprint.getDataFim());
+        }
 
     }
 
@@ -181,12 +190,28 @@ public class CriteriosController {
         Button btnDeleteSprint = new Button("X");
         btnDeleteSprint.setLayoutX(160);
         btnDeleteSprint.setLayoutY(14);
-
         btnDeleteSprint.setOnAction(e -> {
-            try {
-                handleDeleteSprint(sprints.size() - 1);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            // Mensagem de confirmação
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmação de Deleção");
+            alert.setHeaderText("Você realmente deseja excluir esta Sprint?");
+            alert.setContentText("Esta ação não pode ser desfeita.");
+
+            // Adiciona os botões de confirmação
+            ButtonType buttonTypeYes = new ButtonType("Sim");
+            ButtonType buttonTypeNo = new ButtonType("Não");
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+            // Exibe o diálogo e aguarda a resposta
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == buttonTypeYes) {
+                sprint.setMarkedForDeletion(); // Marca para deleção
+
+                try {
+                    handleDeleteSprint(sprint.getId());
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -211,16 +236,13 @@ public class CriteriosController {
     }
 
 
-    private void handleDeleteSprint(int index) throws SQLException {
-        if (index < 0 || index >= sprints.size()) return;
-
-        sprints.remove(index);
-        carregarSprints();
-    }
 
     private void carregarSprints() throws SQLException {
         SprintDao sprintDao = new SprintDao();
         List<Sprint> sprintsBd = sprintDao.listarSprints();
+
+        // Limpa o painel onde as Sprints são exibidas
+        campo_sprints.getChildren().clear();
 
         for (Sprint sprint : sprintsBd) {
             DatePicker dataInicioPicker = new DatePicker();
@@ -246,18 +268,16 @@ public class CriteriosController {
         SprintDao sprintDao = new SprintDao();
 
         for (Sprint sprint : sprints) {
-
             if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
                 exibirMensagem("Datas não podem ser vazias para a Sprint: " + sprint.getNumSprint());
-                return; // Saia do método se houver datas vazias
+                return; // Saia do metodo se houver datas vazias
             }
 
-            sprintDao.salvarSprint(sprint);
+
+            // Salve a sprint e obtenha o ID
+            int id = sprintDao.salvarSprint(sprint); // Modifique salvarSprint para retornar o ID gerado
+            sprint.setId(id); // Atualize o objeto Sprint com o ID gerado
         }
-
-
-        //sprints.clear(); // Limpa a lista após salvar, se necessário
-        carregarSprints(); // Atualiza a interface se necessário
 
         //adicionar crierios
         CriterioDao criterioDao = new CriterioDao();
@@ -265,15 +285,27 @@ public class CriteriosController {
             criterioDao.inserirCriterio(criterio);
         }
 
+        carregarSprints(); // Atualiza a interface se necessário
         exibirMensagem("Informações salvas com sucesso!");
     }
 
+
     //*** DELETAR OS DADOS ****//
 
-    @FXML
-    void handleDeleteSprint(ActionEvent event) {
+
+    private void handleDeleteSprint(int index) throws SQLException {
         SprintDao sprintDao = new SprintDao();
 
+        // Itera sobre as sprints e remove as marcadas para deleção
+        for (int i = sprints.size() - 1; i >= 0; i--) {
+            Sprint sprint = sprints.get(i);
+            if (sprint.isMarkedForDeletion()) {
+                sprints.remove(i); // Remove da lista
+            }
+        }
+
+        sprintDao.deletarSprint(index); // Exclui do banco de dados
+        carregarSprints(); // Atualiza a interface após deleção
     }
 
 
