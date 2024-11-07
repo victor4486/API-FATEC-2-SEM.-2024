@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,6 +25,12 @@ import java.util.Map;
 public class AreaDoAlunoController {
     @FXML
     private Label welcomeText;
+
+    @FXML
+    private Label lblNomeGrupo;
+
+    @FXML
+    private Text lblNotaGrupo;
 
     @FXML
     private Pane alunoSprintsBox;
@@ -81,6 +88,7 @@ public class AreaDoAlunoController {
         carregarCriterios();
         carregarAlunos();
         carregarSprints();
+        exibirNota();
     }
 
     private void carregarSprints() throws SQLException {
@@ -132,6 +140,26 @@ public class AreaDoAlunoController {
                 // Agora você pode salvar o idAluno em uma variável ou usá-lo para outras operações
             }
         });
+    }
+
+    public void exibirNota() {
+        try {
+            AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
+            double nota = areaDoAlunoDao.buscaNota();
+            List<AreaDoAluno> alunos = areaDoAlunoDao.listarAlunos();
+
+
+            // Armazenar o ID de cada aluno no map
+            for (AreaDoAluno aluno : alunos) {
+                lblNomeGrupo.setText(aluno.getGrupo());
+            }
+            // Define o texto da Label com o valor da nota
+            lblNotaGrupo.setText(String.format("%.2f", nota)); // Formata para 2 casas decimais
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

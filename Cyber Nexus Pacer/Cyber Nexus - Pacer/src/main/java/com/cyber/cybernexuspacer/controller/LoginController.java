@@ -59,17 +59,22 @@ public class LoginController {
                 // Se estiverem corretos, muda a tela
                 if ("Aluno".equals(tipoUsuario) && "aluno".equals(senha)) {
                     redirecionarParaRecuperacaoSenha(nome);
-                } else if ("Aluno".equals(tipoUsuario)) {
+                }
+                else if ("Aluno".equals(tipoUsuario)) {
                     System.out.println("email: " + nome);
+
                     // Aqui, após a validação, busca os detalhes do aluno e armazena na sessão
                     AreaDoAluno aluno = loginDao.buscarAlunoPorEmail(nome);  // Método para buscar detalhes do aluno
 
                     // Armazena o aluno logado na sessão
                     AlunoSession.setAlunoLogado(aluno);
+
                     Main.setRoot("AreaDoAluno-view");
-                } else if ("Admin".equals(tipoUsuario)) {
+                }
+                else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");
-                } else if ("Professor".equals(tipoUsuario)) {
+                }
+                else if ("Professor".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");
                 }
             } else {
