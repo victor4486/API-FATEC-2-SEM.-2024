@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -40,7 +41,8 @@ public class CriteriosController {
     private AnchorPane campo_criterios;
 
     @FXML
-    private AnchorPane campo_sprints;
+    //private AnchorPane campo_sprints;
+    private VBox campo_sprints;
 
     @FXML
     private TextField descricaoCriterio;
@@ -145,7 +147,14 @@ public class CriteriosController {
 
         // Adiciona o novo sprint à lista
         sprints.add(novoSprint);
-        exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
+        //exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
+
+        // Cria um novo HBox para armazenar os componentes da sprint
+        HBox novoSprintBox = new HBox(10); // Espaçamento entre os componentes
+        novoSprintBox.getChildren().addAll(new Label(novoSprint.getNumSprint()), dataInicioPicker, dataFimPicker);
+
+        // Adiciona o novo HBox ao VBox que contém as sprints
+        campo_sprints.getChildren().add(novoSprintBox);
 
         // Adicione listeners para os DatePickers
         dataInicioPicker.setOnAction(e -> {
@@ -159,13 +168,6 @@ public class CriteriosController {
                 novoSprint.setDataFim(Date.valueOf(dataFimPicker.getValue())); // Converta para java.sql.Date
             }
         });
-
-        for (Sprint sprint : sprints) {
-            System.out.println("ID: " + sprint.getId());
-            System.out.println("num sprint: " + sprint.getNumSprint());
-            System.out.println("data inicio: " + sprint.getDataInicio());
-            System.out.println("data fim: " + sprint.getDataFim());
-        }
 
     }
 

@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -22,40 +24,52 @@
          <children>
             <Pane fx:id="alunosSprintsBtns" layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="210.0" style="-fx-background-color: #d9d9d5; -fx-background-radius: 2;">
                <children>
-                  <Pane layoutX="11.0" layoutY="14.0" prefHeight="60.0" prefWidth="188.0" style="-fx-background-color: #9886DD; -fx-background-radius: 4;">
+                  <Pane layoutX="11.0" layoutY="7.0" prefHeight="89.0" prefWidth="188.0">
                      <children>
-                        <Text fill="WHITE" layoutX="35.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELEÇÃO DE ">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="55.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPRINTS">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Text>
+                        <Pane layoutY="15.0" prefHeight="60.0" prefWidth="188.0" style="-fx-background-color: #9886DD; -fx-background-radius: 4;">
+                           <children>
+                              <Text fill="WHITE" layoutX="35.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELEÇÃO DE ">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="55.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPRINTS">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
                      </children>
                   </Pane>
-                  <Button fx:id="btnSprint1" layoutX="11.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 1" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnSprint2" layoutX="11.0" layoutY="167.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 2" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnSprint3" layoutX="11.0" layoutY="235.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 3" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnSprint4" layoutX="11.0" layoutY="300.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 4" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
+                  <ScrollPane layoutX="5.0" layoutY="93.0" prefHeight="278.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vBoxSprintsBtns" prefWidth="190.0" spacing="10.0" alignment="TOP_CENTER">
+                           <children>
+                              <Button fx:id="btnSprint1" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 1" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnSprint2" layoutX="5.0" layoutY="20.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 2" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnSprint3" layoutX="5.0" layoutY="30.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 3" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnSprint4" layoutX="5.0" layoutY="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 4" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                </children>
                <padding>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
@@ -68,21 +82,22 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="20.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="Sprint:" wrappingWidth="71.859375">
+                  <Text layoutX="20.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="Aluno:" wrappingWidth="71.859375">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="248.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="Pontos restantes do Grupo:" wrappingWidth="235.859375">
+                  <Text layoutX="349.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="Pontos restantes:" wrappingWidth="140.4000244140625">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="350.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="44" wrappingWidth="31.859375">
+                  <Text layoutX="402.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bolder;" text="44" wrappingWidth="34.25946044921875">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
+                  <ComboBox fx:id="alunosComboBox" layoutX="98.0" layoutY="32.0" prefHeight="28.0" prefWidth="235.0" />
                </children>
             </Pane>
             <AnchorPane layoutX="244.0" layoutY="119.0" minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="484.0">
