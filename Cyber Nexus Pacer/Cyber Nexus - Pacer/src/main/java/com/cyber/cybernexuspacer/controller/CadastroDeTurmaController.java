@@ -2,8 +2,7 @@ package com.cyber.cybernexuspacer.controller;
 
 import com.cyber.cybernexuspacer.dao.CadastroTurmaDao;
 import com.cyber.cybernexuspacer.dao.ConexaoDao;
-import com.cyber.cybernexuspacer.entity.Aluno;
-import com.cyber.cybernexuspacer.entity.CadastroTurma;
+import com.cyber.cybernexuspacer.entity.AreaDoAluno;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,9 +53,9 @@ public class CadastroDeTurmaController {
     private ImageView logo_fatec;
 
     @FXML
-    private TableView<Aluno> tabela;
+    private TableView<AreaDoAluno> tabela;
 
-    private ObservableList<Aluno> listaAluno = FXCollections.observableArrayList();
+    private ObservableList<AreaDoAluno> listaAluno = FXCollections.observableArrayList();
 
 
     @FXML
@@ -65,14 +64,14 @@ public class CadastroDeTurmaController {
             // Inicia a transação
             ConexaoDao.getConnection().setAutoCommit(false);
 
-            for (Aluno aluno : listaAluno) {
+            for (AreaDoAluno aluno : listaAluno) {
                 // Verifica se o aluno já existe
                 if (!CadastroTurmaDao.alunoExists(aluno)) {
                     CadastroTurmaDao.CadastrarAlunos(aluno);
 
                 } else {
                     // Opcional: informe o usuário sobre a duplicata
-                    System.out.println("Aluno já existe: " + aluno.getAluno());
+                    System.out.println("Aluno já existe: " + aluno.getNomeAluno());
                 }
             }
 
@@ -128,7 +127,7 @@ public class CadastroDeTurmaController {
                         String aluno = dados[0];
                         String email = dados[1];
                         String grupo = dados[2];
-                        Aluno pessoa = new Aluno(aluno, email, grupo, "fatec2024", "Aluno");
+                        AreaDoAluno pessoa = new AreaDoAluno(aluno, email, grupo, "fatec2024", "Aluno");
                         listaAluno.add(pessoa);
                     }
                 }
