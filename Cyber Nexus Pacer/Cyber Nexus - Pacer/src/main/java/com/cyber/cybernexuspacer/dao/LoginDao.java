@@ -56,8 +56,13 @@ public class LoginDao {
     // Método para buscar os detalhes do aluno por email
     public AreaDoAluno buscarAlunoPorEmail(String email) throws SQLException {
         String sql = "SELECT * FROM alunos WHERE EMAIL = ?";
+        String sqlNomeGrupo = "SELECT grupo FROM grupos WHERE id = ?";
+
         PreparedStatement stmt = null;
+        PreparedStatement stmtNomeDoGrupo = null;
         ResultSet rs = null;
+        ResultSet rsNomeDoGrupo = null;
+        AreaDoAluno areaDoAluno = null;
 
         try {
             Connection connection = ConexaoDao.getConnection();
@@ -66,12 +71,26 @@ public class LoginDao {
 
             rs = stmt.executeQuery();
 
+
             if (rs.next()) {
                 String nome = rs.getString("nome");
-                String grupo = rs.getString("id_grupo");
+                String idGrupo = rs.getString("id_grupo");
 
-                // Cria o objeto AreaDoAluno e retorna
-                return new AreaDoAluno(nome, email, grupo, "fatec2024", "Aluno");
+                // Consulta para buscar os alunos do mesmo grupo
+                stmtNomeDoGrupo = connection.prepareStatement(sqlNomeGrupo);
+
+                stmtNomeDoGrupo.setInt(1, Integer.parseInt(idGrupo));
+
+                rsNomeDoGrupo = stmtNomeDoGrupo.executeQuery();
+
+                if (rsNomeDoGrupo.next()) {
+
+                    String nomeGrupo = rsNomeDoGrupo.getString("grupo");
+
+                    // Cria o objeto AreaDoAluno e retorna
+                    areaDoAluno = new AreaDoAluno(nome, email, nomeGrupo, "fatec2024", "Aluno");
+                }
+
             } else {
                 return null;  // Retorna null se não encontrar o aluno
             }
@@ -81,7 +100,10 @@ public class LoginDao {
         } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
+            if (stmtNomeDoGrupo != null) stmtNomeDoGrupo.close();
+            if (rsNomeDoGrupo != null) rsNomeDoGrupo.close();
         }
+        return areaDoAluno;
     }
 
 }
