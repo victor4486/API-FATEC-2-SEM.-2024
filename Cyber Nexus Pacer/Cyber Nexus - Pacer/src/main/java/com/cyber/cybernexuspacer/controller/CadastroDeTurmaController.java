@@ -92,7 +92,7 @@ public class CadastroDeTurmaController {
     @FXML
     public void initialize() {
         // Configura as colunas com os dados da classe Pessoa
-        coluna_Aluno.setCellValueFactory(new PropertyValueFactory<>("aluno"));
+        coluna_Aluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
         coluna_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
         coluna_Grupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
 
@@ -123,11 +123,12 @@ public class CadastroDeTurmaController {
                     String linha = scanner.nextLine();
                     String[] dados = linha.split(",");
 
-                    if (dados.length >= 3) {
-                        String aluno = dados[0];
+
+                    if (dados.length >= 1) {
+                        String nome = dados[0];
                         String email = dados[1];
                         String grupo = dados[2];
-                        AreaDoAluno pessoa = new AreaDoAluno(aluno, email, grupo, "fatec2024", "Aluno");
+                        AreaDoAluno pessoa = new AreaDoAluno(nome, email, grupo, "fatec2024", "Aluno");
                         listaAluno.add(pessoa);
                     }
                 }
