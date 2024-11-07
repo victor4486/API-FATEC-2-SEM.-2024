@@ -52,8 +52,5 @@ public class AreaDoAluno {
         this.grupo = grupo;
     }
 
-    @Override
-    public String toString() {
-        return this.nome; // Retorna o nome do aluno quando for exibido no ComboBox
-    }
+
 }
