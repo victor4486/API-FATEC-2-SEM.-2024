@@ -1,6 +1,8 @@
 package com.cyber.cybernexuspacer.controller;
 
 import com.cyber.cybernexuspacer.dao.LoginDao;
+import com.cyber.cybernexuspacer.entity.AreaDoAluno;
+import com.cyber.cybernexuspacer.session.AlunoSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,11 +56,16 @@ public class LoginController {
         try {
             // Verifica se o login e a senha estão corretos no banco de dados
             if (loginDao.verificarLogin(nome, senha, tipoUsuario)) {
-                System.out.println(tipoUsuario);
                 // Se estiverem corretos, muda a tela
                 if ("Aluno".equals(tipoUsuario) && "aluno".equals(senha)) {
                     redirecionarParaRecuperacaoSenha(nome);
                 } else if ("Aluno".equals(tipoUsuario)) {
+                    System.out.println("email: " + nome);
+                    // Aqui, após a validação, busca os detalhes do aluno e armazena na sessão
+                    AreaDoAluno aluno = loginDao.buscarAlunoPorEmail(nome);  // Método para buscar detalhes do aluno
+
+                    // Armazena o aluno logado na sessão
+                    AlunoSession.setAlunoLogado(aluno);
                     Main.setRoot("AreaDoAluno-view");
                 } else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");

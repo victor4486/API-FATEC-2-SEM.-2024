@@ -1,19 +1,25 @@
 package com.cyber.cybernexuspacer.controller;
 
+import com.cyber.cybernexuspacer.dao.AreaDoAlunoDao;
 import com.cyber.cybernexuspacer.dao.CriterioDao;
+import com.cyber.cybernexuspacer.dao.SprintDao;
+import com.cyber.cybernexuspacer.entity.AreaDoAluno;
 import com.cyber.cybernexuspacer.entity.Criterio;
+import com.cyber.cybernexuspacer.entity.Sprint;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AreaDoAlunoController {
     @FXML
@@ -44,9 +50,6 @@ public class AreaDoAlunoController {
     private Button btnSprint1;
 
     @FXML
-    private Button btnSprint111;
-
-    @FXML
     private Button btnSprint2;
 
     @FXML
@@ -59,147 +62,78 @@ public class AreaDoAlunoController {
     private Pane cabecalhoCyber;
 
     @FXML
-    private CheckBox checkBoxDois;
-
-    @FXML
-    private CheckBox checkBoxDois1;
-
-    @FXML
-    private CheckBox checkBoxDois11;
-
-    @FXML
-    private CheckBox checkBoxDois111;
-
-    @FXML
-    private CheckBox checkBoxQuatro;
-
-    @FXML
-    private CheckBox checkBoxQuatro1;
-
-    @FXML
-    private CheckBox checkBoxQuatro11;
-
-    @FXML
-    private CheckBox checkBoxQuatro111;
-
-    @FXML
-    private CheckBox checkBoxTres;
-
-    @FXML
-    private CheckBox checkBoxTres1;
-
-    @FXML
-    private CheckBox checkBoxTres11;
-
-    @FXML
-    private CheckBox checkBoxTres111;
-
-    @FXML
-    private CheckBox checkBoxUm;
-
-    @FXML
-    private CheckBox checkBoxUm1;
-
-    @FXML
-    private CheckBox checkBoxUm11;
-
-    @FXML
-    private CheckBox checkBoxUm111;
-
-    @FXML
     private ScrollPane criteriosNotas;
 
     @FXML
     private Pane grupoAlunoInfo;
 
     @FXML
-    private Label lblTxtDescricaoDocriterio1;
+    private VBox vBoxSprintsBtns;
 
     @FXML
-    private Label lblTxtDescricaoDocriterio11;
+    private ComboBox<String> alunosComboBox;  // Referência para o ComboBox de alunos
 
-    @FXML
-    private Label lblTxtDescricaoDocriterio111;
+    private Map<String, Integer> alunosMap = new HashMap<>();  // Mapeamento nome -> ID do aluno
 
-    @FXML
-    private Label lblTxtDescricaoDocriterio1111;
-
-    @FXML
-    private Label lblTxtNumberFour;
-
-    @FXML
-    private Label lblTxtNumberFour1;
-
-    @FXML
-    private Label lblTxtNumberFour11;
-
-    @FXML
-    private Label lblTxtNumberFour111;
-
-    @FXML
-    private Label lblTxtNumberOne;
-
-    @FXML
-    private Label lblTxtNumberOne1;
-
-    @FXML
-    private Label lblTxtNumberOne11;
-
-    @FXML
-    private Label lblTxtNumberOne111;
-
-    @FXML
-    private Label lblTxtNumberTree;
-
-    @FXML
-    private Label lblTxtNumberTree1;
-
-    @FXML
-    private Label lblTxtNumberTree11;
-
-    @FXML
-    private Label lblTxtNumberTree111;
-
-    @FXML
-    private Label lblTxtNumberTwo;
-
-    @FXML
-    private Label lblTxtNumberTwo1;
-
-    @FXML
-    private Label lblTxtNumberTwo11;
-
-    @FXML
-    private Label lblTxtNumberTwo111;
-
-    @FXML
-    private Label lblTxtTitulodocriterio1;
-
-    @FXML
-    private Label lblTxtTitulodocriterio11;
-
-    @FXML
-    private Label lblTxtTitulodocriterio111;
-
-    @FXML
-    private Label lblTxtTitulodocriterio1111;
-
-    @FXML
-    private Pane paneSprint1;
-
-    @FXML
-    private Pane paneSprint11;
-
-    @FXML
-    private Pane paneSprint111;
-
-    @FXML
-    private Pane paneSprint1111;
 
     @FXML
     public void initialize() throws SQLException {
         carregarCriterios();
+        carregarAlunos();
+        carregarSprints();
     }
+
+    private void carregarSprints() throws SQLException {
+        SprintDao sprintDao = new SprintDao();
+        List<Sprint> sprints = sprintDao.listarSprints();  // Busca todas as sprints no banco
+        vBoxSprintsBtns.getChildren().clear();  // Limpa o conteúdo anterior
+
+
+        // Cria um botão para cada sprint
+        for (Sprint sprint : sprints) {
+            Button sprintButton = new Button(sprint.getNumSprint());
+            sprintButton.setPrefSize(188, 40);
+            sprintButton.setLayoutX(6);
+            sprintButton.setLayoutY(7);
+            sprintButton.setStyle("-fx-background-color: #86B6DD; -fx-font-weight: bolder; -fx-padding: 10 20 10 20;");
+            sprintButton.setOnAction(event -> {
+                // Ação quando a sprint for clicada
+                System.out.println("Sprint " + sprint.getNumSprint() + " selecionada.");
+                // Você pode adicionar a lógica para lidar com o clique na sprint
+            });
+            vBoxSprintsBtns.getChildren().add(sprintButton);  // Adiciona o botão à interface
+        }
+
+    }
+
+
+    private void carregarAlunos() throws SQLException {
+        AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
+        List<AreaDoAluno> alunos = areaDoAlunoDao.listarAlunos();
+
+        // Preenche o ComboBox com os nomes dos alunos
+        alunosComboBox.getItems().setAll(
+                alunos.stream()
+                        .map(AreaDoAluno::getNomeAluno)  // Nome do aluno
+                        .toList()
+        );
+
+        // Armazenar o ID de cada aluno no map
+        for (AreaDoAluno aluno : alunos) {
+            alunosMap.put(aluno.getNomeAluno(), aluno.getIdAlunoReceptor());  // Pegando id do receptor da nota para salvar no banco
+        }
+
+        // Adiciona um listener para capturar a seleção
+        alunosComboBox.setOnAction(event -> {
+            String alunoSelecionado = alunosComboBox.getValue();
+            if (alunoSelecionado != null) {
+                Integer idAlunoReceptor = alunosMap.get(alunoSelecionado);
+                System.out.println("ID do aluno selecionado: " + idAlunoReceptor);
+                // Agora você pode salvar o idAluno em uma variável ou usá-lo para outras operações
+            }
+        });
+    }
+
 
     private void exibirCriterio(String titulo, String descricao) {
         // Criação do campo de exibição do critério
