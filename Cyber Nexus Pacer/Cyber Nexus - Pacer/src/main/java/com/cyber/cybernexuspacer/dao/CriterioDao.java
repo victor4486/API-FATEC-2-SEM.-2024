@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class    CriterioDao {
+public class CriterioDao {
 
     public void inserirCriterio(Criterio criterio) {
         String sql = "INSERT INTO CRITERIO (TITULO, DESCRICAO) VALUES (?, ?)";
@@ -28,6 +28,7 @@ public class    CriterioDao {
 
         } catch (SQLException e) {
             e.printStackTrace(); // Captura corretamente a SQLException
+            System.out.println("Critério não inserido!");
         }finally {
             try {
                 if (stmt != null) {
@@ -39,6 +40,7 @@ public class    CriterioDao {
                  //}
             } catch (SQLException e) {
                 e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
+                System.out.println("Critério não inserido!");
             }
         }
     }
