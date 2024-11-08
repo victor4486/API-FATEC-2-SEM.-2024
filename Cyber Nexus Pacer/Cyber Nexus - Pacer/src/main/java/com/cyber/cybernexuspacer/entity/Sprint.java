@@ -9,7 +9,7 @@ public class Sprint {
     private Date dataFim;
     private boolean markedForDeletion;
 
-    // Construtores, getters e setters
+    // Construtores
     public Sprint(int id, String numSprint, Date dataInicio, Date dataFim) {
         this.id = id;
         this.numSprint = numSprint;
@@ -18,12 +18,15 @@ public class Sprint {
         this.markedForDeletion = false; // Por padrão, não está marcada para exclusão
     }
 
+
+    //getters
     public int getId() { return id; }
     public String getNumSprint() { return numSprint; }
     public java.sql.Date getDataInicio() { return (java.sql.Date) dataInicio; }
     public java.sql.Date getDataFim() { return (java.sql.Date) dataFim; }
     public boolean isMarkedForDeletion() { return markedForDeletion; }
 
+    //setters
     public void setId(int id) { this.id = id; }
     public void setNumSprint(String numSprint) { this.numSprint = numSprint; }
     public void setDataInicio(Date dataInicio) { this.dataInicio = dataInicio; }
