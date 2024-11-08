@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,6 @@ public class CriteriosController {
     private AnchorPane campo_criterios;
 
     @FXML
-    //private AnchorPane campo_sprints;
     private VBox campo_sprints;
 
     @FXML
@@ -63,13 +61,11 @@ public class CriteriosController {
         carregarSprints();
     }
 
-    // *** MÉTODOS DE EXIBIÇÃO DE MENSAGENS ***
     private void exibirMensagem(String mensagem) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mensagem);
         alert.showAndWait();
     }
 
-    // *** MÉTODOS PARA CRITÉRIOS ***
     @FXML
     private void handleAdicionarCriterio() {
         String titulo = tituloCriterio.getText();
@@ -80,45 +76,46 @@ public class CriteriosController {
             return;
         }
 
-        criterios.add(new Criterio(titulo, descricao));
+        int id = 0;
+        Criterio novoCriterio = new Criterio(id, titulo, descricao);
+        criterios.add(novoCriterio);
+        exibirCriterio(novoCriterio);
 
-        //exibindo no historico
-        exibirCriterio(titulo, descricao);
-
-        //limpando campos de entrada
         tituloCriterio.clear();
         descricaoCriterio.clear();
     }
+    
 
-    private void exibirCriterio(String titulo, String descricao) {
-        // Criação do campo de exibição do critério
+    private void exibirCriterio(Criterio criterio) {
         Pane novoCriterio = new Pane();
         novoCriterio.setPrefSize(445, 70);
         novoCriterio.setLayoutX(4);
         novoCriterio.setLayoutY(10);
         novoCriterio.setStyle("-fx-background-color: #86B6DD; -fx-background-radius: 4;");
 
+        Label tituloLabel = criaLabel(10, 10, "Título:   " + criterio.getTitulo(), "-fx-text-fill: white; -fx-font-size: 14px;");
+        Label descricaoLabel = criaLabel(10, 30, "Descrição: " + criterio.getDescricao(), "-fx-text-fill: white; -fx-font-size: 12px;");
+        descricaoLabel.setWrapText(true);
+        descricaoLabel.setPrefWidth(400);
 
-        // Adicionando o título e a descrição no critério
-        Label tituloLabel = criaLabel(10,10,"Título:   " + titulo, "-fx-text-fill: white; -fx-font-size: 14px;");
+        Button btnExcluir = new Button("Excluir");
+        btnExcluir.setLayoutX(370);
+        btnExcluir.setLayoutY(10);
+        btnExcluir.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white;");
+        btnExcluir.setOnAction(event -> {
+            try {
+                handleExcluirCriterio(criterio.getId(), novoCriterio);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
 
-        Label descricaoLabel = criaLabel(10,30,"Descrição: " + descricao, "-fx-text-fill: white; -fx-font-size: 12px;");
-        descricaoLabel.setWrapText(true);  // Permite quebra de linha
-        descricaoLabel.setPrefWidth(400);  // Defina uma largura preferencial
+        novoCriterio.getChildren().addAll(tituloLabel, descricaoLabel, btnExcluir);
 
-
-        novoCriterio.getChildren().addAll(tituloLabel, descricaoLabel);
-
-        // Verifica quantos critérios já existem no campo_criterios
         int numeroDeCriterios = campo_criterios.getChildren().size();
-
-        // Calcula a posição Y para o novo critério
         double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 78;
-
-        // Define a posição do novo critério
         novoCriterio.setLayoutY(novaPosicaoY);
 
-        // Adiciona o novo critério ao AnchorPane (campo_criterios)
         campo_criterios.getChildren().add(novoCriterio);
     }
 
@@ -127,57 +124,60 @@ public class CriteriosController {
         List<Criterio> criteriosBd = criterioDao.listarCriterios();
 
         for (Criterio criterio : criteriosBd) {
-            exibirCriterio(criterio.getTitulo(), criterio.getDescricao());
+            exibirCriterio(criterio);
         }
     }
 
-
-//***ADICIONAR SPRINTS*****//
-
-    private SprintDao sprintDao = new SprintDao();
     @FXML
     private void handleAdicionarSprint() {
-        //sprintCount++;
-        int totalSprints = sprintDao.contarSprints();
-        int numeroDeSprints = totalSprints + 1;
-        String numSprint = "Sprint" + (totalSprints + 1);
+        sprintCount++;
 
         DatePicker dataInicioPicker = new DatePicker();
         DatePicker dataFimPicker = new DatePicker();
 
-        // Inicializando o novo Sprint com um ID temporário (pode ser 0)
-        Sprint novoSprint = new Sprint(0, numeroDeSprints, null, null);
-
-        // Adiciona o novo sprint à lista
+        Sprint novoSprint = new Sprint(0, "Sprint " + sprintCount, null, null);
         sprints.add(novoSprint);
-        //exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
 
-        // Cria um novo HBox para armazenar os componentes da sprint
-        HBox novoSprintBox = new HBox(10); // Espaçamento entre os componentes
-        Label labelSprint = new Label("Nova Sprint");
-        novoSprintBox.getChildren().addAll(labelSprint, dataInicioPicker, dataFimPicker);
+        HBox novoSprintBox = new HBox(10);
+        novoSprintBox.getChildren().addAll(new Label(novoSprint.getNumSprint()), dataInicioPicker, dataFimPicker);
 
-        // Adiciona o novo HBox ao VBox que contém as sprints
-        //campo_sprints.getChildren().add(novoSprintBox);
-        exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
+        campo_sprints.getChildren().add(novoSprintBox);
 
-        // Adicione listeners para os DatePickers
         dataInicioPicker.setOnAction(e -> {
             if (dataInicioPicker.getValue() != null) {
-                novoSprint.setDataInicio(Date.valueOf(dataInicioPicker.getValue())); // Converta para java.sql.Date
+                novoSprint.setDataInicio(Date.valueOf(dataInicioPicker.getValue()));
             }
         });
 
         dataFimPicker.setOnAction(e -> {
             if (dataFimPicker.getValue() != null) {
-                novoSprint.setDataFim(Date.valueOf(dataFimPicker.getValue())); // Converta para java.sql.Date
+                novoSprint.setDataFim(Date.valueOf(dataFimPicker.getValue()));
             }
         });
+    }
 
+    private void carregarSprints() throws SQLException {
+        SprintDao sprintDao = new SprintDao();
+        List<Sprint> sprintsBd = sprintDao.listarSprints();
+
+        campo_sprints.getChildren().clear();
+
+        for (Sprint sprint : sprintsBd) {
+            DatePicker dataInicioPicker = new DatePicker();
+            DatePicker dataFimPicker = new DatePicker();
+
+            if (sprint.getDataInicio() != null) {
+                dataInicioPicker.setValue(sprint.getDataInicio().toLocalDate());
+            }
+            if (sprint.getDataFim() != null) {
+                dataFimPicker.setValue(sprint.getDataFim().toLocalDate());
+            }
+
+            exibirSprint(sprint, dataInicioPicker, dataFimPicker);
+        }
     }
 
     private void exibirSprint(Sprint sprint, DatePicker dataInicioPicker, DatePicker dataFimPicker) {
-
         Pane pane = criarPaneSprint(sprint, dataInicioPicker, dataFimPicker);
         campo_sprints.getChildren().add(pane);
     }
@@ -189,31 +189,26 @@ public class CriteriosController {
         pane.setLayoutY(7);
         pane.setStyle("-fx-background-color: #86B6DD; -fx-background-radius: 5;");
 
-        Label numSprintLabel = criaLabel(25,13, "Sprint" + sprint.getNumSprint(), "-fx-text-fill: white; -fx-font-size: 14px;");
-        Label dataInicioLabel = criaLabel(12,50,"Data de Início:", "-fx-text-fill: white; -fx-font-size: 14px;");
-        Label dataFimLabel = criaLabel(12,85,"Data de Fim:", "-fx-text-fill: white; -fx-font-size: 14px;");
-
+        Label numSprintLabel = criaLabel(25, 13, sprint.getNumSprint(), "-fx-text-fill: white; -fx-font-size: 14px;");
+        Label dataInicioLabel = criaLabel(12, 50, "Data de Início:", "-fx-text-fill: white; -fx-font-size: 14px;");
+        Label dataFimLabel = criaLabel(12, 85, "Data de Fim:", "-fx-text-fill: white; -fx-font-size: 14px;");
 
         Button btnDeleteSprint = new Button("X");
         btnDeleteSprint.setLayoutX(160);
         btnDeleteSprint.setLayoutY(14);
         btnDeleteSprint.setOnAction(e -> {
-            // Mensagem de confirmação
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmação de Deleção");
             alert.setHeaderText("Você realmente deseja excluir esta Sprint?");
             alert.setContentText("Esta ação não pode ser desfeita.");
 
-            // Adiciona os botões de confirmação
             ButtonType buttonTypeYes = new ButtonType("Sim");
             ButtonType buttonTypeNo = new ButtonType("Não");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-            // Exibe o diálogo e aguarda a resposta
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == buttonTypeYes) {
-                sprint.setMarkedForDeletion(); // Marca para deleção
-
+                sprint.setMarkedForDeletion();
                 try {
                     handleDeleteSprint(sprint.getId());
                 } catch (SQLException ex) {
@@ -222,16 +217,11 @@ public class CriteriosController {
             }
         });
 
-
         dataInicioPicker.setLayoutX(114);
         dataInicioPicker.setLayoutY(48);
-        dataInicioPicker.setPrefSize(92, 25);
-
         dataFimPicker.setLayoutX(114);
         dataFimPicker.setLayoutY(81);
-        dataFimPicker.setPrefSize(92, 25);
 
-        // Adicione os elementos ao painel
         pane.getChildren().addAll(numSprintLabel, dataInicioLabel, dataFimLabel, dataInicioPicker, dataFimPicker, btnDeleteSprint);
 
         int numeroDeCriterios = campo_sprints.getChildren().size();
@@ -241,89 +231,30 @@ public class CriteriosController {
         return pane;
     }
 
-    private void carregarSprints() throws SQLException {
-        if (!sprints.isEmpty()) {
-            return; // Se já existirem sprints, não recarregue do banco
-        }
-
-        SprintDao sprintDao = new SprintDao();
-        List<Sprint> sprintsBd = sprintDao.listarSprints();
-
-        // Limpa o painel onde as Sprints são exibidas
-        campo_sprints.getChildren().clear();
-
-        for (Sprint sprint : sprintsBd) {
-            DatePicker dataInicioPicker = new DatePicker();
-            DatePicker dataFimPicker = new DatePicker();
-
-            // Defina os valores dos DatePickers com as datas da Sprint
-            if (sprint.getDataInicio() != null) {
-                dataInicioPicker.setValue(sprint.getDataInicio().toLocalDate()); // Converte java.sql.Date para LocalDate
-            }
-            if (sprint.getDataFim() != null) {
-                dataFimPicker.setValue(sprint.getDataFim().toLocalDate()); // Converte java.sql.Date para LocalDate
-            }
-
-            // Exiba a Sprint com os DatePickers
-            exibirSprint(sprint, dataInicioPicker, dataFimPicker);
-        }
-    }
-
-    //*** SALVAR OS DADOS ****//
-
-    @FXML
-    void onClickConfirmar(ActionEvent event) throws SQLException {
-        //adicionar Sprint
-        //SprintDao sprintDao = new SprintDao();
-
-        for (int i = 0; i < sprints.size(); i++) {
-            Sprint sprint = sprints.get(i);
-
-            if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
-                exibirMensagem("Datas não podem ser vazias para a Sprint: " + sprint.getNumSprint());
-                return; // Saia do metodo se houver datas vazias
-            }
-
-            // Verifique se a sprint já existe no banco antes de tentar salvar
-            // Caso a sprint já tenha um ID, significa que ela foi salva antes
-            if (sprint.getId() == 0) { // Se o ID for 0, é uma nova sprint
-                int id = sprintDao.salvarSprint(sprint);
-                sprint.setId(id); // Atualize o objeto Sprint com o ID gerado
-                sprint.setNumSprint(i + 1);
-            }
-        }
-
-        //adicionar crierios
-        CriterioDao criterioDao = new CriterioDao();
-        for (Criterio criterio : criterios) {
-            criterioDao.inserirCriterio(criterio);
-        }
-
-        carregarSprints(); // Atualiza a interface se necessário
-        exibirMensagem("Informações salvas com sucesso!");
-    }
-
-
-    //*** DELETAR OS DADOS ****//
-
-
     private void handleDeleteSprint(int index) throws SQLException {
         SprintDao sprintDao = new SprintDao();
 
-        // Itera sobre as sprints e remove as marcadas para deleção
         for (int i = sprints.size() - 1; i >= 0; i--) {
             Sprint sprint = sprints.get(i);
             if (sprint.isMarkedForDeletion()) {
-                sprints.remove(i); // Remove da lista
+                sprints.remove(i);
             }
         }
 
-        sprintDao.deletarSprint(index); // Exclui do banco de dados
-        carregarSprints(); // Atualiza a interface após deleção
+        sprintDao.deletarSprint(index);
+        carregarSprints();
     }
 
+    private void handleExcluirCriterio(int criterioId, Pane criterioPane) throws SQLException {
+        CriterioDao criterioDao = new CriterioDao();
+        criterioDao.excluirCriterio(criterioId);
+        campo_criterios.getChildren().remove(criterioPane);
 
-    //*** OUTROS ****//
+        for (int i = 0; i < campo_criterios.getChildren().size(); i++) {
+            Pane pane = (Pane) campo_criterios.getChildren().get(i);
+            pane.setLayoutY(i * 78);
+        }
+    }
 
     private Label criaLabel(double layoutX, double layoutY, String descricao, String style) {
         Label label = new Label(descricao);
@@ -342,6 +273,10 @@ public class CriteriosController {
     void handleAcompSprint(ActionEvent event) throws IOException {
         Main.setRoot("acompanharSprints-view");
     }
-
+    @FXML
+    private void onClickConfirmar(ActionEvent event) {
+        // Implementação do que deve acontecer ao clicar em "Confirmar"
+        exibirMensagem("Operação confirmada com sucesso!");
+    }
 }
 

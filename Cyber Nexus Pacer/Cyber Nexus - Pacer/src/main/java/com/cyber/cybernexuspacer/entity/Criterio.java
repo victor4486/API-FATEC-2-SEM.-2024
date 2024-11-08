@@ -6,7 +6,9 @@ public class Criterio {
     private String descricao;
 
     // Construtores, Getters e Setters
-    public Criterio( String titulo, String descricao) {
+
+    public Criterio(int id, String titulo, String descricao) {
+        this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
     }

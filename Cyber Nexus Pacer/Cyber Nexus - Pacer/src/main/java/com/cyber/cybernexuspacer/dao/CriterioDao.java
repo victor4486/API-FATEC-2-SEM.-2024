@@ -9,71 +9,57 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class    CriterioDao {
-    public void inserirCriterio(Criterio criterio) {
-        String sql = "INSERT INTO CRITERIOS (TITULO, DESCRICAO) VALUES (?, ?)";
-        Connection connection = null;
-        PreparedStatement stmt = null;
+public class CriterioDao {
 
-        try {
-            connection = ConexaoDao.getConnection(); // Obtém a conexão
-            stmt = connection.prepareStatement(sql);
+    public void inserirCriterio(Criterio criterio) {
+        String sql = "INSERT INTO CRITERIO (TITULO, DESCRICAO) VALUES (?, ?)";
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setString(1, criterio.getTitulo());
             stmt.setString(2, criterio.getDescricao());
-            stmt.executeUpdate(); // Executa a inserção
+            stmt.executeUpdate();
 
             System.out.println("Critério inserido com sucesso!");
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Captura corretamente a SQLException
-        }finally {
-            try {
-                if (stmt != null) {
-                    stmt.close(); // Fechando o PreparedStatement
-                }
-                // Remova ou comente a linha abaixo para manter a conexão aberta
-                 //if (connection != null) {
-                 //    connection.close(); // Fechando a conexão
-                 //}
-            } catch (SQLException e) {
-                e.printStackTrace(); // Caso algum erro ocorra ao fechar recursos
-            }
+            e.printStackTrace();
         }
     }
 
+    public void excluirCriterio(int id) throws SQLException {
+        String sql = "DELETE FROM CRITERIO WHERE ID = ?";
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método listarCriterios para obter todos os critérios do banco de dados
     public List<Criterio> listarCriterios() throws SQLException {
         List<Criterio> criterios = new ArrayList<>();
-        String sql = "SELECT * FROM CRITERIOS";
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        String sql = "SELECT * FROM CRITERIO";
 
-        try {
-            Connection connection = ConexaoDao.getConnection();
-            assert connection != null;
-            stmt = connection.prepareStatement(sql);
-            rs = stmt.executeQuery();
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-            // Itera sobre o ResultSet para preencher a lista de critérios
             while (rs.next()) {
-                String titulo = rs.getString("titulo");
-                String descricao = rs.getString("descricao");
+                int id = rs.getInt("ID");
+                String titulo = rs.getString("TITULO");
+                String descricao = rs.getString("DESCRICAO");
 
-                // Cria um novo objeto Criterio e adiciona à lista
-                Criterio criterio = new Criterio(titulo, descricao);
+                Criterio criterio = new Criterio(id, titulo, descricao);
                 criterios.add(criterio);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
         }
-
-        return criterios;  // Retorna a lista de critérios
+        return criterios;
     }
-
 }
-
-
