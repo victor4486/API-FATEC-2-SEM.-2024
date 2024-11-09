@@ -54,6 +54,7 @@ public class CriteriosController {
     private TextField tituloCriterio;
 
     private int sprintCount = 0;
+    private SprintDao sprintDao = new SprintDao();
     private List<Sprint> sprints = new ArrayList<>();
     private List<Criterio> criterios = new ArrayList<>();
 
@@ -142,34 +143,40 @@ public class CriteriosController {
         DatePicker dataInicioPicker = new DatePicker();
         DatePicker dataFimPicker = new DatePicker();
 
-        // Inicializando o novo Sprint com um ID temporário (pode ser 0)
-        Sprint novoSprint = new Sprint(0,"Sprint " + sprintCount, null, null);
+        // Cria o layout de exibição
+        HBox novoSprintBox = new HBox(10);
+        novoSprintBox.getChildren().addAll(new Label("Sprint " + sprintCount), dataInicioPicker, dataFimPicker);
 
-        // Adiciona o novo sprint à lista
-        sprints.add(novoSprint);
-        //exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
-
-        // Cria um novo HBox para armazenar os componentes da sprint
-        HBox novoSprintBox = new HBox(10); // Espaçamento entre os componentes
-        novoSprintBox.getChildren().addAll(new Label(novoSprint.getNumSprint()), dataInicioPicker, dataFimPicker);
-
-        // Adiciona o novo HBox ao VBox que contém as sprints
+        // Adiciona o novo HBox ao VBox
         campo_sprints.getChildren().add(novoSprintBox);
 
         // Adicione listeners para os DatePickers
         dataInicioPicker.setOnAction(e -> {
-            if (dataInicioPicker.getValue() != null) {
-                novoSprint.setDataInicio(Date.valueOf(dataInicioPicker.getValue())); // Converta para java.sql.Date
+            if (dataInicioPicker.getValue() != null && dataFimPicker.getValue() != null) {
+                Date dataInicio = Date.valueOf(dataInicioPicker.getValue());
+                Date dataFim = Date.valueOf(dataFimPicker.getValue());
+
+                if (dataInicio.after(dataFim)) {
+                    exibirMensagem("A data de início deve ser anterior à data de término.");
+                } else {
+                    // Cria uma nova Sprint sem ID, pois será gerado pelo banco de dados
+                    Sprint novoSprint = new Sprint(0, "Sprint " + sprintCount, dataInicio, dataFim);
+
+
+                    // Persistir a Sprint no banco de dados
+                    int idGerado = sprintDao.salvarSprint(novoSprint);
+                    if (idGerado > 0) {
+                        novoSprint.setId(idGerado); // Atualiza o objeto com o ID gerado
+                    } else {
+                        exibirMensagem("Erro ao salvar a Sprint no banco de dados.");
+                    }
+                }
             }
         });
 
-        dataFimPicker.setOnAction(e -> {
-            if (dataFimPicker.getValue() != null) {
-                novoSprint.setDataFim(Date.valueOf(dataFimPicker.getValue())); // Converta para java.sql.Date
-            }
-        });
-
+        dataFimPicker.setOnAction(dataInicioPicker.getOnAction());
     }
+
 
     private void exibirSprint(Sprint sprint, DatePicker dataInicioPicker, DatePicker dataFimPicker) {
 
