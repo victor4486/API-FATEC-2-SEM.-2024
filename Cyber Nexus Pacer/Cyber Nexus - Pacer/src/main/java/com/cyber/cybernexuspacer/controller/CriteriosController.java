@@ -160,7 +160,8 @@ public class CriteriosController {
                     exibirMensagem("A data de início deve ser anterior à data de término.");
                 } else {
                     // Cria uma nova Sprint sem ID, pois será gerado pelo banco de dados
-                    Sprint novoSprint = new Sprint(0, "Sprint " + sprintCount, dataInicio, dataFim);
+                    String numSprint = "Sprint" ;
+                    Sprint novoSprint = new Sprint(0, numSprint, dataInicio, dataFim);
 
 
                     // Persistir a Sprint no banco de dados
