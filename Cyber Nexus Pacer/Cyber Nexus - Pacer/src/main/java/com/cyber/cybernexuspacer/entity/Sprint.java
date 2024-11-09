@@ -29,8 +29,18 @@ public class Sprint {
     //setters
     public void setId(int id) { this.id = id; }
     public void setNumSprint(String numSprint) { this.numSprint = numSprint; }
-    public void setDataInicio(Date dataInicio) { this.dataInicio = dataInicio; }
-    public void setDataFim(Date dataFim) { this.dataFim = dataFim; }
+    public void setDataInicio(Date dataInicio) {
+        if (dataInicio == null) {
+            throw new IllegalArgumentException("dataInicio não pode ser null");
+        }
+        this.dataInicio = dataInicio;
+    }
+    public void setDataFim(Date dataFim) {
+        if (dataFim == null) {
+            throw new IllegalArgumentException("dataFim não pode ser null");
+        }
+        this.dataFim = dataFim;
+    }
     public void setMarkedForDeletion() {
         this.markedForDeletion = true;
     }

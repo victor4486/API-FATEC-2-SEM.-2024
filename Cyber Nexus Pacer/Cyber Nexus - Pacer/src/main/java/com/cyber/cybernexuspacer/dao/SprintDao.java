@@ -10,7 +10,7 @@ import java.util.List;
 public class SprintDao {
     public int salvarSprint(Sprint sprint) {
         // Lógica para conectar ao banco de dados e inserir a sprint
-        String sql = "INSERT INTO sprints (num_sprint, data_inicial, data_final) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO sprints (id, num_sprint, data_inicial, data_final) VALUES (?, ?, ?, ?)";
 
         PreparedStatement stmt = null;
         Connection connection = null;
@@ -25,9 +25,10 @@ public class SprintDao {
             assert connection != null;
             stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, sprint.getNumSprint());
-            stmt.setDate(2, sprint.getDataInicio());
-            stmt.setDate(3, sprint.getDataFim());
+            stmt.setLong(1, sprint.getId());
+            stmt.setString(2, sprint.getNumSprint());
+            stmt.setDate(3, sprint.getDataInicio());
+            stmt.setDate(4, sprint.getDataFim());
             stmt.executeUpdate();
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
