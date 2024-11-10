@@ -69,7 +69,6 @@ public class CadastroTurmaDao {
             }
             e.printStackTrace();
         }
-
     }
 
     public static boolean alunoExists(AreaDoAluno aluno) throws SQLException {

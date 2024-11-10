@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class    CriterioDao {
-
     public void inserirCriterio(Criterio criterio) {
         String sql = "INSERT INTO CRITERIOS (TITULO, DESCRICAO) VALUES (?, ?)";
         Connection connection = null;

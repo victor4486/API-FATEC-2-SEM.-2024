@@ -15,6 +15,7 @@ public class Criterio {
     public String getTitulo() { return titulo; }
     public String getDescricao() { return descricao; }
 
+
     public void setId(int id) { this.id = id; }
     public void settitulo(String titulo) { this.titulo = titulo; }
     public void setEmail(String descricao) { this.descricao = descricao; }

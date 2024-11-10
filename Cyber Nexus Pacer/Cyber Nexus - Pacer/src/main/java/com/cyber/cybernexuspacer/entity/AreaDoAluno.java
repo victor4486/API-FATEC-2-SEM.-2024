@@ -52,5 +52,4 @@ public class AreaDoAluno {
         this.grupo = grupo;
     }
 
-
 }
