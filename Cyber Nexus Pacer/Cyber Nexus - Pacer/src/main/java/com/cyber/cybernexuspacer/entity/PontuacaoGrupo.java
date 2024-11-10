@@ -4,9 +4,9 @@ public class PontuacaoGrupo {
     int id;
     String grupo;
     int integrantes;
-    double nota;
+    int nota;
 
-    public PontuacaoGrupo(int id, String grupo, int integrantes, double nota) {
+    public PontuacaoGrupo(int id, String grupo, int integrantes, int nota) {
         this.id = id;
         this.grupo = grupo;
         this.integrantes = integrantes;
@@ -23,7 +23,7 @@ public class PontuacaoGrupo {
     public int getIntegrantes() {
         return integrantes;
     }
-    public double getNota() {
+    public int getNota() {
         return nota;
     }
 

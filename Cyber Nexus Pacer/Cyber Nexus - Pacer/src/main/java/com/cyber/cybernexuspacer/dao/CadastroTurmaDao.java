@@ -11,12 +11,21 @@ public class CadastroTurmaDao {
 
     public static void CadastrarAlunos(AreaDoAluno aluno) throws SQLException {
 
-        String sqlUsuario = "INSERT INTO USUARIO (EMAIL, SENHA, TIPO_USUARIO) VALUES(?,?,?) ";
-        String sqlGrupo = "INSERT IGNORE INTO GRUPOS (GRUPO,SPRINT,NOTA) VALUES(?,0.00,0.00) "; // Use "ON CONFLICT (EMAIL) DO NOTHING" se estiver usando PostgreSQL
-        String sqlAluno = "INSERT INTO ALUNOS (NOME,EMAIL, ID_GRUPO) VALUES(?, ?, (SELECT ID FROM GRUPOS WHERE GRUPO = ?))";
+        String sqlUsuario = "INSERT INTO USUARIOS (EMAIL, SENHA, TIPO_USUARIO) VALUES(?,?,?) ";
+        String sqlGrupo = "INSERT IGNORE INTO GRUPOS (GRUPO) VALUES(?) "; // Use "ON CONFLICT (EMAIL) DO NOTHING" se estiver usando PostgreSQL
+        String sqlAluno = "INSERT INTO ALUNOS (NOME,EMAIL, GRUPO) VALUES(?, ?, ?)";
+        String sqlNotasGrupos =
+                "INSERT INTO notas_grupos (grupo, num_sprint, nota_grupo) " +
+                        "SELECT g.grupo, s.num_sprint, 0 " +
+                        "FROM grupos g " +
+                        "CROSS JOIN sprints s " +
+                        "WHERE NOT EXISTS ( " +
+                        "SELECT 1 FROM notas_grupos ng " +
+                        "WHERE ng.grupo = g.grupo " +
+                        "AND ng.num_sprint = s.num_sprint " +
+                        ");";
 
 
-        PreparedStatement stmt = null;
         Connection connection = null;
         PreparedStatement stmtGrupo = null;
         PreparedStatement stmtAluno = null;
@@ -46,6 +55,9 @@ public class CadastroTurmaDao {
             stmtAluno.setString(3, aluno.getGrupo());
             stmtAluno.executeUpdate();
 
+            //Inserir Notas dos Grupos
+            PreparedStatement stmt = connection.prepareStatement(sqlNotasGrupos);
+            stmt.executeUpdate();
 
             connection.commit(); // Confirmar a transação
 
@@ -56,12 +68,6 @@ public class CadastroTurmaDao {
                 connection.rollback(); // Desfazer a transação em caso de erro
             }
             e.printStackTrace();
-        } finally {
-            // Fechar os statements e a conexão
-            if (stmtGrupo != null) stmtGrupo.close();
-            if (stmtAluno != null) stmtAluno.close();
-            if (stmtUsuario != null) stmtUsuario.close();
-
         }
 
     }

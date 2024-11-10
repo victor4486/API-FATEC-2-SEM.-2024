@@ -14,8 +14,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import static com.mysql.cj.conf.PropertyKey.logger;
 //---------------------
 
 public class CadastroDeTurmaController {
@@ -60,6 +63,7 @@ public class CadastroDeTurmaController {
 
     @FXML
     void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
+
         try {
             // Inicia a transação
             ConexaoDao.getConnection().setAutoCommit(false);
@@ -70,14 +74,32 @@ public class CadastroDeTurmaController {
                     CadastroTurmaDao.CadastrarAlunos(aluno);
 
                 } else {
-                    // Opcional: informe o usuário sobre a duplicata
+                    // Informar o usuário sobre a duplicata de forma mais amigável
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aluno Duplicado");
+                    alert.setHeaderText("O aluno " + aluno.getNomeAluno() + " já está cadastrado.");
+                    alert.setContentText("Verifique a lista de alunos.");
+                    alert.showAndWait();
                     System.out.println("Aluno já existe: " + aluno.getNomeAluno());
                 }
             }
+            // Mensagem de sucesso
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso");
+            alert.setHeaderText("Alunos cadastrados com sucesso!");
+            alert.showAndWait();
 
             // Confirma a transação
             ConexaoDao.getConnection().commit();
         } catch ( SQLException e) {
+
+            // Informar o usuário sobre o erro de forma mais amigável
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Cadastrar Alunos");
+            alert.setHeaderText("Ocorreu um erro ao cadastrar os alunos.");
+            alert.setContentText("Por favor, verifique os dados e tente novamente.");
+            alert.showAndWait();
+
             // Se ocorrer um erro, reverte a transação
             ConexaoDao.getConnection().rollback();
             e.printStackTrace();
