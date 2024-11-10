@@ -99,7 +99,7 @@ public class AreaDoAlunoController {
 
         // Cria um botão para cada sprint
         for (Sprint sprint : sprints) {
-            Button sprintButton = new Button(sprint.getNumSprint());
+            Button sprintButton = new Button("Sprint " + sprint.getNumSprint());
             sprintButton.setPrefSize(188, 40);
             sprintButton.setLayoutX(6);
             sprintButton.setLayoutY(7);
@@ -154,7 +154,7 @@ public class AreaDoAlunoController {
                 lblNomeGrupo.setText(aluno.getGrupo());
             }
             // Define o texto da Label com o valor da nota
-            lblNotaGrupo.setText(String.format("%.2f", nota)); // Formata para 2 casas decimais
+            lblNotaGrupo.setText(String.valueOf(nota)); // Formata para 2 casas decimais
 
 
         } catch (SQLException e) {
