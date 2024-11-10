@@ -6,8 +6,7 @@ import com.cyber.cybernexuspacer.dao.SprintDao;
 import com.cyber.cybernexuspacer.entity.AreaDoAluno;
 import com.cyber.cybernexuspacer.entity.Criterio;
 import com.cyber.cybernexuspacer.entity.Sprint;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.cyber.cybernexuspacer.session.AlunoSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,6 +17,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +82,11 @@ public class AreaDoAlunoController {
 
     private Map<String, Integer> alunosMap = new HashMap<>();  // Mapeamento nome -> ID do aluno
 
+    private List<CheckBox> checkboxes = new ArrayList<>();
+
+    // Estrutura para armazenar os critérios e suas notas associadas
+    private Map<String, Integer> criteriosSelecionados = new HashMap<>();
+
 
     @FXML
     public void initialize() throws SQLException {
@@ -89,6 +94,49 @@ public class AreaDoAlunoController {
         carregarAlunos();
         carregarSprints();
         exibirNota();
+    }
+
+
+    @FXML
+    private void onClickbtnConfirmaNota(ActionEvent event) throws SQLException {
+
+        // Obtenha o ID do avaliador e do avaliado, assim como o número do sprint
+        String nomeReceptor = alunosComboBox.getValue();  // Nome do aluno selecionado no ComboBox
+        Integer idReceptor = alunosMap.get(nomeReceptor); // O ID correspondente ao nome do aluno selecionado
+
+        AreaDoAluno alunoLogado = AlunoSession.getAlunoLogado();
+        int idAvaliador = alunoLogado.getIdAlunoAvaliador(); // Agora pegamos o ID do aluno logado
+
+
+        // Para cada critério, verifica qual foi a nota atribuída
+        for (Map.Entry<String, Integer> entry : criteriosSelecionados.entrySet()) {
+            String tituloCriterio = entry.getKey();
+            int nota = entry.getValue();
+
+            // Agora você pode salvar a nota no banco de dados chamando o método no DAO
+            AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
+            areaDoAlunoDao.salvarNota(idAvaliador, idReceptor, nota, tituloCriterio); // Salva a nota na tabela NOTAS
+
+
+
+
+        }
+        exibirNota();
+        // Exibe uma mensagem para o usuário
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        // Definindo o título do alerta
+        alert.setTitle("Nota Salva");
+        // Definindo o cabeçalho (pode ser nulo ou você pode colocar uma breve descrição)
+        alert.setHeaderText(null);
+        alert.setContentText("Nota salva com sucesso!");
+        alert.showAndWait();
+    }
+
+
+    // Método para salvar a nota selecionada para um critério específico
+    private void salvarNotaCriterio(String tituloCriterio, int nota) {
+        // Armazenando a nota associada ao critério
+        criteriosSelecionados.put(tituloCriterio, nota);
     }
 
     private void carregarSprints() throws SQLException {
@@ -162,7 +210,6 @@ public class AreaDoAlunoController {
         }
     }
 
-
     private void exibirCriterio(String titulo, String descricao) {
         // Criação do campo de exibição do critério
         Pane paneCriterio = new Pane();
@@ -184,10 +231,21 @@ public class AreaDoAlunoController {
         descricaoLabel.setWrapText(true);  // Permite quebra de linha
         descricaoLabel.setStyle("-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
 
-        CheckBox checkboxZero = criaCheckbox(355,10);
-        CheckBox checkboxUm = criaCheckbox(385,10);
-        CheckBox checkboxDois = criaCheckbox(415,10);
-        CheckBox checkboxTres = criaCheckbox(445,10);
+        CheckBox checkboxZero = criaCheckbox("0",355,10);
+        CheckBox checkboxUm = criaCheckbox("1",385,10);
+        CheckBox checkboxDois = criaCheckbox("2",415,10);
+        CheckBox checkboxTres = criaCheckbox("3",445,10);
+
+        checkboxes.add(checkboxZero);
+        checkboxes.add(checkboxUm);
+        checkboxes.add(checkboxDois);
+        checkboxes.add(checkboxTres);
+
+        // Associando a lógica de clique de cada checkbox ao critério
+        checkboxZero.setOnAction(e -> salvarNotaCriterio(titulo, 0));
+        checkboxUm.setOnAction(e -> salvarNotaCriterio(titulo, 1));
+        checkboxDois.setOnAction(e -> salvarNotaCriterio(titulo, 2));
+        checkboxTres.setOnAction(e -> salvarNotaCriterio(titulo, 3));
 
         Label lblNotaZero = criaLabel(355,33,"0");
         Label lblNotaUm = criaLabel(385,33,"1");
@@ -223,8 +281,9 @@ public class AreaDoAlunoController {
         }
     }
 
-    private CheckBox criaCheckbox(double layoutX, double layoutY) {
-        CheckBox checkBox = new CheckBox();
+
+    private CheckBox criaCheckbox(String nome, double layoutX, double layoutY) {
+        CheckBox checkBox = new CheckBox(nome);
         checkBox.setLayoutX(layoutX);
         checkBox.setLayoutY(layoutY);
         return checkBox;
