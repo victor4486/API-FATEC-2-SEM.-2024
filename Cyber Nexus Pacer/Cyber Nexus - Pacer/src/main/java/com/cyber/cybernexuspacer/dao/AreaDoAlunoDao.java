@@ -106,7 +106,7 @@ public class AreaDoAlunoDao {
         }
 
         String sql = "SELECT SUM(NOTA_GRUPO) - ( " +
-                "    SELECT SUM(NOTA) " +
+                "    SELECT COALESCE(SUM(NOTA), 0) " +
                 "    FROM NOTAS " +
                 "    WHERE ID_AVALIADOR IN ( " +
                 "        SELECT ID " +
