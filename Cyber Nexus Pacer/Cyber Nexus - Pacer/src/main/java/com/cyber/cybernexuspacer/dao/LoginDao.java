@@ -71,12 +71,13 @@ public class LoginDao {
 
 
             if (rs.next()) {
+                int idAluno = rs.getInt("id");
                 String nome = rs.getString("nome");
                 String nomeGrupo = rs.getString("grupo");
 
 
                 // Cria o objeto AreaDoAluno e retorna
-                areaDoAluno = new AreaDoAluno(nome, email, nomeGrupo, "fatec2024", "Aluno");
+                areaDoAluno = new AreaDoAluno(idAluno,nome, email, nomeGrupo, "fatec2024", "Aluno");
 
 
             } else {
