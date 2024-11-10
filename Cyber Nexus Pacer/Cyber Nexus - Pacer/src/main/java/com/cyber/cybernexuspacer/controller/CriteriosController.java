@@ -135,10 +135,11 @@ public class CriteriosController {
 
 //***ADICIONAR SPRINTS*****//
 
-
     @FXML
     private void handleAdicionarSprint() {
         sprintCount++;
+        int totalSprints = sprintDao.contarSprints();
+        String numSprint = "Sprint" + (totalSprints + 1);
 
         DatePicker dataInicioPicker = new DatePicker();
         DatePicker dataFimPicker = new DatePicker();
@@ -160,7 +161,7 @@ public class CriteriosController {
                     exibirMensagem("A data de início deve ser anterior à data de término.");
                 } else {
                     // Cria uma nova Sprint sem ID, pois será gerado pelo banco de dados
-                    String numSprint = "Sprint" ;
+                    sprintDao.contarSprints();
                     Sprint novoSprint = new Sprint(0, numSprint, dataInicio, dataFim);
 
 

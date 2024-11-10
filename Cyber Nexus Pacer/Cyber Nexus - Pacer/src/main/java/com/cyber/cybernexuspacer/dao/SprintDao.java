@@ -113,7 +113,7 @@ public class SprintDao {
         return totalSprints;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         SprintDao sprintDao = new SprintDao();
         int totalSprints = sprintDao.contarSprints();
         System.out.println("Número total de sprints cadastradas: " + totalSprints);
