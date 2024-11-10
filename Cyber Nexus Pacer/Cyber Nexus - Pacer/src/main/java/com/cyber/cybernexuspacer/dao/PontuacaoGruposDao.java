@@ -1,7 +1,9 @@
 package com.cyber.cybernexuspacer.dao;
 
 import com.cyber.cybernexuspacer.entity.PontuacaoGrupo;
+import com.cyber.cybernexuspacer.entity.Sprint;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,10 +13,11 @@ import java.util.List;
 public class PontuacaoGruposDao {
 
     public static List<PontuacaoGrupo> pesquisarGrupos() throws SQLException {
-        String sql = "SELECT  G.id, G.grupo AS grupo,  G.nota,  COUNT(A.id) AS integrantes\n" +
-                "FROM   GRUPOS AS G\n" +
-                "LEFT JOIN  ALUNOS AS A ON G.id = A.id_grupo\n" +
-                "GROUP BY  G.id, G.grupo, G.nota;  ";
+        String sql = "SELECT G.ID, G.GRUPO, NG.NOTA_GRUPO, COUNT(A.id) AS INTEGRANTES\n" +
+                "FROM GRUPOS AS G\n" +
+                "LEFT JOIN NOTAS_GRUPOS AS NG ON G.ID = NG.ID\n" +
+                "LEFT JOIN ALUNOS AS A ON G.GRUPO = A.GRUPO\n" +
+                "GROUP BY  G.ID, G.GRUPO;";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -30,7 +33,7 @@ public class PontuacaoGruposDao {
                 int id = rs.getInt("id");
                 String grupo = rs.getString("grupo");
                 int integrantes = rs.getInt("integrantes");
-                double nota = rs.getDouble("nota");
+                int nota = rs.getInt("nota_grupo");
 
                 // Cria um novo objeto Criterio e adiciona à lista
                 PontuacaoGrupo pontuacaoGrupo = new PontuacaoGrupo(id,grupo, integrantes, nota);
@@ -49,16 +52,18 @@ public class PontuacaoGruposDao {
 
     }
 
-    public static void salvarNota(Integer idGrupo, String novaNota) throws SQLException {
-        String sql = "UPDATE GRUPOS SET NOTA = ? WHERE ID = ?";
+    public static void salvarNotaGrupo(String nomeGrupo, int num_sprint, int novaNota) throws SQLException {
+        String sql = "UPDATE NOTAS_GRUPOS SET NOTA_GRUPO = ? WHERE GRUPO = ? AND NUM_SPRINT = ?";  // Usando o nome do grupo e o sprintId
 
         PreparedStatement stmt = null;
 
         try {
 
             stmt = ConexaoDao.getConnection().prepareStatement(sql);
-            stmt.setString(1, novaNota);
-            stmt.setInt(2, idGrupo);
+            stmt = ConexaoDao.getConnection().prepareStatement(sql);
+            stmt.setInt(1, novaNota);      // Nome do grupo
+            stmt.setString(2, nomeGrupo);          // ID do sprint
+            stmt.setInt(3, num_sprint);
             stmt.executeUpdate();
 
         }catch (SQLException e) {
@@ -69,4 +74,5 @@ public class PontuacaoGruposDao {
         }
 
     }
+
 }

@@ -10,13 +10,12 @@ import java.util.List;
 public class SprintDao {
     public int salvarSprint(Sprint sprint) {
         // Lógica para conectar ao banco de dados e inserir a sprint
-        String sql = "INSERT INTO sprints (num_sprint, data_inicial, data_final) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO SPRINTS (NUM_SPRINT, DATA_INICIAL, DATA_FINAL) VALUES (?, ?, ?)";
 
         PreparedStatement stmt = null;
         Connection connection = null;
 
-        try  {
-
+        try {
             if (sprint.getDataInicio() == null  ||  sprint.getDataFim() == null) {
                 throw new IllegalArgumentException("Datas não podem ser vazias");
             }
@@ -25,7 +24,7 @@ public class SprintDao {
             assert connection != null;
             stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, sprint.getNumSprint());
+            stmt.setInt(1, sprint.getNumSprint());
             stmt.setDate(2, sprint.getDataInicio());
             stmt.setDate(3, sprint.getDataFim());
             stmt.executeUpdate();
@@ -58,7 +57,7 @@ public class SprintDao {
             // Itera sobre o ResultSet para preencher a lista de critérios
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String numSprint = rs.getString("num_sprint");
+                int numSprint = rs.getInt("num_sprint");
                 Date dataInicial = rs.getDate("data_inicial");
                 Date dataFinal = rs.getDate("data_final");
 
@@ -78,7 +77,7 @@ public class SprintDao {
     }
 
     public void deletarSprint(int id) throws SQLException {
-        String sql = "DELETE FROM sprints WHERE id = ?";
+        String sql = "DELETE FROM SPRINTS WHERE id = ?";
 
         Connection connection = null;
 
@@ -92,6 +91,34 @@ public class SprintDao {
             // Tratar exceções, se necessário
             throw e;
         }
+    }
+
+    public static Sprint obterSprintAtual() throws SQLException {
+        String sql = "SELECT * FROM SPRINTS WHERE CURDATE() BETWEEN DATA_INICIAL AND DATA_FINAL LIMIT 1";
+
+        Sprint sprintAtual = null;
+
+        // Estabelece a conexão com o banco
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            // Verifica se encontrou algum sprint
+            if (rs.next()) {
+                // Cria o objeto Sprint com os dados retornados
+                sprintAtual = new Sprint();
+                sprintAtual.setId(rs.getInt("id"));
+                sprintAtual.setNumSprint(rs.getInt("num_sprint"));
+                sprintAtual.setDataInicio(rs.getDate("data_inicial"));
+                sprintAtual.setDataFim(rs.getDate("data_final"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao buscar o sprint atual", e);
+        }
+
+        return sprintAtual;
     }
 }
 

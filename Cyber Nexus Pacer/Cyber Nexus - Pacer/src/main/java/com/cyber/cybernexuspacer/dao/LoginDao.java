@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class LoginDao {
 
     public boolean verificarLogin(String nome, String senha, String tipoUsuario) throws SQLException {
-        String sql = "SELECT * FROM USUARIO WHERE EMAIL = ? AND SENHA = ? AND TIPO_USUARIO = ?";
+        String sql = "SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ? AND TIPO_USUARIO = ?";
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -34,7 +34,7 @@ public class LoginDao {
     }
 
     public boolean atualizarSenha(String nome, String novaSenha) throws SQLException {
-        String sql = "UPDATE USUARIO SET SENHA = ? WHERE NOME = ?";
+        String sql = "UPDATE USUARIOS SET SENHA = ? WHERE EMAIL = ?";
         PreparedStatement stmt = null;
 
         try {
@@ -55,13 +55,11 @@ public class LoginDao {
 
     // Método para buscar os detalhes do aluno por email
     public AreaDoAluno buscarAlunoPorEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM alunos WHERE EMAIL = ?";
-        String sqlNomeGrupo = "SELECT grupo FROM grupos WHERE id = ?";
+        String sql = "SELECT * FROM ALUNOS WHERE EMAIL = ?";
 
         PreparedStatement stmt = null;
-        PreparedStatement stmtNomeDoGrupo = null;
         ResultSet rs = null;
-        ResultSet rsNomeDoGrupo = null;
+
         AreaDoAluno areaDoAluno = null;
 
         try {
@@ -74,22 +72,12 @@ public class LoginDao {
 
             if (rs.next()) {
                 String nome = rs.getString("nome");
-                String idGrupo = rs.getString("id_grupo");
+                String nomeGrupo = rs.getString("grupo");
 
-                // Consulta para buscar os alunos do mesmo grupo
-                stmtNomeDoGrupo = connection.prepareStatement(sqlNomeGrupo);
 
-                stmtNomeDoGrupo.setInt(1, Integer.parseInt(idGrupo));
+                // Cria o objeto AreaDoAluno e retorna
+                areaDoAluno = new AreaDoAluno(nome, email, nomeGrupo, "fatec2024", "Aluno");
 
-                rsNomeDoGrupo = stmtNomeDoGrupo.executeQuery();
-
-                if (rsNomeDoGrupo.next()) {
-
-                    String nomeGrupo = rsNomeDoGrupo.getString("grupo");
-
-                    // Cria o objeto AreaDoAluno e retorna
-                    areaDoAluno = new AreaDoAluno(nome, email, nomeGrupo, "fatec2024", "Aluno");
-                }
 
             } else {
                 return null;  // Retorna null se não encontrar o aluno
@@ -100,10 +88,7 @@ public class LoginDao {
         } finally {
             if (rs != null) rs.close();
             if (stmt != null) stmt.close();
-            if (stmtNomeDoGrupo != null) stmtNomeDoGrupo.close();
-            if (rsNomeDoGrupo != null) rsNomeDoGrupo.close();
         }
         return areaDoAluno;
     }
-
 }

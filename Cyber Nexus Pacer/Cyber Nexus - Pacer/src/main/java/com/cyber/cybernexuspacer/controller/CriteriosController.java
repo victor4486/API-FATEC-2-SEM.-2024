@@ -143,7 +143,7 @@ public class CriteriosController {
         DatePicker dataFimPicker = new DatePicker();
 
         // Inicializando o novo Sprint com um ID temporário (pode ser 0)
-        Sprint novoSprint = new Sprint(0,"Sprint " + sprintCount, null, null);
+        Sprint novoSprint = new Sprint(0, sprintCount, null, null);
 
         // Adiciona o novo sprint à lista
         sprints.add(novoSprint);
@@ -151,7 +151,8 @@ public class CriteriosController {
 
         // Cria um novo HBox para armazenar os componentes da sprint
         HBox novoSprintBox = new HBox(10); // Espaçamento entre os componentes
-        novoSprintBox.getChildren().addAll(new Label(novoSprint.getNumSprint()), dataInicioPicker, dataFimPicker);
+        Label labelSprint = new Label("Nova Sprint");
+        novoSprintBox.getChildren().addAll(labelSprint, dataInicioPicker, dataFimPicker);
 
         // Adiciona o novo HBox ao VBox que contém as sprints
         campo_sprints.getChildren().add(novoSprintBox);
@@ -184,7 +185,7 @@ public class CriteriosController {
         pane.setLayoutY(7);
         pane.setStyle("-fx-background-color: #86B6DD; -fx-background-radius: 5;");
 
-        Label numSprintLabel = criaLabel(25,13,sprint.getNumSprint(), "-fx-text-fill: white; -fx-font-size: 14px;");
+        Label numSprintLabel = criaLabel(25,13, "Sprint" + sprint.getNumSprint(), "-fx-text-fill: white; -fx-font-size: 14px;");
         Label dataInicioLabel = criaLabel(12,50,"Data de Início:", "-fx-text-fill: white; -fx-font-size: 14px;");
         Label dataFimLabel = criaLabel(12,85,"Data de Fim:", "-fx-text-fill: white; -fx-font-size: 14px;");
 
@@ -240,6 +241,10 @@ public class CriteriosController {
 
 
     private void carregarSprints() throws SQLException {
+        if (!sprints.isEmpty()) {
+            return; // Se já existirem sprints, não recarregue do banco
+        }
+
         SprintDao sprintDao = new SprintDao();
         List<Sprint> sprintsBd = sprintDao.listarSprints();
 
@@ -269,17 +274,23 @@ public class CriteriosController {
     void onClickConfirmar(ActionEvent event) throws SQLException {
         SprintDao sprintDao = new SprintDao();
 
-        for (Sprint sprint : sprints) {
+        for (int i = 0; i < sprints.size(); i++) {
+            Sprint sprint = sprints.get(i);
+
             if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
                 exibirMensagem("Datas não podem ser vazias para a Sprint: " + sprint.getNumSprint());
                 return; // Saia do metodo se houver datas vazias
             }
 
-
-            // Salve a sprint e obtenha o ID
-            int id = sprintDao.salvarSprint(sprint); // Modifique salvarSprint para retornar o ID gerado
-            sprint.setId(id); // Atualize o objeto Sprint com o ID gerado
+            // Verifique se a sprint já existe no banco antes de tentar salvar
+            // Caso a sprint já tenha um ID, significa que ela foi salva antes
+            if (sprint.getId() == 0) { // Se o ID for 0, é uma nova sprint
+                int id = sprintDao.salvarSprint(sprint);
+                sprint.setId(id); // Atualize o objeto Sprint com o ID gerado
+                sprint.setNumSprint(i + 1);
+            }
         }
+
 
         //adicionar crierios
         CriterioDao criterioDao = new CriterioDao();

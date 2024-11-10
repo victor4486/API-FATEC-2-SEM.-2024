@@ -2,8 +2,10 @@ package com.cyber.cybernexuspacer.controller;
 
 import com.cyber.cybernexuspacer.dao.CriterioDao;
 import com.cyber.cybernexuspacer.dao.PontuacaoGruposDao;
+import com.cyber.cybernexuspacer.dao.SprintDao;
 import com.cyber.cybernexuspacer.entity.Criterio;
 import com.cyber.cybernexuspacer.entity.PontuacaoGrupo;
+import com.cyber.cybernexuspacer.entity.Sprint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -158,14 +161,14 @@ public class PontuacaoGruposController {
     private AnchorPane mostrar_Grupos;// ScrollPane para exibir os critérios
 
     TextField lblNotasSprint;
-    private Map<Integer,TextField> notasMap  = new HashMap<>();
+    private Map<Pair<String, Integer>, TextField> notasMap = new HashMap<>();
 
     @FXML
     public void initialize() throws SQLException {
         carregarGrupos();
     }
 
-    private void exibirGrupos(int id, String grupo, int integrantes, double nota) {
+    private void exibirGrupos(int id, String grupo, int integrantes, int nota, int numSprint) {
         // Criação do campo de exibição do critério
         Pane paneCriterio = new Pane();
         paneCriterio.setPrefSize(579, 60);
@@ -178,6 +181,7 @@ public class PontuacaoGruposController {
         Label integrantesEquipe = criaLabel(7,34,"Integrantes da Equipe: " + String.valueOf(integrantes), "-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
         Label labelNotas = criaLabel(482,10,"Notas da Sprint", "-fx-text-fill: black; -fx-font-size: 12px; -fx-font-family: 'Arial';");
 
+        //int notaInteira = (int) nota;
 
         lblNotasSprint = new TextField(String.valueOf(nota));
         lblNotasSprint.setLayoutX(509);
@@ -185,8 +189,9 @@ public class PontuacaoGruposController {
         lblNotasSprint.setPrefWidth(44);
         lblNotasSprint.setStyle("-fx-font-size: 12px; -fx-font-family: 'Arial';");
 
-        // Armazena o TextField associado ao ID do grupo
-        notasMap.put(id,lblNotasSprint);
+        // Armazena o TextField associado ao nome do grupo e ao sprintId
+        Pair<String, Integer> chave = new Pair<>(grupo, numSprint);
+        notasMap.put(chave, lblNotasSprint);
 
         Rectangle retangNotaSprint = new Rectangle();
         retangNotaSprint.setWidth(44);
@@ -214,12 +219,27 @@ public class PontuacaoGruposController {
         mostrar_Grupos.getChildren().add(paneCriterio);
     }
 
+    private Sprint obterSprintAtual() throws SQLException {
+        // Carregar o sprint atual de algum lugar, por exemplo, do banco de dados
+        SprintDao sprintDao = new SprintDao();
+        return sprintDao.obterSprintAtual(); // Método para obter o sprint atual
+    }
+
     private void carregarGrupos() throws SQLException {
         PontuacaoGruposDao pontuacaoGruposDao = new PontuacaoGruposDao();
         List<PontuacaoGrupo> pontGrupo = pontuacaoGruposDao.pesquisarGrupos();
 
-        for (PontuacaoGrupo pontuacoes : pontGrupo) {
-            exibirGrupos(pontuacoes.getId(), pontuacoes.getGrupo(), pontuacoes.getIntegrantes(), pontuacoes.getNota());
+        // Obter o sprint atual
+        Sprint sprintAtual = obterSprintAtual(); // Aqui você busca o sprint atual
+        if (sprintAtual != null) {
+            int numSprint = sprintAtual.getNumSprint(); // Obtenha o sprintID, ou numSprint
+
+            // Agora, ao exibir os grupos, passe o sprintID
+            for (PontuacaoGrupo pontuacoes : pontGrupo) {
+                exibirGrupos(pontuacoes.getId(), pontuacoes.getGrupo(), pontuacoes.getIntegrantes(), pontuacoes.getNota(), numSprint);
+            }
+        } else {
+            System.out.println("Não foi possível encontrar o sprint atual.");
         }
     }
 
@@ -233,14 +253,15 @@ public class PontuacaoGruposController {
 
     @FXML
     void onbtnconfirmar(ActionEvent event) throws SQLException {
-        for (Map.Entry<Integer,TextField> entry : notasMap.entrySet()){
-            Integer idGrupo = entry.getKey();
-            String novaNota = entry.getValue().getText();
+        for (Map.Entry<Pair<String, Integer>, TextField> entry : notasMap.entrySet()) {
+            Pair<String, Integer> chave = entry.getKey();
+            String nomeGrupo = chave.getKey(); // Nome do grupo
+            int numSprint = chave.getValue();   // ID do sprint
+            int novaNota = Integer.parseInt(entry.getValue().getText());
 
-            PontuacaoGruposDao.salvarNota(idGrupo, novaNota);
+            PontuacaoGruposDao.salvarNotaGrupo(nomeGrupo, numSprint, novaNota);
         }
     }
-
     @FXML
     void onbtnsair(ActionEvent event) throws IOException {
         Main.setRoot("TelaMenu-view");

@@ -10,9 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class    CriterioDao {
-
     public void inserirCriterio(Criterio criterio) {
-        String sql = "INSERT INTO CRITERIO (TITULO, DESCRICAO) VALUES (?, ?)";
+        String sql = "INSERT INTO CRITERIOS (TITULO, DESCRICAO) VALUES (?, ?)";
         Connection connection = null;
         PreparedStatement stmt = null;
 
@@ -45,7 +44,7 @@ public class    CriterioDao {
 
     public List<Criterio> listarCriterios() throws SQLException {
         List<Criterio> criterios = new ArrayList<>();
-        String sql = "SELECT * FROM CRITERIO";
+        String sql = "SELECT * FROM CRITERIOS";
         PreparedStatement stmt = null;
         ResultSet rs = null;
 

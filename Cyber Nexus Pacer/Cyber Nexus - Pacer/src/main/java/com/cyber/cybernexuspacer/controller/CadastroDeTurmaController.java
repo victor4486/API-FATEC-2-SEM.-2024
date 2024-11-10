@@ -14,8 +14,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import static com.mysql.cj.conf.PropertyKey.logger;
 //---------------------
 
 public class CadastroDeTurmaController {
@@ -57,38 +60,6 @@ public class CadastroDeTurmaController {
 
     private ObservableList<AreaDoAluno> listaAluno = FXCollections.observableArrayList();
 
-
-    @FXML
-    void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
-        try {
-            // Inicia a transação
-            ConexaoDao.getConnection().setAutoCommit(false);
-
-            for (AreaDoAluno aluno : listaAluno) {
-                // Verifica se o aluno já existe
-                if (!CadastroTurmaDao.alunoExists(aluno)) {
-                    CadastroTurmaDao.CadastrarAlunos(aluno);
-
-                } else {
-                    // Opcional: informe o usuário sobre a duplicata
-                    System.out.println("Aluno já existe: " + aluno.getNomeAluno());
-                }
-            }
-
-            // Confirma a transação
-            ConexaoDao.getConnection().commit();
-        } catch ( SQLException e) {
-            // Se ocorrer um erro, reverte a transação
-            ConexaoDao.getConnection().rollback();
-            e.printStackTrace();
-        } finally {
-            // Restaura o modo de auto-commit
-            ConexaoDao.getConnection().setAutoCommit(true);
-            ConexaoDao.getConnection().close();
-
-        }
-    }
-
     @FXML
     public void initialize() {
         // Configura as colunas com os dados da classe Pessoa
@@ -100,6 +71,57 @@ public class CadastroDeTurmaController {
         // Configura a tabela para exibir a lista de pessoas
         tabela.setItems(listaAluno);
     }
+
+    @FXML
+    void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
+
+        try {
+            // Inicia a transação
+            ConexaoDao.getConnection().setAutoCommit(false);
+
+            for (AreaDoAluno aluno : listaAluno) {
+                // Verifica se o aluno já existe
+                if (!CadastroTurmaDao.alunoExists(aluno)) {
+                    CadastroTurmaDao.CadastrarAlunos(aluno);
+
+                } else {
+                    // Informar o usuário sobre a duplicata de forma mais amigável
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aluno Duplicado");
+                    alert.setHeaderText("O aluno " + aluno.getNomeAluno() + " já está cadastrado.");
+                    alert.setContentText("Verifique a lista de alunos.");
+                    alert.showAndWait();
+                    System.out.println("Aluno já existe: " + aluno.getNomeAluno());
+                }
+            }
+            // Mensagem de sucesso
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso");
+            alert.setHeaderText("Alunos cadastrados com sucesso!");
+            alert.showAndWait();
+
+            // Confirma a transação
+            ConexaoDao.getConnection().commit();
+        } catch ( SQLException e) {
+
+            // Informar o usuário sobre o erro de forma mais amigável
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro ao Cadastrar Alunos");
+            alert.setHeaderText("Ocorreu um erro ao cadastrar os alunos.");
+            alert.setContentText("Por favor, verifique os dados e tente novamente.");
+            alert.showAndWait();
+
+            // Se ocorrer um erro, reverte a transação
+            ConexaoDao.getConnection().rollback();
+            e.printStackTrace();
+        } finally {
+            // Restaura o modo de auto-commit
+            ConexaoDao.getConnection().setAutoCommit(true);
+            ConexaoDao.getConnection().close();
+
+        }
+    }
+
 
     @FXML
     public void onClickCarregarPlanilha(javafx.event.ActionEvent actionEvent) {
