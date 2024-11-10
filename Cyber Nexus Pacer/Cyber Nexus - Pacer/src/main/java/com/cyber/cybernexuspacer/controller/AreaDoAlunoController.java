@@ -242,4 +242,5 @@ public class AreaDoAlunoController {
     void onClickbtnSair(ActionEvent event) throws IOException {
         Main.setRoot("login-view");
     }
+
 }

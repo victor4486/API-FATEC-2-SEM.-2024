@@ -16,7 +16,6 @@ public class SprintDao {
         Connection connection = null;
 
         try {
-
             if (sprint.getDataInicio() == null  ||  sprint.getDataFim() == null) {
                 throw new IllegalArgumentException("Datas não podem ser vazias");
             }

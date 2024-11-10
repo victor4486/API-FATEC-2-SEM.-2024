@@ -291,6 +291,7 @@ public class CriteriosController {
             }
         }
 
+
         //adicionar crierios
         CriterioDao criterioDao = new CriterioDao();
         for (Criterio criterio : criterios) {

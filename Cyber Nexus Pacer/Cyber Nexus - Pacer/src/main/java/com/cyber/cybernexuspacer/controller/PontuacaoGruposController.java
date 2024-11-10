@@ -262,7 +262,6 @@ public class PontuacaoGruposController {
             PontuacaoGruposDao.salvarNotaGrupo(nomeGrupo, numSprint, novaNota);
         }
     }
-
     @FXML
     void onbtnsair(ActionEvent event) throws IOException {
         Main.setRoot("TelaMenu-view");

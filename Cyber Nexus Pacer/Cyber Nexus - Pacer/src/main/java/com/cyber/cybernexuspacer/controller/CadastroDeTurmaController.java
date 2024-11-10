@@ -60,6 +60,17 @@ public class CadastroDeTurmaController {
 
     private ObservableList<AreaDoAluno> listaAluno = FXCollections.observableArrayList();
 
+    @FXML
+    public void initialize() {
+        // Configura as colunas com os dados da classe Pessoa
+        coluna_Aluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
+        coluna_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        coluna_Grupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
+
+
+        // Configura a tabela para exibir a lista de pessoas
+        tabela.setItems(listaAluno);
+    }
 
     @FXML
     void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
@@ -111,17 +122,6 @@ public class CadastroDeTurmaController {
         }
     }
 
-    @FXML
-    public void initialize() {
-        // Configura as colunas com os dados da classe Pessoa
-        coluna_Aluno.setCellValueFactory(new PropertyValueFactory<>("nomeAluno"));
-        coluna_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        coluna_Grupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
-
-
-        // Configura a tabela para exibir a lista de pessoas
-        tabela.setItems(listaAluno);
-    }
 
     @FXML
     public void onClickCarregarPlanilha(javafx.event.ActionEvent actionEvent) {

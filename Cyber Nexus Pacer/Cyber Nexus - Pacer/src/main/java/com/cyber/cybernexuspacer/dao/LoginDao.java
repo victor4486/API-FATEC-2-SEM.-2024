@@ -91,5 +91,4 @@ public class LoginDao {
         }
         return areaDoAluno;
     }
-
 }
