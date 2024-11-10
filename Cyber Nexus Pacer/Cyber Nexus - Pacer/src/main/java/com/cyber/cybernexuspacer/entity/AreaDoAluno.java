@@ -4,13 +4,15 @@ public class AreaDoAluno {
 
     private int idAlunoReceptor;
     private int idAlunoAvaliador;
+    private int idAluno;
     private String nome;
     private String senha;
     private String email;
     private String tipo_usuario;
     private String grupo;
 
-    public AreaDoAluno(String nome, String email, String grupo, String senha, String tipo_usuario) {
+    public AreaDoAluno(int idAluno, String nome, String email, String grupo, String senha, String tipo_usuario) {
+        this.idAluno = idAluno;
         this.nome = nome;
         this.email = email;
         this.grupo = grupo;
@@ -18,8 +20,11 @@ public class AreaDoAluno {
         this.tipo_usuario = tipo_usuario;
     }
 
+    public int getIdAluno() {
+        return idAluno;
+    }
     public int getIdAlunoReceptor() {
-        return idAlunoReceptor;
+        return idAluno;
     }
     public int getIdAlunoAvaliador() {
         return idAlunoAvaliador;

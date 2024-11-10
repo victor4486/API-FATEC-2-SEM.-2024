@@ -130,7 +130,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btnConfirmaCriterios" layoutX="611.0" layoutY="546.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #369C06; -fx-font-weight: bolder;" text="Confirmar" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="btnConfirma" layoutX="611.0" layoutY="546.0" mnemonicParsing="false" onAction="#onClickbtnConfirmaNota" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #369C06; -fx-font-weight: bolder;" text="Confirmar" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>

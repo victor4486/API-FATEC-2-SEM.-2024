@@ -140,6 +140,9 @@ public class CadastroDeTurmaController {
                     scanner.nextLine();
                 }
 
+                // Variável para gerar IDs fictícios
+                int idTemporario = 1;  // Inicia o contador do ID temporário
+
                 // Lê o arquivo linha por linha e adiciona cada pessoa na lista
                 while (scanner.hasNextLine()) {
                     String linha = scanner.nextLine();
@@ -150,9 +153,11 @@ public class CadastroDeTurmaController {
                         String nome = dados[0];
                         String email = dados[1];
                         String grupo = dados[2];
-                        AreaDoAluno pessoa = new AreaDoAluno(nome, email, grupo, "fatec2024", "Aluno");
+                        AreaDoAluno pessoa = new AreaDoAluno(idTemporario,nome, email, grupo, "fatec2024", "Aluno");
                         listaAluno.add(pessoa);
                     }
+                    // Incrementa o ID temporário para o próximo aluno
+                    idTemporario++;
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

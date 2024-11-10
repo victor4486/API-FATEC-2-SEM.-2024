@@ -29,12 +29,15 @@ public class AreaDoAlunoDao {
         // Consulta SQL para obter o id_grupo do aluno
         String sqlGrupo = "SELECT GRUPO FROM ALUNOS WHERE email = ?";
         String sqlAlunosDoGrupo = "SELECT ID, NOME, EMAIL, GRUPO FROM ALUNOS WHERE GRUPO = ?";
+        String sqlAlunoLogado = "SELECT ID FROM ALUNOS WHERE email = ?";
 
 
         PreparedStatement stmtGrupo = null;
         PreparedStatement stmtAlunosDoGrupo = null;
+        PreparedStatement stmtAlunoLogado = null;
         ResultSet rsGrupo = null;
         ResultSet rsAlunosDoGrupo = null;
+        ResultSet rsAlunoLogado = null;
 
         try {
             // Conexão com o banco de dados
@@ -45,6 +48,11 @@ public class AreaDoAlunoDao {
             stmtGrupo = connection.prepareStatement(sqlGrupo);
             stmtGrupo.setString(1, emailAlunoLogado);
             rsGrupo = stmtGrupo.executeQuery();
+
+            stmtAlunoLogado = connection.prepareStatement(sqlAlunoLogado);
+            stmtAlunoLogado.setString(1, emailAlunoLogado);
+            rsAlunoLogado = stmtAlunoLogado.executeQuery();
+
 
             if (rsGrupo.next()) {
                 String grupo = rsGrupo.getString("grupo");
@@ -61,11 +69,17 @@ public class AreaDoAlunoDao {
                     String nome = rsAlunosDoGrupo.getString("nome");
                     String email = rsAlunosDoGrupo.getString("email");
 
-
                     // Cria e adiciona o aluno à lista
-                    AreaDoAluno aluno = new AreaDoAluno(nome, email, grupo, "fatec2024", "Aluno");
-                    aluno.setIdAlunoReceptor(idAluno);
+                    AreaDoAluno aluno = new AreaDoAluno(idAluno,nome, email, grupo, "fatec2024", "Aluno");
+
+
                     alunos.add(aluno);
+                }
+                if (rsAlunoLogado.next()) {
+                    alunoLogado.setIdAlunoAvaliador(rsAlunoLogado.getInt("ID"));
+                } else {
+                    // Caso não tenha encontrado o aluno logado, trata-se de um erro
+                    throw new SQLException("Aluno logado não encontrado.");
                 }
 
             }
@@ -91,7 +105,20 @@ public class AreaDoAlunoDao {
             throw new SQLException("Nenhuma sprint ativa encontrada.");
         }
 
-        String sql = "SELECT NOTA_GRUPO FROM NOTAS_GRUPOS WHERE GRUPO = ? AND NUM_SPRINT = ?";
+        String sql = "SELECT SUM(NOTA_GRUPO) - ( " +
+                "    SELECT SUM(NOTA) " +
+                "    FROM NOTAS " +
+                "    WHERE ID_AVALIADOR IN ( " +
+                "        SELECT ID " +
+                "        FROM ALUNOS " +
+                "        WHERE GRUPO = ? ) " +  // Nome do grupo
+                "    AND NUM_SPRINT = ? " +  // Número da sprint
+                ") AS resultado " +
+                "FROM NOTAS_GRUPOS " +
+                "WHERE GRUPO IN ( " +
+                "    SELECT GRUPO " +
+                "    FROM ALUNOS " +
+                "    WHERE ID = ? );";  // ID do avaliador do grupo
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -99,12 +126,15 @@ public class AreaDoAlunoDao {
         try {
             Connection connection = ConexaoDao.getConnection();
             stmt = connection.prepareStatement(sql);
+
+
             stmt.setString(1, AlunoSession.getAlunoLogado().getGrupo());
             stmt.setInt(2, sprintAtual.getNumSprint());
+            stmt.setInt(3, AlunoSession.getAlunoLogado().getIdAlunoAvaliador());
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return rs.getDouble("nota_grupo"); // Retorna a nota do grupo
+                return rs.getDouble("resultado"); // Retorna a nota do grupo
             } else {
                 throw new SQLException("Nota não encontrada para o grupo do aluno.");
             }
@@ -117,5 +147,35 @@ public class AreaDoAlunoDao {
             if (stmt != null) stmt.close(); // Fechar o PreparedStatement
         }
     }
+
+    public void salvarNota(int idAvaliador, int idReceptor, int nota, String tituloCriterio) throws SQLException {
+        // Pegando sprint atual
+        Sprint sprintAtual = SprintDao.obterSprintAtual();
+
+        if (sprintAtual == null) {
+            throw new SQLException("Nenhuma sprint ativa encontrada.");
+        }
+
+        String sql = "INSERT INTO NOTAS (id_avaliador, id_receptor, nota, titulo_criterio, num_sprint) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            // Definir os parâmetros do PreparedStatement
+            stmt.setInt(1, idAvaliador);          // ID do avaliador
+            stmt.setInt(2, idReceptor);           // ID do avaliado
+            stmt.setInt(3, nota);                 // Nota
+            stmt.setString(4, tituloCriterio);    // Título do critério
+            stmt.setInt(5, sprintAtual.getNumSprint());            // Número do sprint
+
+            // Executar o insert
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            // Tratar exceções
+            System.err.println("Erro ao salvar a nota: " + e.getMessage());
+            throw e; // Re-lançar exceção para propagar o erro
+        }
+    }
+
 }
 
