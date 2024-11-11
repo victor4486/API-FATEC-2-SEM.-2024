@@ -118,8 +118,8 @@ public class AreaDoAlunoController {
             AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
             areaDoAlunoDao.salvarNota(idAvaliador, idReceptor, nota, tituloCriterio); // Salva a nota na tabela NOTAS
 
-
         }
+
         exibirNota();
         // Exibe uma mensagem para o usuário
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
