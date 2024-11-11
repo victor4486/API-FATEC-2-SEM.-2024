@@ -239,8 +239,6 @@ public class CriteriosController {
         return pane;
     }
 
-
-
     private void carregarSprints() throws SQLException {
         if (!sprints.isEmpty()) {
             return; // Se já existirem sprints, não recarregue do banco

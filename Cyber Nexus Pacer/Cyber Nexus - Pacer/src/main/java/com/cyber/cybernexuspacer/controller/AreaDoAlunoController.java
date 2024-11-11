@@ -119,8 +119,6 @@ public class AreaDoAlunoController {
             areaDoAlunoDao.salvarNota(idAvaliador, idReceptor, nota, tituloCriterio); // Salva a nota na tabela NOTAS
 
 
-
-
         }
         exibirNota();
         // Exibe uma mensagem para o usuário
