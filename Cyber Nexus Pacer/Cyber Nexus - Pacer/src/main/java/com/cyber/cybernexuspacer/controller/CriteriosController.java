@@ -235,7 +235,6 @@ public class CriteriosController {
         double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 130;
         pane.setLayoutY(novaPosicaoY);
 
-
         return pane;
     }
 

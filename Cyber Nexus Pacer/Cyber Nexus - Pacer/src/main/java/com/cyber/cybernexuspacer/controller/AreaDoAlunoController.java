@@ -158,7 +158,6 @@ public class AreaDoAlunoController {
             });
             vBoxSprintsBtns.getChildren().add(sprintButton);  // Adiciona o botão à interface
         }
-
     }
 
 
