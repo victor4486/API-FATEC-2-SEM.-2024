@@ -155,7 +155,8 @@ public class CriteriosController {
         novoSprintBox.getChildren().addAll(labelSprint, dataInicioPicker, dataFimPicker);
 
         // Adiciona o novo HBox ao VBox que contém as sprints
-        campo_sprints.getChildren().add(novoSprintBox);
+        //campo_sprints.getChildren().add(novoSprintBox);
+        exibirSprint(novoSprint, dataInicioPicker, dataFimPicker);
 
         // Adicione listeners para os DatePickers
         dataInicioPicker.setOnAction(e -> {
