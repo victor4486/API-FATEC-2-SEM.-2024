@@ -92,12 +92,12 @@ _______________________________________________________________________________
 
  [**BURNDOWN**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
 
- ![image]([https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/a46af4f1e22e14799075731cbe298e7c4699572c/DOCUMENTOS/Burndown%20Sprint3.jpg))
+ ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint3/DOCUMENTOS/Burndown%20Sprint3.jpg)
  
  
  [**MODELAGEM DE BANCO DE DADOS**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
 
- ![image]((https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/a46af4f1e22e14799075731cbe298e7c4699572c/DOCUMENTOS/MODELAGEM_DE_DADOS_SPRINT3.jpg))
+ ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint3/DOCUMENTOS/MODELAGEM_DE_DADOS_SPRINT3.jpg)
  
  
  [**PROTÓTIPO DE TELAS**](https://www.figma.com/design/QGUqQzvNf3rkLnSx3C5mAM/PACER-V2?node-id=0-1&t=bUoGKdfa1E2TV2fU-1)
