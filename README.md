@@ -57,8 +57,6 @@ _______________________________________________________________________________
 |-------|--------|-------|--------|
 | DIEGO SALES GAMERO JOÃO| ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/DiegoSGamero" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/3c28b9a0-d16b-4fa2-9b41-f4678eb8959f)|
 |  JOÃO PEDRO VENTURA | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/jaupventur" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/4bf968bd-8879-47d7-a0ec-522768f831dd)|
-|  LEONARDO RIBEIRO | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/LeoRibeiro05" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/f5f349b7-0219-4ff8-8bf1-8a22e232a3d9)|
-|  MARCOS ANTONIO POVINSKE | ![Static Badge](https://img.shields.io/badge/PRODUCT_OWNER-pink) | <a href="https://github.com/MarcosPovs" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![Image](https://github.com/user-attachments/assets/0c7edca6-0bbf-4a15-addf-eda3555d0cca)|
 |  TIAGO AUGUSTO SEIXAS  | ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href="https://github.com/TiagoAugustoSeixas" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>|![Image](https://github.com/user-attachments/assets/d3c8ecb3-562d-408b-9122-a35133830aa9)|
 |  TIAGO SANTOS | ![Static Badge](https://img.shields.io/badge/SCRUM_MASTER-black) | <a href="https://github.com/tiago17santos" target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>|![Image](https://github.com/user-attachments/assets/e39515e8-763e-4a17-befd-04cff4d20c9c)|
 |  VICTOR SOUZA |  ![Static Badge](https://img.shields.io/badge/DEV-blue) | <a href=" https://github.com/victor4486 " target="_blank"><img src="https://img.shields.io/badge/-black?style=social&logo=github&label=github&color=black" target="_blank"></a>| ![image](https://github.com/user-attachments/assets/442d8d83-06b9-4313-a0da-15f24c83c593)
@@ -69,10 +67,11 @@ _______________________________________________________________________________
 
 | **SPRINT BACKLOG**| **PRIORIDADE** | **STATUS** 
 |:-------:|:--------:|:-------:|
-| DESENVOLVIMENTO DO AMBIENTE DE ACESSO DO PROFESSOR | PRIORIDADE ALTA | ✅ |
-| DESENVOLVIMENTO DO AMBIENTE DE ACESSO DO ALUNO | PRIORIDADE ALTA |✅ |
-| DESENVOLVIMENTO DO AMBIENTE DE USUÁRIO FRONT END | PRIORIDADE MÉDIA |✅ |
-| DESENVOLVIMENTO DO AMBIENTE DE ACESSO DO PROFESSOR | PRIORIDADE BAIXA |✅ |
+| DESENVOLVIMENTO DO LIMITADOR DE PONTOS DO GRUPO | PRIORIDADE MÉDIA | ✅ |
+| CRIAÇÃO DO SISTEMA DE VOTAÇÃO | PRIORIDADE ALTA | ✅ |
+| RESTRUTURAÇÃO DA MODELAGEM DE DADOS | PRIORIDADE MÉDIA | ✅ |
+| DESENVOLVIMENTO DO MANUAL DE USUÁRIO DO ALUNO | PRIORIDADE MÉDIA | ✅ |
+
 
 
 
@@ -82,22 +81,23 @@ _______________________________________________________________________________
 
 | **SPRINT BACKLOG**| **PRIORIDADE** | **STATUS** 
 |:-------:|:--------:|:-------:|
-| CRIAÇÃO DE UM LIMITADOR DE DATA DAS SPRINTS | PRIORIDADE ALTA | ❌ |
-| DESENVOLVIMENTO DO SISTEMA DE AVALIAÇÃO DO ALUNO | PRIORIDADE ALTA |❌ |
-| CRIAÇÃO DE UM SISTEMA DE LOGIN E SENHA | PRIORIDADE MÉDIA |❌ |
-
+| DESENVOLVIMENTO DO SISTEMA DE MANEJAMENTO DE ALUNOS | PRIORIDADE MÉDIA | ❌ |
+| CRIAÇÃO DO PRINT DE RELATÓRIO DA SPRINT | PRIORIDADE ALTA |❌ |
+| CRIAR DROPDOWN NA TELA VISÃO DE GRUPOS | PRIORIDADE MÉDIA |❌ |
+| LÓGICA PARA INCLUSÃO DE DATAS VÁLIDAS NAS SPRINTS | PRIORIDADE MÉDIA |❌ |
+| LÓGICA PARA BOTÕES DE SPRINTS FICAREM INATIVAS | PRIORIDADE MÉDIA |❌ |
 
 ## <a name="DOCS"></a>  **DOCUMENTAÇÕES 📚** 
 _______________________________________________________________________________
 
  [**BURNDOWN**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
 
- ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png)
+ ![image]([https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/Burndown%20Cyber%20Nexus.png](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/a46af4f1e22e14799075731cbe298e7c4699572c/DOCUMENTOS/Burndown%20Sprint3.jpg))
  
  
  [**MODELAGEM DE BANCO DE DADOS**](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/tree/main)
 
- ![image](https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/Sprint2/DOCUMENTOS/MODELAGEM%20DE%20BANCO%20DE%20DADOS%20SPRINT%202%20CYBERNEXUS.png)
+ ![image]((https://github.com/API-2-Semestre/API-FATEC-2-SEM.-2024/blob/a46af4f1e22e14799075731cbe298e7c4699572c/DOCUMENTOS/MODELAGEM_DE_DADOS_SPRINT3.jpg))
  
  
  [**PROTÓTIPO DE TELAS**](https://www.figma.com/design/QGUqQzvNf3rkLnSx3C5mAM/PACER-V2?node-id=0-1&t=bUoGKdfa1E2TV2fU-1)
