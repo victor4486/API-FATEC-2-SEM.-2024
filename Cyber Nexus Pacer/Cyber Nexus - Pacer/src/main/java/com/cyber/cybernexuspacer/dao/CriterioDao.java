@@ -50,11 +50,10 @@ public class CriterioDao {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
                 String titulo = rs.getString("titulo");
                 String descricao = rs.getString("descricao");
 
-                Criterio criterio = new Criterio(id, titulo, descricao);
+                Criterio criterio = new Criterio( titulo, descricao);
                 criterios.add(criterio);
             }
         } catch (SQLException e) {
@@ -68,15 +67,15 @@ public class CriterioDao {
     }
 
     // Método para deletar critério pelo ID
-    public void deletarCriterio(int id) throws SQLException {
-        String sql = "DELETE FROM CRITERIOS WHERE ID = ?";
+    public void deletarCriterio(String titulo) throws SQLException {
+        String sql = "DELETE FROM CRITERIOS WHERE TITULO = ?";
         Connection connection = null;
         PreparedStatement stmt = null;
 
         try {
             connection = ConexaoDao.getConnection();
             stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setString(1, titulo);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
