@@ -22,7 +22,6 @@ public class CriterioDao {
             stmt.setString(1, criterio.getTitulo());
             stmt.setString(2, criterio.getDescricao());
             stmt.executeUpdate();
-
             System.out.println("Critério inserido com sucesso!");
 
         } catch (SQLException e) {

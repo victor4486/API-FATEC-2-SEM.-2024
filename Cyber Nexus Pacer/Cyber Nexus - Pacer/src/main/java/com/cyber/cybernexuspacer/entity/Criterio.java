@@ -5,7 +5,6 @@ public class Criterio {
     private String titulo;
     private String descricao;
 
-
     // Construtor sem ID
     public Criterio(String titulo, String descricao) {
         this.titulo = titulo;
