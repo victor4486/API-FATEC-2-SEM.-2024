@@ -137,7 +137,7 @@ public class CriteriosController {
     private SprintDao sprintDao = new SprintDao();
     @FXML
     private void handleAdicionarSprint() {
-        sprintCount++;
+        //sprintCount++;
         int totalSprints = sprintDao.contarSprints();
         int numeroDeSprints = totalSprints + 1;
         String numSprint = "Sprint" + (totalSprints + 1);
@@ -273,7 +273,8 @@ public class CriteriosController {
 
     @FXML
     void onClickConfirmar(ActionEvent event) throws SQLException {
-        SprintDao sprintDao = new SprintDao();
+        //adicionar Sprint
+        //SprintDao sprintDao = new SprintDao();
 
         for (int i = 0; i < sprints.size(); i++) {
             Sprint sprint = sprints.get(i);
