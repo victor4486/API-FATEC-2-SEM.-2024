@@ -20,7 +20,6 @@ public class LoginDao {
             stmt.setString(1, nome);
             stmt.setString(2, senha);
             stmt.setString(3, tipoUsuario);
-            System.out.println(stmt);
 
             rs = stmt.executeQuery();
 
