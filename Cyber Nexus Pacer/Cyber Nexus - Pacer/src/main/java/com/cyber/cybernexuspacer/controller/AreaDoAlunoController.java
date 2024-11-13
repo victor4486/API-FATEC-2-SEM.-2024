@@ -7,7 +7,6 @@ import com.cyber.cybernexuspacer.entity.AreaDoAluno;
 import com.cyber.cybernexuspacer.entity.Criterio;
 import com.cyber.cybernexuspacer.entity.Sprint;
 import com.cyber.cybernexuspacer.session.AlunoSession;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
