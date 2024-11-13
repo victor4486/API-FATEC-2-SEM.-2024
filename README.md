@@ -56,7 +56,7 @@ _______________________________________________________________________________
 
 | **PRODUCT BACKLOG**| **PRIORIDADE** | **STATUS** 
 |:-------:|:--------:|:-------:|
-| CRIAÇÃO DO SISTEMA DE VOTAÇÃO | PRIORIDADE ALTA | ❌ |
+| CRIAÇÃO DO SISTEMA DE VOTAÇÃO | PRIORIDADE ALTA | ✅ |
 | CRIAÇÃO DO PRINT DE RELATÓRIO DA SPRINT | PRIORIDADE ALTA |❌ |
 | CRIAÇÃO DO PRINT DE RELATÓRIO DA SPRINT | PRIORIDADE ALTA |❌ |
 | CRIAÇÃO DE SISTEMA DE UPLOAD DE ARQUIVOS | PRIORIDADE MÉDIA |❌ |
@@ -111,9 +111,9 @@ _______________________________________________________________________________
 
 | **SPRINT**| **INICIO** | **ENTREGA** | **STATUS**|
 |:-----:|:-----:|:------:|:------:|
-| 1ª sprint | 09/09 | 29/09 |  ❌ |
-| 2ª sprint | 30/09 | 20/10 |  ❌ |
-| 3ª sprint | 21/10 | 10/11 |  ❌ |
+| 1ª sprint | 09/09 | 29/09 |  ✅ |
+| 2ª sprint | 30/09 | 20/10 |  ✅ |
+| 3ª sprint | 21/10 | 10/11 |  ✅ |
 | 4ª sprint | 11/11 | 01/12 |  ❌ |
 | Feira de Soluções | 12/12 | 12/12 |  ❌ |
 
