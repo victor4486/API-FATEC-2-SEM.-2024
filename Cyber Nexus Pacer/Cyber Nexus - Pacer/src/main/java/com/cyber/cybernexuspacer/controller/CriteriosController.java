@@ -134,16 +134,19 @@ public class CriteriosController {
 
 //***ADICIONAR SPRINTS*****//
 
-
+    private SprintDao sprintDao = new SprintDao();
     @FXML
     private void handleAdicionarSprint() {
         sprintCount++;
+        int totalSprints = sprintDao.contarSprints();
+        int numeroDeSprints = totalSprints + 1;
+        String numSprint = "Sprint" + (totalSprints + 1);
 
         DatePicker dataInicioPicker = new DatePicker();
         DatePicker dataFimPicker = new DatePicker();
 
         // Inicializando o novo Sprint com um ID temporário (pode ser 0)
-        Sprint novoSprint = new Sprint(0, sprintCount, null, null);
+        Sprint novoSprint = new Sprint(0, numeroDeSprints, null, null);
 
         // Adiciona o novo sprint à lista
         sprints.add(novoSprint);

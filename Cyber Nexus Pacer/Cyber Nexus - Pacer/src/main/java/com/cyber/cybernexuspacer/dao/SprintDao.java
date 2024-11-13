@@ -120,5 +120,25 @@ public class SprintDao {
 
         return sprintAtual;
     }
+
+    public int contarSprints() {
+        String sql = "SELECT COUNT(*) FROM sprints";
+        int totalSprints = 0;
+
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                totalSprints = rs.getInt(1); // Obtém o número total de sprints
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalSprints;
+    }
+
+
 }
 
