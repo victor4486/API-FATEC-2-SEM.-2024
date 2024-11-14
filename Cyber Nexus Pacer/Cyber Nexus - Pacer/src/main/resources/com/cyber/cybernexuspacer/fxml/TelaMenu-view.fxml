@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #DD9D9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cyber.cybernexuspacer.controller.TelaMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #D9D9D9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cyber.cybernexuspacer.controller.TelaMenuController">
    <children>
       <Pane layoutX="-1.0" prefHeight="79.0" prefWidth="800.0">
          <children>
-            <Text fx:id="txt_acompanhamento_pacer" fill="#39535f" layoutX="247.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu de Início" textAlignment="CENTER" underline="true">
+            <Text fx:id="txt_acompanhamento_pacer" fill="#39535f" layoutX="343.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Menu" textAlignment="CENTER" underline="true">
                <font>
-                  <Font name="Arial Bold" size="44.0" />
+                  <Font name="Arial Bold" size="48.0" />
                </font>
             </Text>
             <ImageView fitHeight="99.0" fitWidth="276.0" layoutX="-29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -41,6 +41,12 @@
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
+         <effect>
+            <DropShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Pane layoutX="40.0" layoutY="135.0" prefHeight="384.0" prefWidth="720.0" style="-fx-background-color: white; -fx-background-radius: 4; -fx-border-color: black; -fx-border-radius: 4;">
          <children>
