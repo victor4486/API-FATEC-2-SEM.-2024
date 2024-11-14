@@ -1,2 +1,8 @@
 ../.idea
 .idea
+# Ignorar todos os arquivos .class
+*.class
+
+# Ignorar o diretório de compilação target
+/Cyber Nexus Pacer/Cyber Nexus - Pacer/target/
+
