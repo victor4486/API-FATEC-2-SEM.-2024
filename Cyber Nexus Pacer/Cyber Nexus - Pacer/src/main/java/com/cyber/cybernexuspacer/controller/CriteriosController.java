@@ -114,17 +114,22 @@ public class CriteriosController {
 
         novoCriterio.getChildren().addAll(tituloLabel, descricaoLabel, excluirButton);
 
-        // Verifica quantos critérios já existem no campo_criterios
+        // Verifica quantos critérios já existem no campo_criterios para setar posição de altura correto
         int numeroDeCriterios = campo_criterios.getChildren().size();
-
-        // Calcula a posição Y para o novo critério
         double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 78;
-
-        // Define a posição do novo critério
         novoCriterio.setLayoutY(novaPosicaoY);
 
         // Adiciona o novo critério ao AnchorPane (campo_criterios)
         campo_criterios.getChildren().add(novoCriterio);
+    }
+
+    private void carregarCriterios() throws SQLException {
+        CriterioDao criterioDao = new CriterioDao();
+        List<Criterio> criteriosBd = criterioDao.listarCriterios();
+
+        for (Criterio criterio : criteriosBd) {
+            exibirCriterio(criterio.getTitulo(), criterio.getDescricao());
+        }
     }
 
     private void handleExcluirCriterio(String titulo, Pane criterioPane) {
@@ -139,14 +144,7 @@ public class CriteriosController {
         }
     }
 
-    private void carregarCriterios() throws SQLException {
-        CriterioDao criterioDao = new CriterioDao();
-        List<Criterio> criteriosBd = criterioDao.listarCriterios();
 
-        for (Criterio criterio : criteriosBd) {
-            exibirCriterio(criterio.getTitulo(), criterio.getDescricao());
-        }
-    }
 
 
 //***ADICIONAR SPRINTS*****//

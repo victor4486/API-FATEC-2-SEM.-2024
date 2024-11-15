@@ -44,30 +44,7 @@
                   </Pane>
                   <ScrollPane layoutX="5.0" layoutY="93.0" prefHeight="278.0" prefWidth="200.0">
                      <content>
-                        <VBox fx:id="vBoxSprintsBtns" alignment="TOP_CENTER" prefWidth="190.0" spacing="10.0">
-                           <children>
-                              <Button fx:id="btnSprint1" layoutX="5.0" layoutY="5.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 1" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="btnSprint2" layoutX="5.0" layoutY="20.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 2" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="btnSprint3" layoutX="5.0" layoutY="30.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 3" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="btnSprint4" layoutX="5.0" layoutY="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #86B6DD; -fx-font-weight: bolder;" text="SPRINT 4" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="vBoxSprintsBtns" alignment="TOP_CENTER" prefWidth="190.0" spacing="10.0" />
                      </content>
                   </ScrollPane>
                </children>
