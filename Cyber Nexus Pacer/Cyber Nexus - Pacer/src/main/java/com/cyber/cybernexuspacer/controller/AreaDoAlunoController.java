@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class AreaDoAlunoController {
-    @FXML
-    private Label welcomeText;
 
     @FXML
     private Label lblNomeGrupo;
@@ -33,46 +31,7 @@ public class AreaDoAlunoController {
     private Text lblNotaGrupo;
 
     @FXML
-    private Pane alunoSprintsBox;
-
-    @FXML
-    private Pane alunosSprintsBtns;
-
-    @FXML
-    private AnchorPane areaAlunoContainer;
-
-    @FXML
-    private Pane areaAlunoTitulo;
-
-    @FXML
-    private Button btnConfirmaCriterios;
-
-    @FXML
-    private Button btnSairNotas;
-
-    @FXML
     private AnchorPane campo_criterios;
-
-    @FXML
-    private Button btnSprint1;
-
-    @FXML
-    private Button btnSprint2;
-
-    @FXML
-    private Button btnSprint3;
-
-    @FXML
-    private Button btnSprint4;
-
-    @FXML
-    private Pane cabecalhoCyber;
-
-    @FXML
-    private ScrollPane criteriosNotas;
-
-    @FXML
-    private Pane grupoAlunoInfo;
 
     @FXML
     private VBox vBoxSprintsBtns;

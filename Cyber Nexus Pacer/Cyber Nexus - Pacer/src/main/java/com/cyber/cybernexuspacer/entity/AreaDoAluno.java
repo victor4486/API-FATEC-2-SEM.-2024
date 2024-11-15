@@ -11,6 +11,8 @@ public class AreaDoAluno {
     private String tipo_usuario;
     private String grupo;
 
+    public AreaDoAluno() {}
+
     public AreaDoAluno(int idAluno, String nome, String email, String grupo, String senha, String tipo_usuario) {
         this.idAluno = idAluno;
         this.nome = nome;

@@ -12,7 +12,7 @@ public class ConexaoDao {
 
     private static final String url = "jdbc:mysql://localhost:3306/pacerapi?useTimezone=true&serverTimezone=UTC";
     private static final String user = "root";
-    private static final String password = "Einstein_12!";
+    private static final String password = "tiago123";
 
     private static Connection conn;
 

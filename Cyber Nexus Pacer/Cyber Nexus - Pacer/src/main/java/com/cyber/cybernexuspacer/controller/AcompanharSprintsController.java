@@ -1,144 +1,274 @@
 package com.cyber.cybernexuspacer.controller;
 
+import com.cyber.cybernexuspacer.dao.AcompanharSprintsDao;
+import com.cyber.cybernexuspacer.dao.AreaDoAlunoDao;
+import com.cyber.cybernexuspacer.dao.CriterioDao;
+import com.cyber.cybernexuspacer.dao.SprintDao;
+import com.cyber.cybernexuspacer.entity.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.awt.geom.Area;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class AcompanharSprintsController {
 
     @FXML
-    private ImageView btn_print_nota_grupo1;
+    private ScrollPane ScrollPaneSprints;
 
     @FXML
-    private ImageView btn_print_nota_grupo2;
+    private AnchorPane paneAlunos;
 
     @FXML
-    private ImageView btn_print_nota_grupo3;
+    private Button btnGerarAluno;
 
     @FXML
-    private ImageView btn_print_nota_grupo4;
+    private Button btnLimpar;
 
     @FXML
-    private ImageView btn_print_nota_individual1;
+    private Button btnGerarGrupo;
 
     @FXML
-    private ImageView btn_print_nota_individual2;
+    private Button btnSair;
 
     @FXML
-    private ImageView btn_print_nota_individual3;
+    private Button btn_confirmar;
 
     @FXML
-    private ImageView btn_print_nota_individual4;
+    private ImageView btn_print_nota_grupo11;
 
     @FXML
-    private Button btnconfirmar;
+    private ComboBox<String> gruposComboBox;
 
     @FXML
-    private Button btnsair;
-
-    @FXML
-    private Button btnsprint1;
-
-    @FXML
-    private Button btnsprint2;
-
-    @FXML
-    private Button btnsprint3;
-
-    @FXML
-    private Button btnsprint4;
+    private ComboBox<String> criteriosComboBox;
 
     @FXML
     private ImageView logofatec;
 
     @FXML
-    private Text nota_grupo1;
-
-    @FXML
-    private Text nota_grupo2;
-
-    @FXML
-    private Text nota_grupo3;
-
-    @FXML
-    private Text nota_grupo4;
+    private ImageView logofatec1;
 
     @FXML
     private Text nota_individual1;
 
     @FXML
-    private Text nota_individual2;
+    private Pane paneSprints;
 
     @FXML
-    private Text nota_individual3;
+    private VBox vBoxSprintsBtns;
+
 
     @FXML
-    private Text nota_individual4;
+    public void initialize() throws SQLException {
+        carregarSprints();
+        carregarGrupos();
+        carregarCriterios();
+        carregarAlunos();
+
+
+    }
+
+    private void carregarSprints() throws SQLException {
+        SprintDao sprintDao = new SprintDao();
+        List<Sprint> sprints = sprintDao.listarSprints();  // Busca todas as sprints no banco
+        vBoxSprintsBtns.getChildren().clear();  // Limpa o conteúdo anterior
+
+
+        // Cria um botão para cada sprint
+        for (Sprint sprint : sprints) {
+            Button sprintButton = new Button("Sprint " + sprint.getNumSprint());
+            sprintButton.setPrefSize(150, 40);
+            //sprintButton.setLayoutX(11);
+            sprintButton.setLayoutY(11);
+            sprintButton.setStyle("-fx-background-color: #86B6DD; -fx-font-weight: bolder;");
+            sprintButton.setOnAction(event -> {
+                // Ação quando a sprint for clicada
+                System.out.println("Sprint " + sprint.getNumSprint() + " selecionada.");
+                // Você pode adicionar a lógica para lidar com o clique na sprint
+            });
+
+            int numSprint = paneAlunos.getChildren().size();
+            double novaPosicaoY = numSprint == 0 ? 11 : numSprint * 70;  // Incrementa a posição vertical a cada aluno
+            sprintButton.setLayoutY(novaPosicaoY);
+
+            vBoxSprintsBtns.getChildren().add(sprintButton);  // Adiciona o botão à interface
+            vBoxSprintsBtns.setPrefHeight(novaPosicaoY);
+
+        }
+    }
+
+    private void carregarGrupos() throws SQLException {
+        AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+        List<PontuacaoGrupo> alunos = acompanharSprintsDao.listarGrupos();
+
+        // Preenche o ComboBox com os nomes dos grupos
+        gruposComboBox.getItems().setAll(
+                alunos.stream()
+                        .map(PontuacaoGrupo::getGrupo)  // Nome do grupo
+                        .toList()
+        );
+    }
+
+    private void carregarCriterios() throws SQLException {
+        CriterioDao criterioDao = new CriterioDao();
+        List<Criterio> criterios = criterioDao.listarCriterios();
+
+        // Preenche o ComboBox com os nomes dos grupos
+        criteriosComboBox.getItems().setAll(
+                criterios.stream()
+                        .map(Criterio::getTitulo)  // Nome do grupo
+                        .toList()
+        );
+    }
+
+    private void carregarAlunos() throws SQLException {
+        AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+        List<AreaDoAluno> alunos = acompanharSprintsDao.listarAlunos();
+
+        paneAlunos.getChildren().clear();
+
+        for(AreaDoAluno aluno : alunos) {
+            exibirAlunos(aluno.getNomeAluno(),aluno.getGrupo());
+        }
+
+    }
+
+
+    // Método para quando um grupo for selecionado
+    @FXML
+    private void onGrupoSelecionado(ActionEvent event) {
+        String grupoSelecionado = gruposComboBox.getValue();
+        if (grupoSelecionado != null) {
+            try {
+                carregarAlunosDoGrupo(grupoSelecionado);  // Chama o método que carrega os alunos
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @FXML
-    private Label txt_acompanhamento_pacer;
+    private void onCriterioSelecionado(ActionEvent event) {
+        String criterioSelecionado = criteriosComboBox.getValue();
+        if (criterioSelecionado != null) {
+            try {
+                carregarAlunosDoGrupo(criterioSelecionado); //Chama o método que carrega os alunos
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    // Carrega os alunos do grupo selecionado
+    private void carregarAlunosDoGrupo(String grupo) throws SQLException {
+        AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+        List<AreaDoAluno> alunos = acompanharSprintsDao.listarAlunosPorGrupo(grupo);
+
+        paneAlunos.getChildren().clear();
+
+        for(AreaDoAluno aluno : alunos) {
+            exibirAlunos(aluno.getNomeAluno(),aluno.getGrupo());
+        }
+
+    }
+
+    // Carrega os alunos do grupo selecionado
+    private void carregarNotasDoCriterio(String titulo) throws SQLException {
+        AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+        List<AreaDoAluno> alunos = acompanharSprintsDao.listarAlunosPorGrupo(titulo); //listarNotasPorCriterio
+
+        paneAlunos.getChildren().clear();
+
+        for(AreaDoAluno aluno : alunos) {
+            exibirAlunos(aluno.getNomeAluno(),aluno.getGrupo());
+        }
+
+    }
+
+    // Este método cria e exibe um aluno no painel
+    private void exibirAlunos(String nome, String grupo) {
+        // Criar um painel para cada aluno
+        Pane alunoPane = new Pane();
+        alunoPane.setPrefSize(550, 65);
+        alunoPane.setLayoutX(4);
+        alunoPane.setLayoutY(10);
+        alunoPane.setStyle("-fx-background-color: #86B6DD; -fx-background-radius: 5;");
+
+        Label nomeAluno = criaLabel(5,7, "Aluno: " + nome, "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label grupoAluno = criaLabel(5,40,"Grupo: ", "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label lblAluno = criaLabel(375,7,"NOTA DA SPRINT:", "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label notaAluno = criaLabel(395,30,"24/72", "-fx-text-fill: black; -fx-font-size: 12px;");
+
+
+        // Criar o ComboBox para os grupos
+        ComboBox<String> grupoComboBox = new ComboBox<>();
+        grupoComboBox.getItems().setAll(gruposComboBox.getItems());  // Preenche com os grupos disponíveis
+        grupoComboBox.setValue(grupo);  // Define o grupo atual do aluno
+        grupoComboBox.setLayoutX(50);
+        grupoComboBox.setLayoutY(35);
+        grupoComboBox.setPrefWidth(150);
+        grupoComboBox.setOnAction(event -> {
+            String grupoSelecionado = grupoComboBox.getValue();
+            System.out.println("Grupo selecionado para o aluno: " + grupoSelecionado);
+            // Você pode implementar lógica adicional, como salvar a mudança no banco de dados, etc.
+        });
+
+        // Adicionar os textos e o ComboBox ao painel do aluno
+        alunoPane.getChildren().addAll(
+                nomeAluno, grupoAluno,grupoComboBox,lblAluno, notaAluno
+        );
+
+        int numeroDeAlunos = paneAlunos.getChildren().size();
+        double novaPosicaoY = numeroDeAlunos == 0 ? 5 : numeroDeAlunos * 70;
+        alunoPane.setLayoutY(novaPosicaoY);
+
+        paneAlunos.getChildren().add(alunoPane);
+        paneAlunos.setPrefHeight(novaPosicaoY);
+
+
+    }
+
+    private Label criaLabel(double layoutX, double layoutY, String descricao, String style) {
+        Label label = new Label(descricao);
+        label.setLayoutX(layoutX);
+        label.setLayoutY(layoutY);
+        label.setStyle(style);
+        return label;
+    }
+
 
     @FXML
-    private Text txt_nota_grupo1;
+    void onClickGerarRelatorioAlunos(ActionEvent event) {
+
+    }
 
     @FXML
-    private Text txt_nota_grupo2;
+    void onClickGerarRelatorioGrupos(ActionEvent event) {
+
+    }
 
     @FXML
-    private Text txt_nota_grupo3;
+    private void onGrupoAlunoSelecionado(ActionEvent event) {}
 
     @FXML
-    private Text txt_nota_grupo4;
-
-    @FXML
-    private Text txt_nota_individual1;
-
-    @FXML
-    private Text txt_nota_individual2;
-
-    @FXML
-    private Text txt_nota_individual3;
-
-    @FXML
-    private Text txt_nota_individual4;
-
-    @FXML
-    private Label txt_ola_professor;
-
-    @FXML
-    private Text txt_selecaodesprints;
-
-    @FXML
-    private Text txtaluno1;
-
-    @FXML
-    private Text txtaluno2;
-
-    @FXML
-    private Text txtaluno3;
-
-    @FXML
-    private Text txtaluno4;
-
-    @FXML
-    private Label txtcibernexus;
-
-    @FXML
-    private Text txtgrupo1;
-
-    @FXML
-    private Text txtgrupo2;
-
-    @FXML
-    private Text txtgrupo3;
-
-    @FXML
-    private Text txtgrupo4;
+    void onClickLimpar(ActionEvent event) throws SQLException {
+        carregarAlunos();
+    }
 
     @FXML
     protected void onbtnconfirmar(ActionEvent event) {
@@ -146,28 +276,8 @@ public class AcompanharSprintsController {
     }
 
     @FXML
-    protected void onbtnsair(ActionEvent event) throws IOException {
+    protected void onClickVoltarMenu(ActionEvent event) throws IOException {
         Main.setRoot("TelaMenu-view");
-    }
-
-    @FXML
-    protected void onbtnsprint1(ActionEvent event) {
-
-    }
-
-    @FXML
-    protected void onbtnsprint2(ActionEvent event) {
-
-    }
-
-    @FXML
-    protected void onbtnsprint3(ActionEvent event) {
-
-    }
-
-    @FXML
-    protected void onbtnsprint4(ActionEvent event) {
-
     }
 
 }
