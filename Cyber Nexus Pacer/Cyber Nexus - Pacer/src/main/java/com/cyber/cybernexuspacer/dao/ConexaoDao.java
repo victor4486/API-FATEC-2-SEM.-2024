@@ -10,9 +10,9 @@ public class ConexaoDao {
     private static final String password = "CyberNexusFatec"; // Substitua pela senha do Supabase*/
 
 
-    private static final String url = "jdbc:mysql://localhost:3306/pacerapi?useTimezone=true&serverTimezone=UTC";
+    private static final String url = "jdbc:mysql://localhost:3306/pacer1";
     private static final String user = "root";
-    private static final String password = "tiago123";
+    private static final String password = "mayara@1";
 
     private static Connection conn;
 
