@@ -74,6 +74,9 @@ public class AcompanharSprintsController {
 
     private int sprintSelecionada = 1;
 
+    private Map<String, String> alteracoesGrupo = new HashMap<>();
+
+
     @FXML
     public void initialize() throws SQLException {
         carregarSprints();
@@ -241,7 +244,7 @@ public class AcompanharSprintsController {
         grupoComboBox.setOnAction(event -> {
             String grupoSelecionado = grupoComboBox.getValue();
             System.out.println("Grupo selecionado para o aluno: " + grupoSelecionado);
-            // Você pode implementar lógica adicional, como salvar a mudança no banco de dados, etc.
+            alteracoesGrupo.put(nome, grupoSelecionado); // Armazena a alteração dos grupos dos alunos
         });
 
         // Adicionar os textos e o ComboBox ao painel do aluno
@@ -287,9 +290,26 @@ public class AcompanharSprintsController {
     }
 
     @FXML
-    protected void onbtnconfirmar(ActionEvent event) {
-
+    protected void onbtnconfirmar(ActionEvent event) throws SQLException {
+        AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao(); // DAO para manipular dados dos alunos
+        for (Map.Entry<String, String> entry : alteracoesGrupo.entrySet()) {
+            String nomeAluno = entry.getKey();
+            String novoGrupo = entry.getValue();
+            try {
+                // Obter o ID do aluno baseado no nome (crie um método no DAO para isso)
+                long idAluno = acompanharSprintsDao.obterIdPorNome(nomeAluno);
+                acompanharSprintsDao.atualizarGrupoAluno(idAluno, nomeAluno, novoGrupo);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Erro ao atualizar grupo do aluno: " + nomeAluno);
+            }
+        }
+        alteracoesGrupo.clear(); // Limpa o mapa após processar as alterações
+        System.out.println("Alterações confirmadas.");
+        carregarAlunos();
     }
+
+
 
     @FXML
     protected void onClickVoltarMenu(ActionEvent event) throws IOException {

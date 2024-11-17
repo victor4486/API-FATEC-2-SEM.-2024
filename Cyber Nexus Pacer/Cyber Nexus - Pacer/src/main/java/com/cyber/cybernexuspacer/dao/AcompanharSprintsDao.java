@@ -197,6 +197,80 @@ public class AcompanharSprintsDao {
         return notas;
     }
 
+    public void atualizarGrupoAluno(long idAluno, String nomeAluno, String novoGrupo) throws SQLException {
+        // Primeiro, obter o grupo atual do aluno
+        String grupoAtual = obterGrupoAtualAluno(idAluno);
+
+        // Registrar o histórico
+        salvarHistoricoGrupo(idAluno, grupoAtual, novoGrupo);
+
+        // Atualizar o grupo no banco
+        String sql = "UPDATE alunos SET grupo = ? WHERE id = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, novoGrupo);
+            stmt.setLong(2, idAluno);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String obterGrupoAtualAluno(long idAluno) throws SQLException {
+        String sql = "SELECT grupo FROM alunos WHERE id = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, idAluno);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("grupo");
+            } else {
+                throw new SQLException("Aluno não encontrado com id: " + idAluno);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public long obterIdPorNome(String nomeAluno) throws SQLException {
+        String sql = "SELECT id FROM alunos WHERE nome = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, nomeAluno);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong("id");
+                } else {
+                    throw new SQLException("Aluno não encontrado com o nome: " + nomeAluno);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public void salvarHistoricoGrupo(long idAluno, String grupoAnterior, String grupoAtual) throws SQLException {
+        String sql = "INSERT INTO historico_grupo_aluno (id_aluno, grupo_anterior, grupo_atual) VALUES (?, ?, ?)";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, idAluno);
+            stmt.setString(2, grupoAnterior);
+            stmt.setString(3, grupoAtual);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
 
 }
