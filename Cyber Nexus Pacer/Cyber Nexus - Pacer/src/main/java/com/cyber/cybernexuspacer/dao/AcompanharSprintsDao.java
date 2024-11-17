@@ -128,5 +128,149 @@ public class AcompanharSprintsDao {
         return alunos;  // Retorna a lista de alunos
     }
 
+    // Método para pesquisar os grupos e calcular a soma e a média das notas
+    public List<AcompanharSprints> listarNotasPorCriterioESprint(String tituloCriterio, long numSprint) throws SQLException {
+        List<AcompanharSprints> notas = new ArrayList<>();
+        String sql = """
+            WITH grupos_com_integrantes AS (
+                SELECT
+                    a.grupo,
+                    COUNT(*) AS num_integrantes
+                FROM
+                    alunos a
+                GROUP BY
+                    a.grupo
+            ),
+            notas_por_grupo_criterio AS (
+                SELECT
+                    a.grupo,
+                    n.titulo_criterio,
+                    n.num_sprint,
+                    SUM(n.nota) AS soma_notas_grupo
+                FROM
+                    notas n
+                INNER JOIN alunos a ON n.id_avaliador = a.id
+                GROUP BY
+                    a.grupo, n.titulo_criterio, n.num_sprint
+            )
+            SELECT
+                a.nome AS nome_aluno,
+                a.grupo AS grupo_aluno,
+                SUM(n.nota) AS soma_notas_aluno,
+                ng.soma_notas_grupo,
+                (SUM(n.nota) / gci.num_integrantes) AS media_aluno
+            FROM
+                notas n
+            INNER JOIN alunos a ON n.id_receptor = a.id
+            INNER JOIN notas_por_grupo_criterio ng ON
+                a.grupo = ng.grupo AND
+                n.titulo_criterio = ng.titulo_criterio AND
+                n.num_sprint = ng.num_sprint
+            INNER JOIN grupos_com_integrantes gci ON a.grupo = gci.grupo
+            WHERE
+                n.titulo_criterio = ?
+                AND n.num_sprint = ?
+            GROUP BY
+                a.nome, a.grupo, ng.soma_notas_grupo, gci.num_integrantes
+            ORDER BY
+                a.grupo, a.nome;
+            """;
+        try  {
+
+            Connection conn = ConexaoDao.getConnection();
+            assert conn != null;
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, tituloCriterio);
+            stmt.setLong(2, numSprint);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String nome = rs.getString("nome_aluno");
+                String grupo = rs.getString("grupo_aluno");
+                double somaGrupo = rs.getDouble("soma_notas_grupo");
+                double mediaNota = rs.getDouble("media_aluno");
+                //double somaAluno = rs.getDouble("soma_notas_aluno");
+                notas.add(new AcompanharSprints(nome, grupo, mediaNota, somaGrupo));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return notas;
+    }
+
+    public void atualizarGrupoAluno(long idAluno, String nomeAluno, String novoGrupo) throws SQLException {
+        // Primeiro, obter o grupo atual do aluno
+        String grupoAtual = obterGrupoAtualAluno(idAluno);
+
+        // Registrar o histórico
+        salvarHistoricoGrupo(idAluno, grupoAtual, novoGrupo);
+
+        // Atualizar o grupo no banco
+        String sql = "UPDATE alunos SET grupo = ? WHERE id = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, novoGrupo);
+            stmt.setLong(2, idAluno);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String obterGrupoAtualAluno(long idAluno) throws SQLException {
+        String sql = "SELECT grupo FROM alunos WHERE id = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, idAluno);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("grupo");
+            } else {
+                throw new SQLException("Aluno não encontrado com id: " + idAluno);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public long obterIdPorNome(String nomeAluno) throws SQLException {
+        String sql = "SELECT id FROM alunos WHERE nome = ?";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, nomeAluno);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong("id");
+                } else {
+                    throw new SQLException("Aluno não encontrado com o nome: " + nomeAluno);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public void salvarHistoricoGrupo(long idAluno, String grupoAnterior, String grupoAtual) throws SQLException {
+        String sql = "INSERT INTO historico_grupo_aluno (id_aluno, grupo_anterior, grupo_atual) VALUES (?, ?, ?)";
+        try {
+            Connection conn = ConexaoDao.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, idAluno);
+            stmt.setString(2, grupoAnterior);
+            stmt.setString(3, grupoAtual);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
 
 }
