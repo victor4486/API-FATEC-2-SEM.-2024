@@ -21,7 +21,9 @@ import javafx.scene.text.Text;
 import java.awt.geom.Area;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AcompanharSprintsController {
 
@@ -70,6 +72,7 @@ public class AcompanharSprintsController {
     @FXML
     private VBox vBoxSprintsBtns;
 
+    private int sprintSelecionada = 1;
 
     @FXML
     public void initialize() throws SQLException {
@@ -96,7 +99,8 @@ public class AcompanharSprintsController {
             sprintButton.setStyle("-fx-background-color: #86B6DD; -fx-font-weight: bolder;");
             sprintButton.setOnAction(event -> {
                 // Ação quando a sprint for clicada
-                System.out.println("Sprint " + sprint.getNumSprint() + " selecionada.");
+                sprintSelecionada = sprint.getNumSprint();
+                System.out.println("Sprint " + sprintSelecionada + " selecionada.");
                 // Você pode adicionar a lógica para lidar com o clique na sprint
             });
 
@@ -146,8 +150,6 @@ public class AcompanharSprintsController {
 
     }
 
-
-    // Método para quando um grupo for selecionado
     @FXML
     private void onGrupoSelecionado(ActionEvent event) {
         String grupoSelecionado = gruposComboBox.getValue();
@@ -159,13 +161,15 @@ public class AcompanharSprintsController {
             }
         }
     }
-
+    //Arrumar criterios para que puxe o filtro dos grupos caso selecionado
     @FXML
     private void onCriterioSelecionado(ActionEvent event) {
         String criterioSelecionado = criteriosComboBox.getValue();
+        //String grupoSelecionado = gruposComboBox.getValue();
         if (criterioSelecionado != null) {
             try {
-                carregarAlunosDoGrupo(criterioSelecionado); //Chama o método que carrega os alunos
+                //carregarAlunosDoGrupo(grupoSelecionado);
+                carregarNotasDoCriterio(criterioSelecionado,sprintSelecionada); //Chama o método que carrega os alunos
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -188,20 +192,32 @@ public class AcompanharSprintsController {
     }
 
     // Carrega os alunos do grupo selecionado
-    private void carregarNotasDoCriterio(String titulo) throws SQLException {
+    private void carregarNotasDoCriterio(String tituloCriterio, int numSprint) throws SQLException {
         AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
-        List<AreaDoAluno> alunos = acompanharSprintsDao.listarAlunosPorGrupo(titulo); //listarNotasPorCriterio
+        List<AcompanharSprints> notas = acompanharSprintsDao.listarNotasPorCriterioESprint(tituloCriterio, numSprint);
 
+        // Limpa o painel antes de atualizar os dados
         paneAlunos.getChildren().clear();
 
-        for(AreaDoAluno aluno : alunos) {
-            exibirAlunos(aluno.getNomeAluno(),aluno.getGrupo());
-        }
+        // Itera sobre os resultados e exibe os alunos com suas notas calculadas
+        for (AcompanharSprints notaAluno : notas) {
+            exibirAlunos(
+                    notaAluno.getNomeAluno(),
+                    notaAluno.getGrupo(),
+                    notaAluno.getMediaNotaAluno(), // A média já é calculada no DAO
+                    notaAluno.getSomaTotalCriterio()); // Soma total do critério para exibir ou usar, se necessário
 
+        }
+    }
+
+    //Sobrecarga do metodo exibirAlunos
+    private void exibirAlunos(String nome, String grupo) {
+        // Chama a nova versão do método com valores padrão
+        exibirAlunos(nome, grupo, 0.0, 0.0);
     }
 
     // Este método cria e exibe um aluno no painel
-    private void exibirAlunos(String nome, String grupo) {
+    private void exibirAlunos(String nome, String grupo, double mediaNota, double somaTotalCriterio) {
         // Criar um painel para cada aluno
         Pane alunoPane = new Pane();
         alunoPane.setPrefSize(550, 65);
@@ -212,8 +228,8 @@ public class AcompanharSprintsController {
         Label nomeAluno = criaLabel(5,7, "Aluno: " + nome, "-fx-text-fill: black; -fx-font-size: 12px;");
         Label grupoAluno = criaLabel(5,40,"Grupo: ", "-fx-text-fill: black; -fx-font-size: 12px;");
         Label lblAluno = criaLabel(375,7,"NOTA DA SPRINT:", "-fx-text-fill: black; -fx-font-size: 12px;");
-        Label notaAluno = criaLabel(395,30,"24/72", "-fx-text-fill: black; -fx-font-size: 12px;");
-
+        Label mediaAluno = criaLabel(395,30,String.format("%.2f", mediaNota) + " / ", "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label notaTotal = criaLabel(427, 30, String.format("%.2f", somaTotalCriterio), "-fx-text-fill: black; -fx-font-size: 12px;");
 
         // Criar o ComboBox para os grupos
         ComboBox<String> grupoComboBox = new ComboBox<>();
@@ -230,7 +246,7 @@ public class AcompanharSprintsController {
 
         // Adicionar os textos e o ComboBox ao painel do aluno
         alunoPane.getChildren().addAll(
-                nomeAluno, grupoAluno,grupoComboBox,lblAluno, notaAluno
+                nomeAluno, grupoAluno,grupoComboBox,lblAluno, mediaAluno,notaTotal
         );
 
         int numeroDeAlunos = paneAlunos.getChildren().size();
