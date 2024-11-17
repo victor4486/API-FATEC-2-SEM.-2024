@@ -3,6 +3,7 @@ module com.cyber.cybernexuspacer {
     requires javafx.fxml;
     requires java.sql;
     requires mysql.connector.j;
+    requires java.desktop;
 
 
     //opens com.cyber.cybernexuspacer to javafx.fxml;
