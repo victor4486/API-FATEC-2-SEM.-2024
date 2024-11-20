@@ -57,7 +57,7 @@ public class LoginController {
             // Verifica se o login e a senha estão corretos no banco de dados
             if (loginDao.verificarLogin(nome, senha, tipoUsuario)) {
                 // Se estiverem corretos, muda a tela
-                if ("Aluno".equals(tipoUsuario) && "aluno".equals(senha)) {
+                if ("Aluno".equals(tipoUsuario) && "fatec2024".equals(senha)) {
                     redirecionarParaRecuperacaoSenha(nome);
                 }
                 else if ("Aluno".equals(tipoUsuario)) {
