@@ -263,4 +263,5 @@ public class AreaDoAlunoController {
         Main.setRoot("login-view");
     }
 
+
 }

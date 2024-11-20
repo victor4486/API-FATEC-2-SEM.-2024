@@ -28,6 +28,7 @@ public class PontuacaoGrupo {
         return nota;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }

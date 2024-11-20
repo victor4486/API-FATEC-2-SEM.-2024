@@ -25,6 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileOutputStream;
+
+
 public class AcompanharSprintsController {
 
     @FXML
@@ -262,6 +271,101 @@ public class AcompanharSprintsController {
 
     }
 
+    public void gerarRelatorio(List<GrupoSprint> dados) throws Exception {
+        // Criação do documento PDF
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("relatorio_grupos.pdf"));
+        document.open();
+
+        // Título do relatório
+        Paragraph titulo = new Paragraph("Relatório de Grupos e Sprints", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        document.add(titulo);
+
+        // Criação da tabela
+        int numColunas = dados.stream().mapToInt(g -> g.getNotas().size()).max().orElse(1) + 1; // +1 para o nome do grupo
+        PdfPTable table = new PdfPTable(numColunas);
+        table.setWidthPercentage(100);
+
+        // Cabeçalho
+        PdfPCell headerGrupo = new PdfPCell(new Phrase("Grupo", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerGrupo);
+
+        for (int i = 1; i < numColunas; i++) {
+            PdfPCell headerSprint = new PdfPCell(new Phrase("Sprint " + i, FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+            table.addCell(headerSprint);
+        }
+
+        // Dados
+        for (GrupoSprint grupo : dados) {
+            table.addCell(new PdfPCell(new Phrase(grupo.getNome())));
+            for (int nota : grupo.getNotas()) {
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(nota))));
+            }
+            // Preenche células vazias para grupos com menos sprints
+            for (int i = grupo.getNotas().size(); i < numColunas - 1; i++) {
+                table.addCell(new PdfPCell(new Phrase("")));
+            }
+        }
+
+        // Adiciona a tabela ao documento
+        document.add(table);
+        document.close();
+
+        System.out.println("Relatório gerado com sucesso: relatorio_grupos.pdf");
+    }
+
+    public void gerarRelatorioAlunos(List<AcompanharSprints> alunos) throws Exception {
+        // Criação do documento PDF
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("relatorio_alunos_com_notas.pdf"));
+        document.open();
+
+        // Título do relatório
+        Paragraph titulo = new Paragraph("Relatório de Alunos por Grupo", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        document.add(titulo);
+
+        // Criação da tabela com 3 colunas: Grupo, Nome do Aluno, e Nota
+        PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100);
+
+        // Cabeçalhos
+        PdfPCell headerGrupo = new PdfPCell(new Phrase("Grupo", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerGrupo);
+
+        PdfPCell headerAluno = new PdfPCell(new Phrase("Aluno", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerAluno);
+
+        PdfPCell headerNota = new PdfPCell(new Phrase("Nota", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerNota);
+
+        PdfPCell headerCriterio = new PdfPCell(new Phrase("Critério", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerCriterio);
+
+        PdfPCell headerSprint = new PdfPCell(new Phrase("Sprint", FontFactory.getFont(FontFactory.HELVETICA_BOLD)));
+        table.addCell(headerSprint);
+
+        // Dados
+        for (AcompanharSprints aluno : alunos) {
+            table.addCell(new PdfPCell(new Phrase(aluno.getGrupo())));
+            table.addCell(new PdfPCell(new Phrase(aluno.getNomeAluno())));
+            table.addCell(new PdfPCell(new Phrase(String.format("%.2f", aluno.getMediaNotaAluno()))));
+            table.addCell(new PdfPCell(new Phrase(aluno.getCriterio())));
+            table.addCell(new PdfPCell(new Phrase(aluno.getSprint())));
+        }
+
+        // Adiciona a tabela ao documento
+        document.add(table);
+        document.close();
+
+        System.out.println("Relatório gerado com sucesso: relatorio_alunos_com_notas.pdf");
+    }
+
+
+
     private Label criaLabel(double layoutX, double layoutY, String descricao, String style) {
         Label label = new Label(descricao);
         label.setLayoutX(layoutX);
@@ -273,12 +377,32 @@ public class AcompanharSprintsController {
 
     @FXML
     void onClickGerarRelatorioAlunos(ActionEvent event) {
-
+        try {
+            AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+            List<AcompanharSprints> alunos = acompanharSprintsDao.listarDadosParaRelatorioAlunos();
+            gerarRelatorioAlunos(alunos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao gerar relatório: " + e.getMessage());
+        }
     }
+
 
     @FXML
     void onClickGerarRelatorioGrupos(ActionEvent event) {
+        try {
+            // 1. Coletar os dados (exemplo usando o DAO)
+            AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+            List<GrupoSprint> dados = acompanharSprintsDao.listarDadosParaRelatorio(); // Método no DAO para buscar os dados
 
+            // 2. Gerar o relatório
+            gerarRelatorio(dados);
+
+        } catch (Exception e) {
+            // Tratar exceções
+            e.printStackTrace();
+            // Exibir mensagem de erro para o usuário
+        }
     }
 
     @FXML
@@ -315,5 +439,6 @@ public class AcompanharSprintsController {
     protected void onClickVoltarMenu(ActionEvent event) throws IOException {
         Main.setRoot("TelaMenu-view");
     }
+
 
 }
