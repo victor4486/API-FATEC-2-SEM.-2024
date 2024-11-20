@@ -2,6 +2,7 @@ package com.cyber.cybernexuspacer.dao;
 
 import com.cyber.cybernexuspacer.entity.AcompanharSprints;
 import com.cyber.cybernexuspacer.entity.AreaDoAluno;
+import com.cyber.cybernexuspacer.entity.GrupoSprint;
 import com.cyber.cybernexuspacer.entity.PontuacaoGrupo;
 import com.cyber.cybernexuspacer.session.AlunoSession;
 
@@ -11,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AcompanharSprintsDao {
     public List<PontuacaoGrupo> listarGrupos() throws SQLException {
@@ -269,6 +272,78 @@ public class AcompanharSprintsDao {
         }
     }
 
+    public List<GrupoSprint> listarDadosParaRelatorio() throws SQLException {
+        List<GrupoSprint> dados = new ArrayList<>();
+        String sql = "SELECT grupo, num_sprint, nota_grupo FROM notas_grupos ORDER BY grupo, num_sprint";
+
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Map<String, GrupoSprint> gruposMap = new HashMap<>();
+
+            while (resultSet.next()) {
+                String nomeGrupo = resultSet.getString("grupo");
+                int nota = resultSet.getInt("nota_grupo");
+
+                GrupoSprint grupo = gruposMap.computeIfAbsent(nomeGrupo, GrupoSprint::new);
+                grupo.adicionarNota(nota);
+            }
+
+            dados.addAll(gruposMap.values());
+        }
+        return dados;
+    }
+
+    public List<AcompanharSprints> listarDadosParaRelatorioAlunos() throws SQLException {
+        List<AcompanharSprints> alunos = new ArrayList<>();
+        String sql = """
+                WITH grupos_com_integrantes AS (
+                            SELECT
+                                a.grupo,
+                                COUNT(*) AS num_integrantes
+                            FROM alunos a
+                            GROUP BY a.grupo)
+                        SELECT
+                            a.nome,
+                            c.titulo,
+                            a.grupo,
+                            SUM(n.nota) / AVG(gci.num_integrantes) AS media_aluno,
+                            n.num_sprint
+                        FROM
+                            notas n
+                        INNER JOIN alunos a ON n.id_receptor = a.id
+                        INNER JOIN criterios c ON n.titulo_criterio = c.titulo
+                        INNER JOIN grupos_com_integrantes gci ON a.grupo = gci.grupo
+                        GROUP BY a.nome, c.titulo, a.grupo, n.num_sprint
+                        ORDER BY a.nome;""";
+
+        try  {
+            Connection connection = ConexaoDao.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nomeAluno = resultSet.getString("nome");
+                String grupo = resultSet.getString("grupo");
+                double nota = resultSet.getDouble("media_aluno");
+                String criterio = resultSet.getString("titulo");
+                int sprint = resultSet.getInt("num_sprint");
+
+                AcompanharSprints aluno = new AcompanharSprints();
+                aluno.setNomeAluno(nomeAluno);
+                aluno.setGrupo(grupo);
+                aluno.setMediaNotaAluno(nota);
+                aluno.setCriterio(criterio);
+                aluno.setSprint(sprint);
+
+                alunos.add(aluno);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return alunos;
+    }
 
 
 

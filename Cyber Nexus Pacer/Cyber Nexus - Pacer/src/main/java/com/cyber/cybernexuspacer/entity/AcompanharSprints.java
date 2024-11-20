@@ -5,6 +5,10 @@ public class AcompanharSprints {
     private String grupo;
     private double mediaNotaAluno; // Média das notas para o critério e sprint
     private double somaTotalCriterio; // Soma total das notas do critério para todos os alunos no grupo/sprint
+    private String criterio;
+    private int sprint;
+
+    public AcompanharSprints() {}
 
     public AcompanharSprints(String nomeAluno, String grupo, double mediaNotaAluno, double somaTotalCriterio) {
         this.nomeAluno = nomeAluno;
@@ -44,6 +48,20 @@ public class AcompanharSprints {
 
     public void setSomaTotalCriterio(double somaTotalCriterio) {
         this.somaTotalCriterio = somaTotalCriterio;
+    }
+    public String getCriterio() {
+        return criterio;
+    }
+
+    public void setCriterio(String criterio) {
+        this.criterio = criterio;
+    }
+
+    public int getSprint() {
+        return sprint;
+    }
+    public void setSprint(int sprint) {
+        this.sprint = sprint;
     }
 
 }
