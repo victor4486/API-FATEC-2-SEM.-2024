@@ -3,6 +3,7 @@ package com.cyber.cybernexuspacer.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class GrupoSprint {
     private String nome;
     private List<Integer> notas; // Notas por sprint

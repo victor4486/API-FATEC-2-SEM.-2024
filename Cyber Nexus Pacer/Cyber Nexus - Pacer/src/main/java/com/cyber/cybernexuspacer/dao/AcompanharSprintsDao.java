@@ -25,6 +25,7 @@ public class AcompanharSprintsDao {
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
+
             while (rs.next()) {
                 PontuacaoGrupo grupo = new PontuacaoGrupo();
                 grupo.setGrupo(rs.getString("grupo"));
