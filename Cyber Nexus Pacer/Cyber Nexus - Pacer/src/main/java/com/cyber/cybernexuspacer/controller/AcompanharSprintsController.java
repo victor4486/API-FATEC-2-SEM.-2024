@@ -116,12 +116,14 @@ public class AcompanharSprintsController {
                 // Você pode adicionar a lógica para lidar com o clique na sprint
             });
 
-            int numSprint = paneAlunos.getChildren().size();
+            int numSprint = vBoxSprintsBtns.getChildren().size();
             double novaPosicaoY = numSprint == 0 ? 11 : numSprint * 70;  // Incrementa a posição vertical a cada aluno
             sprintButton.setLayoutY(novaPosicaoY);
 
             vBoxSprintsBtns.getChildren().add(sprintButton);  // Adiciona o botão à interface
-            vBoxSprintsBtns.setPrefHeight(novaPosicaoY);
+
+        double alturaTotal = sprints.size() * 70;
+        vBoxSprintsBtns.setPrefHeight(alturaTotal);
 
         }
     }

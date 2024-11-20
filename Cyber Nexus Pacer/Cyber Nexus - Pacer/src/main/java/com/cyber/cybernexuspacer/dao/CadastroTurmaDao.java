@@ -9,14 +9,15 @@ import java.sql.SQLException;
 
 public class CadastroTurmaDao {
 
-    public static void CadastrarAlunos(AreaDoAluno aluno) throws SQLException {
+    public static void CadastrarAlunos(AreaDoAluno aluno,Connection connection) throws SQLException {
 
         String sqlUsuario = "INSERT INTO USUARIOS (EMAIL, SENHA, TIPO_USUARIO) VALUES(?,?,?) ";
-        String sqlGrupo = "INSERT IGNORE INTO GRUPOS (GRUPO) VALUES(?) "; // Use "ON CONFLICT (EMAIL) DO NOTHING" se estiver usando PostgreSQL
+        //String sqlGrupo = "INSERT IGNORE INTO GRUPOS (GRUPO) VALUES(?) "; // Use "ON CONFLICT (EMAIL) DO NOTHING" se estiver usando PostgreSQL
+        String sqlGrupo = "INSERT INTO GRUPOS (GRUPO) VALUES (?) ON CONFLICT (GRUPO) DO NOTHING";
         String sqlAluno = "INSERT INTO ALUNOS (NOME,EMAIL, GRUPO) VALUES(?, ?, ?)";
         String sqlNotasGrupos =
-                "INSERT INTO notas_grupos (grupo, num_sprint, nota_grupo) " +
-                        "SELECT g.grupo, s.num_sprint, 0 " +
+                "INSERT INTO notas_grupos (grupo, num_sprint, nota_grupo,liberado) " +
+                        "SELECT g.grupo, s.num_sprint, 0,0 " +
                         "FROM grupos g " +
                         "CROSS JOIN sprints s " +
                         "WHERE NOT EXISTS ( " +
@@ -26,48 +27,33 @@ public class CadastroTurmaDao {
                         ");";
 
 
-        Connection connection = null;
-        PreparedStatement stmtGrupo = null;
-        PreparedStatement stmtAluno = null;
-        PreparedStatement stmtUsuario = null;
-
-        try {
-
-            connection = ConexaoDao.getConnection();
-            connection.setAutoCommit(false); // Começar uma transação
-
-            //Inserir usuario
-            stmtUsuario = connection.prepareStatement(sqlUsuario);
+        try (
+                PreparedStatement stmtUsuario = connection.prepareStatement(sqlUsuario);
+                PreparedStatement stmtGrupo = connection.prepareStatement(sqlGrupo);
+                PreparedStatement stmtAluno = connection.prepareStatement(sqlAluno);
+                PreparedStatement stmtNotasGrupos = connection.prepareStatement(sqlNotasGrupos)
+        ) {
+            // Inserir usuário
             stmtUsuario.setString(1, aluno.getEmail());
             stmtUsuario.setString(2, aluno.getSenha());
             stmtUsuario.setString(3, aluno.getTipo_usuario());
             stmtUsuario.executeUpdate();
 
-            // Insert grupo
-            stmtGrupo = connection.prepareStatement(sqlGrupo);
+            // Inserir grupo
             stmtGrupo.setString(1, aluno.getGrupo());
             stmtGrupo.executeUpdate();
 
             // Inserir aluno
-            stmtAluno = connection.prepareStatement(sqlAluno);
             stmtAluno.setString(1, aluno.getNomeAluno());
             stmtAluno.setString(2, aluno.getEmail());
             stmtAluno.setString(3, aluno.getGrupo());
             stmtAluno.executeUpdate();
 
-            //Inserir Notas dos Grupos
-            PreparedStatement stmt = connection.prepareStatement(sqlNotasGrupos);
-            stmt.executeUpdate();
-
-            connection.commit(); // Confirmar a transação
-
-            System.out.println("Alunos Cadastrados com sucesso!");
+            // Inserir Notas dos Grupos
+            stmtNotasGrupos.executeUpdate();
 
         } catch (SQLException e) {
-            if (connection != null) {
-                connection.rollback(); // Desfazer a transação em caso de erro
-            }
-            e.printStackTrace();
+            throw e; // Repassa a exceção para ser tratada na controller
         }
     }
 
