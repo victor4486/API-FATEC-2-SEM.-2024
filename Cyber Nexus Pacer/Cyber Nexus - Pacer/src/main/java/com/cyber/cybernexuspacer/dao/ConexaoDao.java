@@ -9,9 +9,6 @@ public class ConexaoDao {
     private static final String user = "postgres.avytuuhwmswsbshvwipz"; // Substitua pelo usuário do Supabase
     private static final String password = "CyberNexusFatec"; // Substitua pela senha do Supabase
 
-
-
-
    /* private static final String url = "jdbc:mysql://localhost:3306/pacerapi?useTimezone=true&serverTimezone=UTC";
     private static final String user = "root";
     private static final String password = "tiago123";*/
@@ -21,17 +18,16 @@ public class ConexaoDao {
     public static Connection getConnection() {
         try {
             //Descomentar linhas abaixo e das configs para acessar banco online e comentar a config do mysql
-            /*if (conn == null) {
-                  Class.forName("org.postgresql.Driver"); // Atualizado para o driver PostgreSQL
-                  return conn;
-            } else {
-                return conn;
-            }*/
-
             if (conn == null || conn.isClosed()) {
+                  Class.forName("org.postgresql.Driver"); // Atualizado para o driver PostgreSQL
+                  conn = DriverManager.getConnection(url, user, password);
+                  return conn;
+            }
+
+            /*if (conn == null || conn.isClosed()) {
                 Class.forName("com.mysql.cj.jdbc.Driver"); // Atualizado para o driver MySQL
                 conn = DriverManager.getConnection(url, user, password);
-            }
+            }*/
 
             return conn;
 

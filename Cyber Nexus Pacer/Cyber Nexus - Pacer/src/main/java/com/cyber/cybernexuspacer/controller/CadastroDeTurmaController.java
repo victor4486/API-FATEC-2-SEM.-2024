@@ -146,9 +146,6 @@ public class CadastroDeTurmaController {
     }
 
 
-
-
-
     @FXML
     public void onClickCarregarPlanilha(javafx.event.ActionEvent actionEvent) {
         // Abre o explorador de arquivos para a escolha do arquivo
