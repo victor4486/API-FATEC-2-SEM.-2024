@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -60,6 +61,8 @@ public class CadastroDeTurmaController {
 
     private ObservableList<AreaDoAluno> listaAluno = FXCollections.observableArrayList();
 
+    private Connection connection;
+
     @FXML
     public void initialize() {
         // Configura as colunas com os dados da classe Pessoa
@@ -72,53 +75,73 @@ public class CadastroDeTurmaController {
         tabela.setItems(listaAluno);
     }
 
+    // Método para garantir que a conexão está aberta
+    private Connection ensureConnectionIsOpen() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = ConexaoDao.getConnection(); // ou use seu pool de conexões
+        }
+        return connection;
+    }
+
     @FXML
     void onClickbtnConfirmarAlunos(ActionEvent event) throws IOException, SQLException {
-
+        Connection conn = null;
         try {
-            // Inicia a transação
-            ConexaoDao.getConnection().setAutoCommit(false);
+            // Garante que a conexão está aberta
+            conn = ensureConnectionIsOpen();
+            conn.setAutoCommit(false); // Inicia a transação
+
+            boolean sucesso = true; // Flag para verificar se tudo ocorreu bem
 
             for (AreaDoAluno aluno : listaAluno) {
                 // Verifica se o aluno já existe
                 if (!CadastroTurmaDao.alunoExists(aluno)) {
-                    CadastroTurmaDao.CadastrarAlunos(aluno);
-
+                    // Chama a DAO para cadastrar o aluno e os dados relacionados
+                    CadastroTurmaDao.CadastrarAlunos(aluno, conn);
                 } else {
-                    // Informar o usuário sobre a duplicata de forma mais amigável
+                    // Alerta caso o aluno já exista
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Aluno Duplicado");
                     alert.setHeaderText("O aluno " + aluno.getNomeAluno() + " já está cadastrado.");
                     alert.setContentText("Verifique a lista de alunos.");
                     alert.showAndWait();
                     System.out.println("Aluno já existe: " + aluno.getNomeAluno());
+                    sucesso = false; // Marca que houve um problema com esse aluno
                 }
             }
-            // Mensagem de sucesso
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Sucesso");
-            alert.setHeaderText("Alunos cadastrados com sucesso!");
-            alert.showAndWait();
 
-            // Confirma a transação
-            ConexaoDao.getConnection().commit();
-        } catch ( SQLException e) {
+            if (sucesso) {
 
-            // Informar o usuário sobre o erro de forma mais amigável
+                // Confirma a transação
+                conn.commit();
+
+                // Mensagem de sucesso
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Sucesso");
+                alert.setHeaderText("Alunos cadastrados com sucesso!");
+                alert.showAndWait();
+            }
+
+        } catch (SQLException e) {
+            // Em caso de erro, reverte a transação
+            if (conn != null) {
+                conn.rollback();
+            }
+
+            // Alerta o usuário sobre o erro
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro ao Cadastrar Alunos");
             alert.setHeaderText("Ocorreu um erro ao cadastrar os alunos.");
             alert.setContentText("Por favor, verifique os dados e tente novamente.");
             alert.showAndWait();
 
-            // Se ocorrer um erro, reverte a transação
-            ConexaoDao.getConnection().rollback();
             e.printStackTrace();
         } finally {
-            // Restaura o modo de auto-commit
-            ConexaoDao.getConnection().setAutoCommit(true);
-            ConexaoDao.getConnection().close();
-
+            // Restaura o auto-commit e fecha a conexão se não for mais necessária
+            if (conn != null) {
+                conn.setAutoCommit(true); // Restaura o comportamento padrão
+                conn.close(); // Fecha a conexão
+            }
         }
     }
 
