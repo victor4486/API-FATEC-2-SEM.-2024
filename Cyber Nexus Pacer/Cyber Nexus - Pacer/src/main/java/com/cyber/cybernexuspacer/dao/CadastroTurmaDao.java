@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 public class CadastroTurmaDao {
 
+
     public static void CadastrarAlunos(AreaDoAluno aluno,Connection connection) throws SQLException {
 
         String sqlUsuario = "INSERT INTO USUARIOS (EMAIL, SENHA, TIPO_USUARIO) VALUES(?,?,?) ";
