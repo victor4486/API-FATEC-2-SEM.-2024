@@ -59,12 +59,31 @@ public class AreaDoAlunoController {
     @FXML
     private void onClickbtnConfirmaNota(ActionEvent event) throws SQLException {
 
+
         // Obtenha o ID do avaliador e do avaliado, assim como o número do sprint
         String nomeReceptor = alunosComboBox.getValue();  // Nome do aluno selecionado no ComboBox
         Integer idReceptor = alunosMap.get(nomeReceptor); // O ID correspondente ao nome do aluno selecionado
 
         AreaDoAluno alunoLogado = AlunoSession.getAlunoLogado();
         int idAvaliador = alunoLogado.getIdAlunoAvaliador(); // Agora pegamos o ID do aluno logado
+
+        // Consultar a nota disponível para o grupo
+        AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
+        double notaDisponivel = areaDoAlunoDao.buscaNota();  // Pega a nota disponível do banco
+
+        // Calcular a soma das notas atribuídas
+        int somaNotas = criteriosSelecionados.values().stream().mapToInt(Integer::intValue).sum();
+
+        // Verificar se a soma das notas é válida
+        if (somaNotas > notaDisponivel) {
+            // Se a soma das notas for maior que a nota disponível
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aviso");
+            alert.setHeaderText(null);
+            alert.setContentText("A soma das notas atribuídas é maior do que as notas disponíveis para distribuir.");
+            alert.showAndWait();
+            return;  // Não continua com a confirmação
+        }
 
 
         // Para cada critério, verifica qual foi a nota atribuída
@@ -73,7 +92,7 @@ public class AreaDoAlunoController {
             int nota = entry.getValue();
 
             // Agora você pode salvar a nota no banco de dados chamando o método no DAO
-            AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
+            //AreaDoAlunoDao areaDoAlunoDao = new AreaDoAlunoDao();
             areaDoAlunoDao.salvarNota(idAvaliador, idReceptor, nota, tituloCriterio); // Salva a nota na tabela NOTAS
 
         }
@@ -231,6 +250,7 @@ public class AreaDoAlunoController {
 
         // Adiciona o novo critério ao AnchorPane (campo_criterios)
         campo_criterios.getChildren().add(paneCriterio);
+        campo_criterios.setPrefHeight(novaPosicaoY);
     }
 
     private void carregarCriterios() throws SQLException {
