@@ -119,8 +119,10 @@ public class CriteriosController {
         double novaPosicaoY = numeroDeCriterios == 0 ? 5 : numeroDeCriterios * 78;
         novoCriterio.setLayoutY(novaPosicaoY);
 
+
         // Adiciona o novo critério ao AnchorPane (campo_criterios)
         campo_criterios.getChildren().add(novoCriterio);
+        campo_criterios.setPrefHeight(novaPosicaoY);
     }
 
     private void carregarCriterios() throws SQLException {

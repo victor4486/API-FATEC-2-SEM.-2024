@@ -429,8 +429,6 @@ public class AcompanharSprintsController {
 
 
 
-
-
     private Label criaLabel(double layoutX, double layoutY, String descricao, String style) {
         Label label = new Label(descricao);
         label.setLayoutX(layoutX);
