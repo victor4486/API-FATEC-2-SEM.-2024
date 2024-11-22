@@ -49,6 +49,7 @@ public class AcompanharSprints {
     public void setSomaTotalCriterio(double somaTotalCriterio) {
         this.somaTotalCriterio = somaTotalCriterio;
     }
+
     public String getCriterio() {
         return criterio;
     }
@@ -60,6 +61,7 @@ public class AcompanharSprints {
     public int getSprint() {
         return sprint;
     }
+
     public void setSprint(int sprint) {
         this.sprint = sprint;
     }

@@ -61,7 +61,7 @@ public class LoginController {
                     redirecionarParaRecuperacaoSenha(nome);
                 }
                 else if ("Aluno".equals(tipoUsuario)) {
-                    System.out.println("email: " + nome);
+
 
                     // Aqui, após a validação, busca os detalhes do aluno e armazena na sessão
                     AreaDoAluno aluno = loginDao.buscarAlunoPorEmail(nome);  // Método para buscar detalhes do aluno
@@ -70,6 +70,7 @@ public class LoginController {
                     AlunoSession.setAlunoLogado(aluno);
 
                     Main.setRoot("AreaDoAluno-view");
+                    System.out.println("email: " + nome);
                 }
                 else if ("Admin".equals(tipoUsuario)) {
                     Main.setRoot("TelaMenu-view");

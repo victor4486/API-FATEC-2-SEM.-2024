@@ -346,7 +346,51 @@ public class AcompanharSprintsDao {
         return alunos;
     }
 
+    // Método que lista as notas do aluno específico
+    public List<AcompanharSprints> listarNotasDoAluno(String nomeAluno, int numSprint) throws SQLException {
+        List<AcompanharSprints> notasAluno = new ArrayList<>();
 
+        // SQL que busca as notas do aluno para uma sprint específica
+        String sql = "SELECT a.nome AS nome_aluno, g.grupo, s.num_sprint, c.titulo AS criterio, n.nota AS media_nota_aluno " +
+                "FROM notas n " +
+                "INNER JOIN alunos a ON a.id = n.id_receptor " +
+                "INNER JOIN grupos g ON g.grupo = a.grupo " +
+                "INNER JOIN sprints s ON s.num_sprint = n.num_sprint " +
+                "INNER JOIN criterios c ON c.titulo = n.titulo_criterio " +
+                "WHERE a.nome = ? AND s.num_sprint = ? " +
+                "ORDER BY c.titulo";
+
+        Connection connection = null;
+
+        try {
+
+
+            connection = ConexaoDao.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, nomeAluno);
+            stmt.setInt(2, numSprint);
+
+            ResultSet rs = stmt.executeQuery();
+
+            // Processar o resultado da consulta
+            while (rs.next()) {
+                AcompanharSprints sprints = new AcompanharSprints();
+                sprints.setNomeAluno(rs.getString("nome_aluno"));
+                sprints.setGrupo(rs.getString("grupo"));
+                sprints.setSprint(rs.getInt("num_sprint"));
+                sprints.setCriterio(rs.getString("criterio"));
+                sprints.setMediaNotaAluno(rs.getInt("media_nota_aluno"));
+
+                // Adicionar os dados de notas à lista
+                notasAluno.add(sprints);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return notasAluno;
+    }
 
 
 }

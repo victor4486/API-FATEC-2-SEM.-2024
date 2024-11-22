@@ -241,9 +241,9 @@ public class AcompanharSprintsController {
 
         Label nomeAluno = criaLabel(5,7, "Aluno: " + nome, "-fx-text-fill: black; -fx-font-size: 12px;");
         Label grupoAluno = criaLabel(5,40,"Grupo: ", "-fx-text-fill: black; -fx-font-size: 12px;");
-        Label lblAluno = criaLabel(375,7,"NOTA DA SPRINT:", "-fx-text-fill: black; -fx-font-size: 12px;");
-        Label mediaAluno = criaLabel(395,30,String.format("%.2f", mediaNota) + " / ", "-fx-text-fill: black; -fx-font-size: 12px;");
-        Label notaTotal = criaLabel(427, 30, String.format("%.2f", somaTotalCriterio), "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label lblAluno = criaLabel(355,7,"NOTA DA SPRINT:", "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label mediaAluno = criaLabel(375,30,String.format("%.2f", mediaNota) + " / ", "-fx-text-fill: black; -fx-font-size: 12px;");
+        Label notaTotal = criaLabel(407, 30, String.format("%.2f", somaTotalCriterio), "-fx-text-fill: black; -fx-font-size: 12px;");
 
         // Criar o ComboBox para os grupos
         ComboBox<String> grupoComboBox = new ComboBox<>();
@@ -258,9 +258,16 @@ public class AcompanharSprintsController {
             alteracoesGrupo.put(nome, grupoSelecionado); // Armazena a alteração dos grupos dos alunos
         });
 
+        // Botão para gerar relatório individual
+        Button btnGerarRelatorio = new Button("Relatório");
+        btnGerarRelatorio.setLayoutX(475);
+        btnGerarRelatorio.setLayoutY(20);
+        btnGerarRelatorio.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        btnGerarRelatorio.setOnAction(event -> onClickGerarRelatorioIndividual(nome));
+
         // Adicionar os textos e o ComboBox ao painel do aluno
         alunoPane.getChildren().addAll(
-                nomeAluno, grupoAluno,grupoComboBox,lblAluno, mediaAluno,notaTotal
+                nomeAluno, grupoAluno,grupoComboBox,lblAluno, mediaAluno,notaTotal,btnGerarRelatorio
         );
 
         int numeroDeAlunos = paneAlunos.getChildren().size();
@@ -365,6 +372,62 @@ public class AcompanharSprintsController {
 
         System.out.println("Relatório gerado com sucesso: relatorio_alunos_com_notas.pdf");
     }
+
+    @FXML
+    private void onClickGerarRelatorioIndividual(String nomeAluno) {
+        try {
+            AcompanharSprintsDao acompanharSprintsDao = new AcompanharSprintsDao();
+
+            // Buscar as notas e informações do aluno pelo nome
+            List<AcompanharSprints> alunoInfo = acompanharSprintsDao.listarNotasDoAluno(nomeAluno,sprintSelecionada);
+
+            // Gerar o relatório individual
+            gerarRelatorioAlunoIndividual(alunoInfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao gerar relatório individual: " + e.getMessage());
+        }
+    }
+
+    private void gerarRelatorioAlunoIndividual(List<AcompanharSprints> alunoInfo) throws Exception {
+        // Criação do documento PDF
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("relatorio_individual.pdf"));
+        document.open();
+
+        // Título do relatório
+        Paragraph titulo = new Paragraph("Relatório Individual do Aluno", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16));
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        titulo.setSpacingAfter(20);
+        document.add(titulo);
+
+        // Criação da tabela com as informações do aluno
+        PdfPTable table = new PdfPTable(4); // 4 colunas: Nome do Aluno, Nota, Critério, Sprint
+        table.setWidthPercentage(100);
+
+        // Cabeçalhos da tabela
+        table.addCell(new PdfPCell(new Phrase("Aluno", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+        table.addCell(new PdfPCell(new Phrase("Nota", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+        table.addCell(new PdfPCell(new Phrase("Critério", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+        table.addCell(new PdfPCell(new Phrase("Sprint", FontFactory.getFont(FontFactory.HELVETICA_BOLD))));
+
+        // Adicionar os dados do aluno
+        for (AcompanharSprints sprints : alunoInfo) {
+            table.addCell(new PdfPCell(new Phrase(sprints.getNomeAluno())));
+            table.addCell(new PdfPCell(new Phrase(String.format("%.2f", sprints.getMediaNotaAluno()))));
+            table.addCell(new PdfPCell(new Phrase(sprints.getCriterio())));
+            table.addCell(new PdfPCell(new Phrase(sprintSelecionada)));
+        }
+
+        // Adiciona a tabela ao documento
+        document.add(table);
+        document.close();
+
+        System.out.println("Relatório individual gerado com sucesso: relatorio_individual.pdf");
+    }
+
+
 
 
 
