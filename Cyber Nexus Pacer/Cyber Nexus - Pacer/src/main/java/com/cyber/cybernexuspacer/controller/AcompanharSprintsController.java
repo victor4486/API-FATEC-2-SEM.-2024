@@ -363,7 +363,7 @@ public class AcompanharSprintsController {
             table.addCell(new PdfPCell(new Phrase(aluno.getNomeAluno())));
             table.addCell(new PdfPCell(new Phrase(String.format("%.2f", aluno.getMediaNotaAluno()))));
             table.addCell(new PdfPCell(new Phrase(aluno.getCriterio())));
-            table.addCell(new PdfPCell(new Phrase(aluno.getSprint())));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(aluno.getSprint()))));
         }
 
         // Adiciona a tabela ao documento
@@ -417,7 +417,7 @@ public class AcompanharSprintsController {
             table.addCell(new PdfPCell(new Phrase(sprints.getNomeAluno())));
             table.addCell(new PdfPCell(new Phrase(String.format("%.2f", sprints.getMediaNotaAluno()))));
             table.addCell(new PdfPCell(new Phrase(sprints.getCriterio())));
-            table.addCell(new PdfPCell(new Phrase(sprintSelecionada)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(sprints.getSprint()))));
         }
 
         // Adiciona a tabela ao documento
