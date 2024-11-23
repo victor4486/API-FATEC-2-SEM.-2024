@@ -11,25 +11,46 @@ public class SprintDao {
 
     // Salva um novo sprint no banco de dados
     public int salvarSprint(Sprint sprint) {
-        String sql = "INSERT INTO SPRINTS (NUM_SPRINT, DATA_INICIAL, DATA_FINAL) VALUES (?, ?, ?)";
+        String fetchSprintsSql = "SELECT NUM_SPRINT FROM SPRINTS ORDER BY NUM_SPRINT ASC"; // Consulta para buscar sprints existentes
+        String insertSql = "INSERT INTO SPRINTS (NUM_SPRINT, DATA_INICIAL, DATA_FINAL) VALUES (?, ?, ?)";
 
-        try (Connection connection = ConexaoDao.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
-                throw new IllegalArgumentException("Datas não podem ser vazias");
+        try (Connection connection = ConexaoDao.getConnection()) {
+            // 1. Buscar todas as sprints existentes
+            List<Integer> sprintsExistentes = new ArrayList<>();
+            try (PreparedStatement fetchStmt = connection.prepareStatement(fetchSprintsSql);
+                 ResultSet resultSet = fetchStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    sprintsExistentes.add(resultSet.getInt("NUM_SPRINT"));
+                }
             }
 
-            stmt.setInt(1, sprint.getNumSprint());
-            stmt.setDate(2, sprint.getDataInicio());
-            stmt.setDate(3, sprint.getDataFim());
-            stmt.executeUpdate();
+            // 2. Determinar o próximo número de sprint
+            int proximaSprint = 1; // Caso nenhuma sprint exista, comece com "1"
+            for (int i = 1; i <= sprintsExistentes.size() + 1; i++) {
+                if (!sprintsExistentes.contains(i)) {
+                    proximaSprint = i;
+                    break; // Encontre o primeiro número ausente e saia do loop
+                }
+            }
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1); // Retorna o ID gerado
-                } else {
-                    throw new SQLException("Falha ao obter o ID gerado.");
+            // 3. Inserir a nova sprint
+            try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+                if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
+                    throw new IllegalArgumentException("Datas não podem ser vazias");
+                }
+
+                insertStmt.setInt(1, proximaSprint); // Configura o número correto da sprint
+                insertStmt.setDate(2, sprint.getDataInicio());
+                insertStmt.setDate(3, sprint.getDataFim());
+                insertStmt.executeUpdate();
+
+                // 4. Obter o ID gerado
+                try (ResultSet generatedKeys = insertStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1); // Retorna o ID gerado
+                    } else {
+                        throw new SQLException("Falha ao obter o ID gerado.");
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -37,6 +58,7 @@ public class SprintDao {
         }
         return 0;
     }
+
 
     // Lista todos os sprints no banco de dados
     public List<Sprint> listarSprints() throws SQLException {
