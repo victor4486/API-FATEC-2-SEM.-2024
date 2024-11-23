@@ -136,7 +136,19 @@ public class CriteriosController {
 
     private void handleExcluirCriterio(String titulo, Pane criterioPane) {
         CriterioDao criterioDao = new CriterioDao();
+        SprintDao sprintDao = new SprintDao(); // Para buscar a data final da primeira sprint
+
         try {
+            // Obter a data final da primeira sprint
+            Date dataFinalPrimeiraSprint = (Date) sprintDao.buscarDataFinalPrimeiraSprint();
+
+            if (dataFinalPrimeiraSprint != null && new Date(System.currentTimeMillis()).after(dataFinalPrimeiraSprint)) {
+                // Caso a data atual seja posterior à data final da primeira sprint, exibe mensagem e interrompe
+                exibirMensagem("Não é possível excluir o critério após a data final da primeira sprint.");
+                return;
+            }
+
+            // Excluir o critério
             criterioDao.deletarCriterio(titulo);
             campo_criterios.getChildren().remove(criterioPane);
             exibirMensagem("Critério excluído com sucesso!");
@@ -145,6 +157,7 @@ public class CriteriosController {
             exibirMensagem("Erro ao excluir o critério.");
         }
     }
+
 
 
 

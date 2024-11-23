@@ -164,4 +164,18 @@ public class SprintDao {
 
         return totalSprints;
     }
+    public Date buscarDataFinalPrimeiraSprint() throws SQLException {
+        String sql = "SELECT DATA_FINAL FROM SPRINTS ORDER BY NUM_SPRINT ASC LIMIT 1";
+
+        try (Connection connection = ConexaoDao.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet resultSet = stmt.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getDate("DATA_FINAL");
+            }
+        }
+        return null; // Retorna null se nenhuma sprint for encontrada
+    }
+
 }
