@@ -1,6 +1,7 @@
 package com.cyber.cybernexuspacer.dao;
 
 import com.cyber.cybernexuspacer.entity.Sprint;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,17 +11,22 @@ import java.util.List;
 public class SprintDao {
 
     // Salva um novo sprint no banco de dados
+
+
     public int salvarSprint(Sprint sprint) {
-        String fetchSprintsSql = "SELECT NUM_SPRINT FROM SPRINTS ORDER BY NUM_SPRINT ASC"; // Consulta para buscar sprints existentes
+        String fetchSprintsSql = "SELECT NUM_SPRINT, DATA_FINAL FROM SPRINTS ORDER BY NUM_SPRINT ASC"; // Consulta para buscar sprints existentes
         String insertSql = "INSERT INTO SPRINTS (NUM_SPRINT, DATA_INICIAL, DATA_FINAL) VALUES (?, ?, ?)";
 
         try (Connection connection = ConexaoDao.getConnection()) {
             // 1. Buscar todas as sprints existentes
             List<Integer> sprintsExistentes = new ArrayList<>();
+            Date ultimaDataFinal = null; // Para armazenar a última data final
+
             try (PreparedStatement fetchStmt = connection.prepareStatement(fetchSprintsSql);
                  ResultSet resultSet = fetchStmt.executeQuery()) {
                 while (resultSet.next()) {
                     sprintsExistentes.add(resultSet.getInt("NUM_SPRINT"));
+                    ultimaDataFinal = resultSet.getDate("DATA_FINAL"); // Atualiza com a última data final encontrada
                 }
             }
 
@@ -33,10 +39,17 @@ public class SprintDao {
                 }
             }
 
-            // 3. Inserir a nova sprint
+            // 3. Validar a data inicial da nova sprint
+            if (ultimaDataFinal != null && !sprint.getDataInicio().after(ultimaDataFinal)) {
+                exibirMensagemPopup("A data inicial da nova sprint deve ser posterior à data final da última sprint.");
+                return 0; // Interrompe a operação se a validação falhar
+            }
+
+            // 4. Inserir a nova sprint
             try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
                 if (sprint.getDataInicio() == null || sprint.getDataFim() == null) {
-                    throw new IllegalArgumentException("Datas não podem ser vazias");
+                    exibirMensagemPopup("Datas não podem ser vazias.");
+                    return 0; // Interrompe a operação se as datas forem inválidas
                 }
 
                 insertStmt.setInt(1, proximaSprint); // Configura o número correto da sprint
@@ -44,7 +57,7 @@ public class SprintDao {
                 insertStmt.setDate(3, sprint.getDataFim());
                 insertStmt.executeUpdate();
 
-                // 4. Obter o ID gerado
+                // 5. Obter o ID gerado
                 try (ResultSet generatedKeys = insertStmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         return generatedKeys.getInt(1); // Retorna o ID gerado
@@ -58,6 +71,16 @@ public class SprintDao {
         }
         return 0;
     }
+
+    private void exibirMensagemPopup(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Validação de Data");
+        alert.setHeaderText("Erro de Validação");
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+
 
 
     // Lista todos os sprints no banco de dados
