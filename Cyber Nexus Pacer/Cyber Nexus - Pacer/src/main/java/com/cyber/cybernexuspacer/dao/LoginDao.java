@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class LoginDao {
 
     public boolean verificarLogin(String nome, String senha, String tipoUsuario) throws SQLException {
+       //String sql = "SELECT * FROM SPRINTS WHERE CURDATE() BETWEEN DATA_INICIAL AND DATA_FINAL LIMIT 1";
         String sql = "SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ? AND TIPO_USUARIO = ?";
         PreparedStatement stmt = null;
         ResultSet rs = null;

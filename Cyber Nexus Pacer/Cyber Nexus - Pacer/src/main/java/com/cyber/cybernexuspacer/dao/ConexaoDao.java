@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexaoDao {
-//   // private static final String url = "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres"; // Substitua pelos seus dados do Supabase
-//    private static final String user = "postgres.avytuuhwmswsbshvwipz"; // Substitua pelo usuário do Supabase
-//    private static final String password = "CyberNexusFatec"; // Substitua pela senha do Supabase
+    private static final String url = "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres"; // Substitua pelos seus dados do Supabase
+    private static final String user = "postgres.avytuuhwmswsbshvwipz"; // Substitua pelo usuário do Supabase
+   private static final String password = "CyberNexusFatec"; // Substitua pela senha do Supabase
 
-   private static final String url = "jdbc:mysql://localhost:3306/pacer1?useTimezone=true&serverTimezone=UTC";
+   /*private static final String url = "jdbc:mysql://localhost:3306/pacer1?useTimezone=true&serverTimezone=UTC";
     private static final String user = "root";
-    private static final String password = "mayara@1";
+    private static final String password = "";*/
 
     private static Connection conn;
 

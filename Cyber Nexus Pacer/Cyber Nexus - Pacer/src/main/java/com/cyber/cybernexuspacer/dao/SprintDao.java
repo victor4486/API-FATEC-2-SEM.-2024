@@ -124,6 +124,7 @@ public class SprintDao {
 
     // Obtém o sprint atual com base na data
     public static Sprint obterSprintAtual() throws SQLException {
+        //String sql = "SELECT * FROM SPRINTS WHERE CURDATE() BETWEEN DATA_INICIAL AND DATA_FINAL LIMIT 1";
         String sql = "SELECT * FROM SPRINTS WHERE CURDATE() BETWEEN DATA_INICIAL AND DATA_FINAL LIMIT 1";
 
         Sprint sprintAtual = null;

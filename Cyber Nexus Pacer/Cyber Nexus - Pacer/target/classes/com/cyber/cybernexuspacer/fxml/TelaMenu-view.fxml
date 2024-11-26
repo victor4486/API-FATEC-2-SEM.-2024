@@ -27,11 +27,6 @@
             </ImageView>
          </children>
       </Pane>
-      <Text fx:id="txt_ola_professor" fill="#39535f" layoutX="35.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Olá, Professor!">
-         <font>
-            <Font name="Arial Bold" size="20.0" />
-         </font>
-      </Text>
       <ImageView fx:id="logo_fatec" fitHeight="113.0" fitWidth="114.0" layoutX="636.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagens/fatec.png" />
